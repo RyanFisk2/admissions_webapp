@@ -1,8 +1,6 @@
 # DB 2541 - Spring 2020 Project 1
 
 **Farm Fresh**
- - Jack Umina (jtumina)
- - Zach Bodnick (zbodnick)
  - Jacob Pritchard (JacobPritchard)
  - http://gwupyterhub.seas.gwu.edu/~sp20DBp1-farm_fresh/farm_fresh/src/login.php
  
