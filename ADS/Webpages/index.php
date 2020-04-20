@@ -321,6 +321,21 @@
             				</div>
           				</div>
 					</div>
+					<br><br><br>
+					<div class="row">
+						<div class="col">
+            				<div class="feature-1 border">
+              					<div class="icon-wrapper bg-primary">
+               						<span class="flaticon-mortarboard text-white"></span>
+              					</div>
+								<div class="feature-1-content">
+                					<h2>Find Alumni</h2>
+                					<p>View or search for Alumni.</p>
+                					<p><a href="alumni.php" class="btn btn-primary px-4 rounded-0">View Alumni</a></p>
+								</div>
+            				</div>
+          				</div>
+					</div>
 				</div>
 			</div>
 			<?php

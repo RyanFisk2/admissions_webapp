@@ -1,7 +1,5 @@
 
 <?php
-	// Start the session
-
 	// Insert the page header
 	require_once('header.php');
 
