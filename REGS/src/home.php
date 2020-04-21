@@ -24,7 +24,7 @@
   
       $permLevel = $_SESSION['p_level'];
 
-      if (strcmp($permLevel, "Student") == 0) {
+      if ($permLevel == 5) {
 ?>
     <div class="site-section">
       <div class="container">
@@ -102,7 +102,7 @@
           </div>
     </div>  
 <?php
-} else if (strcmp($permLevel, "Faculty") == 0) {
+} else if ($permLevel == 4) {
 ?>
 	<div></div>
   <br></br>
@@ -166,7 +166,7 @@
           </div>
     </div>    
 <?php
-} else if (strcmp($permLevel, "Admin") == 0) {
+} else if ($permLevel == 1) {
 ?>
 	<div></div>
   <br></br>
@@ -283,7 +283,7 @@
 
         </div>
 <?php
-} else if (strcmp($permLevel, "GS") == 0) {
+} else if ($permLevel == 2) {
 ?>
 	<div></div>
   <br></br>

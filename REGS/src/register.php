@@ -22,7 +22,7 @@ session_start();
 	echo $courses;
 	$courses = mysqli_query ($dbc, $courses);
 
-	$error = "Error: time conflict with classyou are currently enrolled in";
+	$error = "Error: time conflict with class you are currently enrolled in";
 	// If student is not registered for another course at this time, register normally
 	if (!$courses) {
 		$enroll = "INSERT courses_taken (u_id, crn, grade) VALUES ($uid, $crn, '$grade')";
@@ -31,7 +31,6 @@ session_start();
 	} else { // Print error message
 		header("Location: course.php?cno=$cno&conflict=$error");
 	}
-
 
     $class_registering_for_query = "SELECT * FROM schedule, catalog WHERE crn=$crn AND course_id=c_id";
     // die(mysqli_query($dbc, $class_registering_for_query));

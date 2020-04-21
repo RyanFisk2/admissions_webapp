@@ -36,17 +36,17 @@
 
     switch ($permLevel) {
         
-        case 'Student':
+        case 5:
         break;
 
-        case 'Faculty':
+        case 4:
         break;
         
-        case 'Admin':
+        case 1:
         header("Location: home.php");
         break;
 
-        case 'GS':
+        case 2:
         header("Location: home.php");
         break;
 
@@ -121,7 +121,7 @@
             }
         }
 
-        if($_SESSION['p_level'] == "Student"){
+        if($_SESSION['p_level'] == 5){
           // Check that inputted major is valid
           if (empty($_POST['major'])) {
             // Email name was empty  - throw error
@@ -143,7 +143,7 @@
             } else {
                 $progError = $invalidEntry;
             }
-        }else if($_SESSION['p_level'] == "Faculty"){
+        }else if($_SESSION['p_level'] == 4){
           // Check that inputted department is valid
           if (empty($_POST['dept'])) {
             // Department name was empty  - throw error
@@ -159,9 +159,9 @@
         }
 
         if ($fnameValid && $lnameValid && $emailValid && $addrValid) {
-          if($_SESSION['p_level'] == "Student" && $majorValid && $progValid){
+          if($_SESSION['p_level'] == 5 && $majorValid && $progValid){
             $submissionValid = true;
-          }else if($_SESSION['p_level'] == "Faculty" && $deptValid){
+          }else if($_SESSION['p_level'] == 4 && $deptValid){
             $submissionValid = true;
           }
         }
@@ -176,23 +176,23 @@
             $lname = mysqli_real_escape_string($dbc, trim($_POST['lname']));
             $email = mysqli_real_escape_string($dbc, trim($_POST['email']));
             $address = mysqli_real_escape_string($dbc, trim($_POST['address']));
-            if($_SESSION['p_level'] == "Student"){
+            if($_SESSION['p_level'] == 5){
               $major = mysqli_real_escape_string($dbc, trim($_POST['major']));
               $program = mysqli_real_escape_string($dbc, trim($_POST['program']));
               if(strcmp($program, "") == 0){
                 $programNull = true;
               }
-            }else if($_SESSION['p_level'] == "Faculty"){
+            }else if($_SESSION['p_level'] == 4){
               $dept = mysqli_real_escape_string($dbc, trim($_POST['dept']));
             }
             
-            if($_SESSION['p_level'] == "Student"){
+            if($_SESSION['p_level'] == 5){
               if($programNull == false){
-                $query = "INSERT INTO student (u_id, fname, lname, addr, email, major, program) VALUES ('$id', '$fname', '$lname', '$address', '$email', '$major', '$program');";
+                $query = "INSERT INTO student (u_id, fname, lname, addr, email, major, degree) VALUES ('$id', '$fname', '$lname', '$address', '$email', '$major', '$program');";
               }else{
                 $query = "INSERT INTO student (u_id, fname, lname, addr, email, major) VALUES ('$id', '$fname', '$lname', '$address', '$email', '$major');";
               }
-            }else if($_SESSION['p_level'] == "Faculty"){
+            }else if($_SESSION['p_level'] == 4){
               $query = "INSERT INTO faculty (f_id, fname, lname, addr, email, dept) VALUES ('$id', '$fname', '$lname', '$address', '$email', '$dept');";
             }
             
@@ -228,7 +228,7 @@
                     $infoUpdatedMsg
                  </div>";
         }
-        if($_SESSION['p_level'] == "Student"){
+        if($_SESSION['p_level'] == 5){
         ?>
 
                 <form method="post" class="card p-5 mt-4" action="<?php echo $_SERVER['PHP_SELF']; ?>">
@@ -263,7 +263,7 @@
                             <?php echo '<input type="text" maxlength=20 id="major" name="major" class="form-control form-control-lg text-muted" value="">';?>
                         </div>
                         <div class="col-md-6 form-group">
-                            <label for="address">Program (If Masters or PhD)</label><span
+                            <label for="address">Degree (If Masters or PhD)</label><span
                                 class="text-danger"><?php echo $progError;?></span>
                             <?php echo '<input type="text" maxlength=3 id="program" name="program" class="form-control form-control-lg text-muted" value="">';?>
                         </div>
@@ -276,7 +276,7 @@
                     </div>
                 </form>
           <?php
-            }else if($_SESSION['p_level'] == "Faculty"){
+            }else if($_SESSION['p_level'] == 4){
           ?>
                 <form method="post" class="card p-5 mt-4" action="<?php echo $_SERVER['PHP_SELF']; ?>">
                     <div class="row">

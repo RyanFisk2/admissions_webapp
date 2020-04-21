@@ -42,7 +42,8 @@
           $_SESSION['id'] = $row['id'];
           $_SESSION['password'] = $row['password'];
           $_SESSION['p_level'] = $row['p_level'];
-          $_SESSION['id1'] = $_SESSION['p_level1'] = "";
+          $_SESSION['id1'] = "";
+          $_SESSION['p_level1'] = 0;
           //TODO: redirect to index.php
           if($row['id'] == $row['password']){
             $home_url = "set_info.php";

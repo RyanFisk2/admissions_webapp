@@ -55,7 +55,7 @@
 </head>
 
 <?php
-    if($_SESSION['p_level'] != "Admin"){
+    if($_SESSION['p_level'] != 1){
         header("Location: home.php");
     }
 ?>
@@ -73,7 +73,7 @@
 			$dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 
             // If current user is not a student, show a dropdown menu to select a student
-            if (isset ($_SESSION['p_level']) && strcmp ($_SESSION['p_level'], 'Admin') == 0) {
+            if (isset ($_SESSION['p_level']) && $_SESSION['p_level'] == 1) {
                 echo '
                     <div class="row mt-5">
                         <div class="dropdown">
