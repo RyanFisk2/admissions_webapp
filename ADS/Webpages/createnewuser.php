@@ -12,68 +12,54 @@
 		$studid = $_POST['studid'];
 		$pass = $_POST['password'];
 		$fname = $_POST['fname'];
-		$minit = $_POST['minit'];
 		$lname = $_POST['lname'];
 		$dob = $_POST['dob'];
 		$address = $_POST['address'];
 		$email = $_POST['email'];
 		$acctype = $_POST['acctype'];
-		$degree = $_POST['degree'];
+      $degree = $_POST['degree'];
+      $major = $_POST['major'];
 		
 		$gpa = $_POST['gpa'];
 		$gradyear = $_POST['gradyear'];
 
 
-		if($acctype < 3 && empty($degree)  && !(strcmp($degree, 'MS') == 0 || strcmp($degree, 'PhD') == 0)){
-				echo '<p class="error"><font color="red"> Need a degree when creating a student or alumni</font></p>';
-			
-		}
+		if($acctype > 4 && empty($degree)){
+			echo '<br><br><p class="error"><font color="red"> Need a degree when creating a student or alumni</font></p>';
+      }
+      else if ($acctype > 4 && empty($major)){
+         echo '<p class="error"><font color="red"> Need a major when creating a student or alumni</font></p>';
+      }
 
-		else if($acctype == 2 && (empty($gradyear) || empty($gpa))){
-                                echo '<p class="error"><font color="red"> Need a Graduation year and gpa when creating an alumni</font></p>';
+		else if($acctype == 6 && (empty($gradyear) || empty($gpa))){
+         echo '<p class="error"><font color="red"> Need a Graduation year and gpa when creating an alumni</font></p>';
+      }
 
-                }
-
-
-
-                else if(isset($_SESSION['acc_type']) &&  $_SESSION['acc_type'] > 4 && !empty($fname)){//checks permissions and if the form was entered
-                        $query = "insert into user values ($studid, '$pass', '$fname', '$minit', '$lname', '$email', '$dob', '$address', '$acctype');";
-                        $data = mysqli_query($dbc, $query);
-
-
-                        if($acctype == 1) {
-                                $query = "insert into student (uid, degree) values ('$studid', '$degree')";
-                                $data = mysqli_query($dbc, $query);
-                        }
-
-
-                        if($acctype == 2){
- 
-                                $query = "insert into alumni values ($studid, '$degree', '$gpa', '$gradyear');";
-                                $data = mysqli_query($dbc, $query);
-                        
-                        }
-
-
-
-                        //echo $query;
-
-                }
-
-
-        }
+      else if(isset($_SESSION['acc_type']) &&  $_SESSION['acc_type'] < 2 && !empty($fname)){//checks permissions and if the form was entered
+         $query = "insert into users (id, password, p_level) values ('$studid', '$pass', '$acctype');";
+         $data = mysqli_query($dbc, $query);
+         if($acctype == 5) {
+            $query = "insert into student (u_id, fname, lname, addr, email, degree, major, gradapp, form1status, gpa) values ('$studid', '$fname', '$lname', '$address', '$email', '$degree', '$major', 0, 0, '0.00');";
+            $data = mysqli_query($dbc, $query);
+         }
+         else if($acctype == 6){
+            $query = "insert into alumni (a_id, fname, lname, degree, gpa, email, gradyear, addr) values ($studid, '$fname', '$lname', '$degree', '$gpa', '$email', '$gradyear', '$address');";
+            $data = mysqli_query($dbc, $query);            
+         }
+      }
+   }
 
  ?>
  <br><br>
 <div class="site-section">
-        <div class="container">
+   <div class="container">
 		<div class="row mb-4 justify-content-center text-center">
-          	        <div class="col-lg-4 mb-4">
-            			<h2 class="section-title-underline mb-4">
-              			        <span>Create User</span>
-            			</h2>
-          		</div>
-        	</div>
+         <div class="col-lg-4 mb-4">
+            <h2 class="section-title-underline mb-4">
+              	<span>Create User</span>
+            </h2>
+         </div>
+      </div>
 
 
 <form action="createnewuser.php" method="post" class="form">
@@ -93,8 +79,8 @@
    <label for="fname">First Name &nbsp</label>
    <input type="text"  id="fname" name="fname" required>
    <?php echo '&nbsp;'; ?>      
-   <label for="minit">Middle Intial &nbsp</label>
-   <input type="text"  id="minit" name="minit">
+   <label for="email">Email &nbsp</label>
+   <input type="email" id="email" name="email" required>
 
 </div>
 
@@ -112,16 +98,16 @@
 
    <label for="address">Address &nbsp</label>
    <input type="text" id="address" name="address" required>
-   <?php echo '&nbsp;'; ?>        
-   <label for="email">Email &nbsp</label>
-   <input type="email" id="email" name="email" required>
+   <?php echo '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'; ?>        
+   <label for="acctype">Account type &nbsp</label>
+   <input type="number" id="acctype" name="acctype" min = "1" max = "7" required>	
 
 </div>
 
 <div class="row mb-4 justify-content-center text-center">
-   
-   <label for="acctype">Account type &nbsp</label>
-   <input type="number" id="acctype" name="acctype" min = "1" max = "5" required>	 
+    
+   <label for="major">Major &nbsp</label>
+   <input type="text" id="major" name="major">	
    <?php echo '&nbsp;'; ?>        
    <label for="degree">Degree &nbsp</label>
    <input type="text" id="degree" name="degree">
@@ -132,7 +118,7 @@
 
  <label for="gpa">GPA &nbsp</label>
  <input type="number" id="gpa" name="gpa" min = "0" max="4" step = ".01">	
- <?php echo '&nbsp;'; ?>        
+ <?php echo '&nbsp;'; ?>               
  <label for="gradyear">Graduation Year &nbsp</label>
  <input type="text" id="gradyear" name="gradyear"></tr><br>
 
@@ -144,6 +130,11 @@
 
  </form>
 </table>
+
+<p>
+   <span>*User levels 1, 2, 3, 4, 5, 6, 7 correspond to Admin, Graduation Secretary, Chair, Faculty, Student, Alumni, and Applicant, respectively.</span>
+</p>
+
 </div>
 
 

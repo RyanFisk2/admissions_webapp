@@ -29,16 +29,16 @@
 <br>
 
 <table class="table">
-<tr><th>First Name</th><th>Middle Initial</th><th>Last Name</th><th>Email Address</th><th>Degree</th><th>Graduation Year</th></tr>
+<tr><th>First Name</th><th>Last Name</th><th>Email Address</th><th>Degree</th><th>Graduation Year</th><th>Mailing Address</th></tr>
 <?php
     if(isset($_GET['search'])) {
-        $search1 = mysqli_query($dbc, "select * from user, alumni where (gradyear like '%{$_GET['search']}%' or degree like '%{$_GET['search']}%') and user.uid = alumni.uid"); 
+        $search1 = mysqli_query($dbc, "select * from alumni where (gradyear like '%{$_GET['search']}%' or degree like '%{$_GET['search']}%')"); 
     }
     else{
-        $search1 = mysqli_query($dbc, "select * from user, alumni where user.uid = alumni.uid");
+        $search1 = mysqli_query($dbc, "select * from alumni");
     }
     while ($search = mysqli_fetch_array($search1)) {
-        echo '<tr><td>'.$search['fname'].'</td><td>'.$search['minit'].'</td><td>'.$search['lname'].'</td><td>'.$search['email'].'</td><td>'.$search['degree'].'</td><td>'.$search['gradyear'].'</td></tr>';
+        echo '<tr><td>'.$search['fname'].'</td><td>'.$search['lname'].'</td><td>'.$search['email'].'</td><td>'.$search['degree'].'</td><td>'.$search['gradyear'].'</td><td>'.$search['addr'].'</td></tr>';
     }
 ?>
 </table>

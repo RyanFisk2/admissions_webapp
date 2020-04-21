@@ -7,7 +7,7 @@
 $uid = $_GET['uid'];
 
 //retrieve the variables to plug into alumni
-$info = mysqli_query($dbc, "select * from student where uid = '$uid';");
+$info = mysqli_query($dbc, "select * from student where u_id = '$uid';");
     $grad = mysqli_fetch_array($info);
     if (!empty($grad)) {
         $degree = $grad[1];
@@ -22,12 +22,15 @@ $gradyear = date("Y");
 
 // delete grad from student
 
-mysqli_query($dbc, "DELETE FROM student WHERE uid=$uid");
+mysqli_query($dbc, "DELETE FROM student WHERE u_id=$uid");
 
-mysqli_query($dbc, "UPDATE user SET account=2 WHERE uid=$uid");
+mysqli_query($dbc, "UPDATE users SET p_level=6 WHERE id=$uid");
+
+$fname = $grad['fname'];
+$lname = $grad['lname'];
 
 // add grad to alumni
-mysqli_query($dbc, "insert into alumni values ('$uid', '$degree', '$gpa', '$gradyear');");
+mysqli_query($dbc, "insert into alumni values ('$uid', '$fname', '$lname', '$degree', '$gpa', '$gradyear');");
 
 $home_url = 'http://' . $_SERVER["HTTP_HOST"] .
 dirname($_SERVER["PHP_SELF"]) . '/gradapproval.php';;

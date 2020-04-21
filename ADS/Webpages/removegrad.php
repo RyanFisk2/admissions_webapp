@@ -7,7 +7,7 @@
 $uid = $_GET['uid'];
 
 // student will not appear on gradapproval page
-$rejectgrad = "update student set gradapp = 0 where uid = '$uid';";
+$rejectgrad = "update student set gradapp = 0 where u_id = '$uid';";
     mysqli_query($dbc, $rejectgrad);
 
 $home_url = 'http://' . $_SERVER["HTTP_HOST"] .

@@ -28,17 +28,17 @@
 
 // prints out users that match the search
 	  if(isset($_GET['search'])) {
-		$searchapplicants = mysqli_query($dbc, "select * from user, student where (fname like '%{$_GET['search']}%' or minit like '%{$_GET['search']}%' or lname like '%{$_GET['search']}%') and user.uid = student.uid and degree = phd and gradapp = 1;");
+		$searchapplicants = mysqli_query($dbc, "select * from student where (fname like '%{$_GET['search']}%' or lname like '%{$_GET['search']}%') and degree = phd and gradapp = 1;");
 		while ($searchapplicant = mysqli_fetch_array($searchapplicants)) {
 			?>
 		  
-		  <label><?php echo $searchapplicant['fname']; echo ' ' . $searchapplicant['minit'] . '. '; echo $searchapplicant['lname'] . ' '; ?></label>
+		  <label><?php echo $searchapplicant['fname']; echo ' '; echo $searchapplicant['lname'] . ' '; ?></label>
 		  <form action='approvephd.php'>
-		  <input type="hidden" name="uid" value="<?php echo $searchapplicant['uid']?>" />
+		  <input type="hidden" name="uid" value="<?php echo $searchapplicant['u_id']?>" />
 		  <input type="submit" class="button" name="decision" value="Approve" />
 		  </form>
 		  <form action='rejectphd.php'>
-		  <input type="hidden" name="uid" value="<?php echo $searchapplicant['uid']?>" />
+		  <input type="hidden" name="uid" value="<?php echo $searchapplicant['u_id']?>" />
 		  <input type="submit" class="button" name="decision" value="Reject" />
 		  </form>
 		  <br>
@@ -48,16 +48,16 @@
 	  }
 	else {
 	// prints out everyone applying to graduate
-	$applicants = mysqli_query($dbc, "select * from user, student where user.uid = student.uid and degree = 'PhD' and gradapp = 1;");
+	$applicants = mysqli_query($dbc, "select * from student where degree = 'PhD' and gradapp = 1;");
 	while ($applicant = mysqli_fetch_array($applicants)) {
 		?>
-		<label><?php echo $applicant['fname']; echo ' ' . $applicant['minit'] . '. '; echo $applicant['lname'] . ' '; ?></label>
+		<label><?php echo $applicant['fname']; echo ' '; echo $applicant['lname'] . ' '; ?></label>
 		  <form action='approvephd.php'>
-		  <input type="hidden" name="dui" value="<?php echo $applicant['uid']?>" />
+		  <input type="hidden" name="dui" value="<?php echo $applicant['u_id']?>" />
 		  <input type="submit" class="button" name="decision" value="Approve" />
 		  </form>
 		  <form action='rejectphd.php'>
-		  <input type="hidden" name="uid" value="<?php echo $applicant['uid']?>" />
+		  <input type="hidden" name="uid" value="<?php echo $applicant['u_id']?>" />
 		  <input type="submit" class="button" name="decision" value="Reject" />
 		  </form>
 		  <br>

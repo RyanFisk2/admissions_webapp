@@ -25,18 +25,6 @@
                 $allInfo = false;
             }
         }
-        if (strlen($_POST['minit']) > 1){
-            $minitErr = "Please enter one character middle intital";
-            $allInfo = false;
-        }
-        else{
-            $middlename = test_input($_POST["minit"]);
-            // check if name only contains letters and whitespace
-            if (!preg_match("/^[A-Z]*$/",$middlename)) {
-              $minitErr = "Only letters allowed";
-              $allInfo = false;
-            }
-        }
         if (empty($_POST["lname"])) {
             $lnameErr = "Please enter name";
             $allInfo = false;
@@ -79,7 +67,7 @@
               $emailErr = "Invalid email format";
               $allInfo = false;
             }
-            else if (!preg_match("/^[a-zA-Z@.]*$/",$email)) {
+            else if (!preg_match("/^[a-zA-Z1-9@.]*$/",$email)) {
                 $emailErr = "Only valid email characters allowed";
                 $allInfo = false;
             }
@@ -90,7 +78,23 @@
         }
         if ($allInfo){
             $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
-            $query = "UPDATE user SET fname='".$_POST['fname']."', minit='".$_POST['minit']."', lname='".$_POST['lname']."', address='".$_POST['address']."', email='".$_POST['email']."' WHERE uid='" . $_SESSION['user_id'] . "'";
+            if ($_SESSION['acc_type'] == 7){
+                $db = "applicant";
+                $id_name = "app_id";
+            }
+            else if ($_SESSION['acc_type'] == 6){
+                $db = "alumni";
+                $id_name = "a_id";
+            }
+            else if ($_SESSION['acc_type'] == 5){
+                $db = "student";
+                $id_name = "u_id";
+            }		    
+            else if ($_SESSION['acc_type'] == 4){
+                $db = "faculty";
+                $id_name = "f_id";
+            } 
+            $query = "UPDATE $db SET fname='".$_POST['fname']."', lname='".$_POST['lname']."', addr='".$_POST['address']."', email='".$_POST['email']."' WHERE $id_name='" . $_SESSION['user_id'] . "'";
             $data = mysqli_query($dbc, $query);
             header('Location:info.php');
         }
@@ -109,9 +113,25 @@
           		    </div>
         	    </div>
                 <?php
+        if ($_SESSION['acc_type'] == 7){
+            $db = "applicant";
+            $id_name = "app_id";
+        }
+        else if ($_SESSION['acc_type'] == 6){
+            $db = "alumni";
+            $id_name = "a_id";
+        }
+        else if ($_SESSION['acc_type'] == 5){
+            $db = "student";
+            $id_name = "u_id";
+        }		    
+        else if ($_SESSION['acc_type'] == 4){
+            $db = "faculty";
+            $id_name = "f_id";
+        } 
 
         $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
-		$query = "SELECT * FROM user WHERE uid='" . $_SESSION['user_id'] . "'";
+		$query = "SELECT * FROM $db WHERE $id_name='" . $_SESSION['user_id'] . "'";
     	$data = mysqli_query($dbc, $query);
 		$row = mysqli_fetch_array($data);
         
@@ -121,14 +141,11 @@
         echo '<label for="fname">First name: </label>';
         echo '<input type="text" id="fname" name="fname" value="'.$row["fname"].'">'.$fnameErr.' &nbsp;';
 
-        echo '<label for="minit">Middle Initial: </label>';
-        echo '<input type="text" id="minint" name="minit" value="'.$row["minit"].'">'.$minitErr.' &nbsp;';
-
         echo '<label for="lname">Last name:</label>';
         echo '<input type="text" id="lname" name="lname" value="'.$row["lname"].'">'.$lnameErr.'<br><br> ';
 
         echo '<label for="address">Address: </label>';
-        echo '<input type="text" id="address" name="address" value="'.$row["address"].'">'.$addrErr.' &nbsp;';
+        echo '<input type="text" id="address" name="address" value="'.$row["addr"].'">'.$addrErr.' &nbsp;';
 
         echo '<label for="email">Email:</label>';
         echo '<input type="text" id="email" name="email" value="'.$row["email"].'">'.$emailErr.' &nbsp;';

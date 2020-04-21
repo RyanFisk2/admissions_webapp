@@ -19,7 +19,7 @@
 <?php	
   	if (isset($_SESSION['user_id'])) {
 		if (isset($_SESSION['acc_type'])){
-			if($_SESSION['acc_type'] == 1){ //Student
+			if($_SESSION['acc_type'] == 5){ //Student
 			?>
 			<div class="site-section">
       			<div class="container">
@@ -88,7 +88,7 @@
 			</div>
 			<?php 
 			}
-			else if($_SESSION['acc_type'] == 2){ //Alumni
+			else if($_SESSION['acc_type'] == 6){ //Alumni
 			?>
 			<br>
 			<div class="site-section">
@@ -130,7 +130,7 @@
 			</div>
 			<?php	
 			}
-			else if($_SESSION['acc_type'] == 3){ //Faculty
+			else if($_SESSION['acc_type'] == 4){ //Faculty
 			?>
 			<div class="site-section">
       			<div class="container">
@@ -233,7 +233,7 @@
 				</div>
 			</div>
 			<?php }
-			else if($_SESSION['acc_type'] == 4){ //Grad Secretary
+			else if($_SESSION['acc_type'] == 2){ //Grad Secretary
 			?>
 			<div class="site-section">
       			<div class="container">
@@ -308,22 +308,7 @@
 								</div>
             				</div>
           				</div>
-						<div class="col">
-            				<div class="feature-1 border">
-              					<div class="icon-wrapper bg-primary">
-               						<span class="flaticon-book text-white"></span>
-              					</div>
-								<div class="feature-1-content">
-                					<h2>Personal Information</h2>
-                					<p>View and edit personal information.</p>
-                					<p><a href="info.php" class="btn btn-primary px-4 rounded-0">Show Information</a></p>
-								</div>
-            				</div>
-          				</div>
-					</div>
-					<br><br><br>
-					<div class="row">
-						<div class="col">
+						  <div class="col">
             				<div class="feature-1 border">
               					<div class="icon-wrapper bg-primary">
                						<span class="flaticon-mortarboard text-white"></span>
@@ -340,7 +325,7 @@
 			</div>
 			<?php
 			}
-			else{	//Sys Admin
+			else if($_SESSION['acc_type'] == 1){	//Sys Admin
 			?>
 			<div class="site-section">
       			<div class="container">
@@ -434,20 +419,8 @@
               					</div>
 								<div class="feature-1-content">
                 					<h2>Assign Advisors</h2>
-                					<p>Assign faculty advisors to students.</p>
+                					<p>Assign or switch faculty advisors of students.</p>
                 					<p><a href="assignadvisor.php" class="btn btn-primary px-4 rounded-0">Advising</a></p>
-								</div>
-            				</div>
-						</div>
-						<div class="col">
-            				<div class="feature-1 border">
-              					<div class="icon-wrapper bg-primary">
-               						<span class="flaticon-book text-white"></span>
-              					</div>
-								<div class="feature-1-content">
-                					<h2>Personal Information</h2>
-                					<p>View and edit personal information.</p>
-                					<p><a href="info.php" class="btn btn-primary px-4 rounded-0">View Information</a></p>
 								</div>
             				</div>
 						</div>
@@ -457,7 +430,7 @@
 
 		}
 		else{
-			echo'Account error. Please contact system administrator';
+			echo'Account error. Not authorized access to advising system.';
 		}
 		//echo '</div>';
 	}
@@ -469,10 +442,10 @@
 	if (isset($_SESSION['gpacalc']))
 	if (!($_SESSION['gpacalc'])){
 		$dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
-		$query = "SELECT uid, account FROM user WHERE account=1 OR account=2";
+		$query = "SELECT id, p_level FROM users WHERE p_level=5 OR p_level=6";
     	$data = mysqli_query($dbc, $query);
 		while ($row = mysqli_fetch_array($data)){
-			$query2 = "SELECT grade FROM transcript WHERE uid='" . $row['uid'] . "'";
+			$query2 = "SELECT grade FROM transcript WHERE t_id='" . $row['id'] . "'";
 			$data2 = mysqli_query($dbc, $query2);
 			$totalClasses = 0.00;
 			$totalCred = 0.00;
@@ -507,10 +480,10 @@
 			if ($totalClasses != 0.00){
 				$gpa = $totalCred/$totalClasses;
 				if ($row['account'] == 1){
-					$query3 = "UPDATE student SET gpa='".$gpa."' WHERE uid='" . $row['uid'] . "'";
+					$query3 = "UPDATE student SET gpa='".$gpa."' WHERE u_id='" . $row['id'] . "'";
 				}
 				else
-					$query3 = "UPDATE alumni SET gpa='".$gpa."' WHERE uid='" . $row['uid'] . "'";
+					$query3 = "UPDATE alumni SET gpa='".$gpa."' WHERE a_id='" . $row['id'] . "'";
 				$data3 = mysqli_query($dbc, $query3);
 			}
 		}

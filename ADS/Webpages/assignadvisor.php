@@ -6,7 +6,7 @@
 	
 
 
-	if(isset($_SESSION['acc_type']) && $_SESSION['acc_type'] == 4) {
+	if(isset($_SESSION['acc_type']) && $_SESSION['acc_type'] < 2) {
 
 		if ($_SERVER["REQUEST_METHOD"] == "POST"){ 
 
@@ -16,7 +16,7 @@
 			$dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 				
 
-			$query = "update student set advisor = $advidid where uid = $studid;";
+			$query = "update student set advisor = $advidid where u_id = $studid;";
         	$data = mysqli_query($dbc, $query);               
 		}
 	}

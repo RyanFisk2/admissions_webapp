@@ -10,7 +10,6 @@
 	echo '<div class="login">';
 	echo '<link href="login_stylesheet.css" rel="stylesheet" type="text/css">';
 	echo '<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">';
-	//Stylesheet tips from codeshack
 
 	//This php block will handle login validation
 	if ($_SERVER["REQUEST_METHOD"] == "POST"){
@@ -27,7 +26,7 @@
 		$user_password = trim($_POST['password']);
 
 		if (!empty($user_username) && !empty($user_password)) {
-			$query = "SELECT * FROM user WHERE uid='$user_username' AND password='$user_password'";
+			$query = "SELECT * FROM users WHERE id='$user_username' AND password='$user_password'";
           	$data = mysqli_query($dbc, $query);
 			
 			if (!$data){
@@ -36,9 +35,8 @@
           	else if (mysqli_num_rows($data) == 1) {
 				$row = mysqli_fetch_array($data);
 
-            	$_SESSION['user_id'] = $row['uid'];
-				$_SESSION['username'] = $row['fname'];
-				$_SESSION['acc_type'] = $row['account'];
+            	$_SESSION['user_id'] = $row['id'];
+				$_SESSION['acc_type'] = $row['p_level'];
 
 				//Go to homepage
 				$_SESSION['gpacalc'] = false;
@@ -46,6 +44,7 @@
 			}
 			else {
 				$error_msg = 'Please enter valid username and password';
+				//$error_msg = mysqli_num_rows($data);
 			}
 		}
 		else{

@@ -32,16 +32,16 @@
 
 // prints out users that match the search
 	  if(isset($_GET['search'])) {
-		if($_SESSION['acc_type'] == 3) {
-            $searchstudents = mysqli_query($dbc, "select * from user, student where (fname like '%{$_GET['search']}%' or minit like '%{$_GET['search']}%' or lname like '%{$_GET['search']}%') and user.uid = student.uid and form1status > 0 and student.advisor = '$myuid';");
+		if($_SESSION['acc_type'] == 4) {
+            $searchstudents = mysqli_query($dbc, "select * from student where (fname like '%{$_GET['search']}%' or lname like '%{$_GET['search']}%') and form1status > 0 and advisor = '$myuid';");
         }
         else {
-		    $searchstudents = mysqli_query($dbc, "select * from user, student where (fname like '%{$_GET['search']}%' or minit like '%{$_GET['search']}%' or lname like '%{$_GET['search']}%') and user.uid = student.uid and form1status > 0;");
+		    $searchstudents = mysqli_query($dbc, "select * from student where (fname like '%{$_GET['search']}%' or lname like '%{$_GET['search']}%') and form1status > 0;");
         }
 		while ($searchstudent = mysqli_fetch_array($searchstudents)) {
 			?>
 		  
-		  <label><?php echo $searchstudent['fname']; echo ' ' . $searchstudent['minit'] . '. '; echo $searchstudent['lname'] . ' '; ?></label>
+		  <label><?php echo $searchstudent['fname']; echo ' '; echo $searchstudent['lname'] . ' '; ?></label>
 		  <form action='checkform1.php'>
 		  <input type="hidden" name="uid" value="<?php echo $searchstudent['uid']?>" />
 		  <input type="submit" class="button" name="decision" value="Check Form 1" />
@@ -52,16 +52,16 @@
 	
 	  }
 	else {
-		if($_SESSION['acc_type'] == 3) { // prints out every advisee with an approved or unapproved form1
-			$students = mysqli_query($dbc, "select * from user, student where user.uid = student.uid and form1status > 0 and student.advisor = '$myuid';");
+		if($_SESSION['acc_type'] == 4) { // prints out every advisee with an approved or unapproved form1
+			$students = mysqli_query($dbc, "select * from student where form1status > 0 and advisor = '$myuid';");
 		}
 		else { // prints out every student with an approved or unapproved form1
-			$students = mysqli_query($dbc, "select * from user, student where user.uid = student.uid and form1status > 0;");
+			$students = mysqli_query($dbc, "select * from student where form1status > 0;");
 		}
 	while ($student = mysqli_fetch_array($students)) {
 		?>
 		<div class="row mb-4 justify-content-center text-center">
-		<label><?php echo $student['fname']; echo ' ' . $student['minit'] . '. '; echo $student['lname'] . ' &nbsp;'; ?></label>
+		<label><?php echo $student['fname']; echo ' '; echo $student['lname'] . ' &nbsp;'; ?></label>
 		  <form action='checkform1.php'>
 		  <input type="hidden" name="uid" value="<?php echo $student['uid']?>" />
 		  <input type="submit" class="button" name="decision" value="Check Form 1" />

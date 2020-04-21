@@ -6,7 +6,7 @@
     
 $uid = $_GET['uid'];
 
-$rejectphd = "update student set gradapp = 0 where uid = '$uid';";
+$rejectphd = "update student set gradapp = 0 where u_id = '$uid';";
     mysqli_query($dbc, $rejectphd);
 
 $home_url = 'http://' . $_SERVER["HTTP_HOST"] .

@@ -16,7 +16,7 @@
 		<div class="row mb-4 justify-content-center text-center">
           	<div class="col-lg-4 mb-4">
             	<h2 class="section-title-underline mb-4">
-					<?php if($_SESSION['acc_type'] < 3){ ?>
+					<?php if($_SESSION['acc_type'] > 4){ ?>
               		<span>Transcipt</span>
 					<?php }else{ ?>
 					<span>Transcipts</span>
@@ -27,34 +27,35 @@
 <?php
 
 	if (isset($_SESSION['user_id'])) {
-	if($_SESSION['acc_type'] < 3) {
+	if($_SESSION['acc_type'] > 4) {
 		
 		echo '<table class="table">';
 		echo '<tr><th>Department</th><th>Course Number</th><th>Grade</th><th>Semester</th></tr>';
 		
-		if ($_SESSION['acc_type'] == 1)
-			$query = "select gpa FROM student WHERE uid='" . $_SESSION['user_id'] . "'";
+		if ($_SESSION['acc_type'] == 5)
+			$query = "select gpa FROM student WHERE u_id='" . $_SESSION['user_id'] . "'";
 		else
-			$query = "select gpa FROM alumni WHERE uid='" . $_SESSION['user_id'] . "'";
+			$query = "select gpa FROM alumni WHERE a_id='" . $_SESSION['user_id'] . "'";
 
         $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
         $data = mysqli_query($dbc, $query);
 		$gpadata = mysqli_fetch_array($data);
 
+		if ($_SESSION['acc_type'] == 5)
+			$query = "select fname, lname FROM student WHERE u_id='" . $_SESSION['user_id'] . "'";
+		else
+			$query = "select fname, lname FROM alumni WHERE a_id='" . $_SESSION['user_id'] . "'";
 
-		$query = "select fname, lname FROM user WHERE uid='" . $_SESSION['user_id'] . "'";
+            $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
+            //echo $query;
+            $data = mysqli_query($dbc, $query);
+            $namedata = mysqli_fetch_array($data);
+
+
+		$query = "SELECT * FROM transcript t, semester s WHERE t.semesterid = s.semesterid && t.t_id='" . $_SESSION['user_id'] . "'";
+
                 $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
-                //echo $query;
                 $data = mysqli_query($dbc, $query);
-                $namedata = mysqli_fetch_array($data);
-
-
-		$query = "SELECT * FROM transcript t, semester s WHERE t.semesterid = s.semesterid &&t.uid='" . $_SESSION['user_id'] . "'";
-
-                $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
-                //echo $query;
-                $data = mysqli_query($dbc, $query);
-                //$row = mysqli_fetch_array($data)
 
 				echo '<div class="row mb-4 justify-content-center text-center">';
 				echo "User ID: ". $_SESSION['user_id'] . " Name: ". $namedata['fname'] . " ". $namedata['lname'] . " GPA: " . $gpadata['gpa'];
@@ -65,7 +66,7 @@
 
 		echo '</table>';
 	}
-	if($_SESSION['acc_type'] == 3){
+	if($_SESSION['acc_type'] == 4){ //New faculty
 				?>
 				<div class="row mb-4 justify-content-center text-center">
 					<form>
@@ -75,27 +76,26 @@
 				</div>
 				<?php
 				if(isset($_GET['search'])) {
-					$query = "SELECT * FROM student s, user a WHERE (fname like '%{$_GET['search']}%' or minit like '%{$_GET['search']}%' or lname like '%{$_GET['search']}%') AND a.uid = s.uid AND advisor='" . $_SESSION['user_id'] . "'";
+					$query = "SELECT DISTINCT s.u_id, s.fname, s.lname, s.gpa FROM student s, faculty a WHERE (s.fname like '%{$_GET['search']}%' or s.lname like '%{$_GET['search']}%') AND s.advisor='" . $_SESSION['user_id'] . "'";
 				}
 				else{
-					$query = "SELECT * FROM student s, user a WHERE a.uid = s.uid AND advisor='" . $_SESSION['user_id'] . "'";
+					$query = "SELECT DISTINCT s.u_id, s.fname, s.lname, s.gpa FROM student s, faculty a WHERE s.advisor='" . $_SESSION['user_id'] . "'";
 				}
                 $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 				$data = mysqli_query($dbc, $query);
 				$lastid = '0';
                 while($uid = mysqli_fetch_array($data)){
-					if($lastid != $uid['uid']) {
-						$lastid = $uid['uid'];
+					if($lastid != $uid['u_id']) {
+						$lastid = $uid['u_id'];
 						//echo '</table>';
 						echo '<div class="row mb-4 justify-content-center text-center">';
-						echo "User ID:".$uid[0]." Name: " . $uid['fname'] . " " . $uid['lname'] . " GPA:" . $uid['gpa'];
+						echo "User ID:".$uid['u_id']." Name: " . $uid['fname'] . " " . $uid['lname'] . " GPA:" . $uid['gpa'];
 						echo '</div>';
 						echo '<table class="table">';
 						echo '<tr><th>Department</th><th>Course Number</th><th>Grade</th><th>Semester</th></tr>';
 						
 					}
-
-                       	$query = "SELECT * FROM transcript t, semester s WHERE t.semesterid = s.semesterid &&t.uid='" . $uid[0] . "'";
+                       	$query = "SELECT * FROM transcript t, semester s WHERE t.semesterid = s.semesterid && t.t_id='" . $uid['u_id'] . "'";
 						$dbc1 = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
                         $data1 = mysqli_query($dbc1, $query);
 
@@ -109,7 +109,7 @@
 	
 	}
 
-	if($_SESSION['acc_type'] > 3){
+	else if($_SESSION['acc_type'] < 3){ //GS and admin
 				?>
 				<div class="row mb-4 justify-content-center text-center">
 					<form>
@@ -119,17 +119,17 @@
 				</div>
 				<?php
 				if(isset($_GET['search'])) {
-					$query = "SELECT * FROM semester m, transcript t, user a, student s WHERE (fname like '%{$_GET['search']}%' or minit like '%{$_GET['search']}%' or lname like '%{$_GET['search']}%') Having t.semesterid = m.semesterid AND t.uid = a.uid AND a.uid = s.uid ORDER BY t.uid ASC";/*orders it so its somewhat neat also can't see alumni transcripts*/
+					$query = "SELECT * FROM semester m, transcript t, student s WHERE (fname like '%{$_GET['search']}%' or lname like '%{$_GET['search']}%') Having t.semesterid = m.semesterid AND t.t_id = s.u_id ORDER BY t.t_id ASC";/*orders it so its somewhat neat*/
 				}
 				else{
-					$query = "SELECT * FROM semester m, transcript t, user a, student s Having t.semesterid = m.semesterid AND t.uid = a.uid AND a.uid = s.uid ORDER BY t.uid ASC";/*orders it so its somewhat neat also can't see alumni transcripts*/
+					$query = "SELECT * FROM semester m, transcript t, student s Having t.semesterid = m.semesterid AND t.t_id = s.u_id ORDER BY t.t_id ASC";/*orders it so its somewhat neat also can't see alumni transcripts*/
 				}
                 $dbc1 = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
                 $data1 = mysqli_query($dbc1, $query);
 				$lastid = '0';
                 while($row = mysqli_fetch_array($data1)) {
-			      	if($lastid != $row['uid']) {
-			      		$lastid = $row['uid'];
+			      	if($lastid != $row['u_id']) {
+			      		$lastid = $row['u_id'];
 					 	echo '</table>';
 						echo '<div class="row mb-4 justify-content-center text-center">';
 					 	echo "User ID : $lastid Name: " . $row['fname'] . " " . $row['lname'] . " GPA:" . $row['gpa'] . "<br />";

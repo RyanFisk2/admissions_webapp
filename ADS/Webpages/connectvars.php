@@ -1,7 +1,7 @@
 <?php
   // Define database connection constants
   define('DB_HOST', 'localhost');
-  define('DB_USER', 'DB_Team'); //replace this
-  define('DB_PASSWORD', 'DB2Team!'); //edit this
-  define('DB_NAME', 'DB_Team'); //edit this
+  define('DB_USER', 'lschiller'); //replace this
+  define('DB_PASSWORD', '5010Ds/832'); //edit this
+  define('DB_NAME', 'lschiller'); //edit this
 ?>

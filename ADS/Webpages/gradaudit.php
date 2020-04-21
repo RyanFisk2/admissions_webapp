@@ -24,7 +24,7 @@ $uid = $_GET['uid'];
         </div>
         <div class="row mb-4 justify-content-center text-center">
         <?php
-$formcourses = mysqli_query($dbc, "select count(a.cno) from form1 a, transcript b where b.uid = '$uid' and a.uid = b.uid and (a.dept, a.cno) not in (select dept, cno from transcript where uid = '$uid');");
+$formcourses = mysqli_query($dbc, "select count(a.cno) from form1 a, transcript b where b.t_id = '$uid' and a.f1_id = b.t_id and (a.dept, a.cno) not in (select dept, cno from transcript where t_id = '$uid');");
 $fc = mysqli_fetch_array($formcourses);
 if (!empty($fc)) {
     $fcourses = $fc[0];
@@ -33,7 +33,7 @@ if (!empty($fc)) {
     }
 }
 
-$form1info = mysqli_query($dbc, "select form1status from student where uid = '$uid';");
+$form1info = mysqli_query($dbc, "select form1status from student where u_id = '$uid';");
 $f1 = mysqli_fetch_array($form1info);
 if (!empty($f1)) {
     $form1 = $f1[0];
@@ -42,7 +42,7 @@ if (!empty($f1)) {
     }
 }
 
-$dtype = mysqli_query($dbc, "select degree from student where uid = '$uid';");
+$dtype = mysqli_query($dbc, "select degree from student where u_id = '$uid';");
 $dt = mysqli_fetch_array($dtype);
     if (!empty($dt)) {
         $degree = $dt[0];
@@ -54,7 +54,7 @@ $dt = mysqli_fetch_array($dtype);
 
 
 if ($degree == 'MS') {
-    $gpainfo = mysqli_query($dbc, "select gpa from student where uid = '$uid';");
+    $gpainfo = mysqli_query($dbc, "select gpa from student where u_id = '$uid';");
     $g = mysqli_fetch_array($gpainfo);
     if (!empty($g)) {
         $gpa = $g[0];
@@ -66,23 +66,23 @@ if ($degree == 'MS') {
         echo 'Error: could not determine gpa<br>';
     }
 
-    $transcriptinfo = mysqli_query($dbc, "select dept, cno from transcript where uid = '$uid' and dept = 'CSCI' and cno = 6212;");
+    $transcriptinfo = mysqli_query($dbc, "select dept, cno from transcript where t_id = '$uid' and dept = 'CSCI' and cno = 6212;");
     $t = mysqli_fetch_array($transcriptinfo);
     if (empty($t)) {
         $msg = 'is not eligible to graduate.';
     }
-    $transcriptinfo = mysqli_query($dbc, "select dept, cno from transcript where uid = '$uid' and dept = 'CSCI' and cno = 6221;");
+    $transcriptinfo = mysqli_query($dbc, "select dept, cno from transcript where t_id = '$uid' and dept = 'CSCI' and cno = 6221;");
     $t = mysqli_fetch_array($transcriptinfo);
     if (empty($t)) {
         $msg = 'is not eligible to graduate.';
     }
-    $transcriptinfo = mysqli_query($dbc, "select dept, cno from transcript where uid = '$uid' and dept = 'CSCI' and cno = 6461;");
+    $transcriptinfo = mysqli_query($dbc, "select dept, cno from transcript where t_id = '$uid' and dept = 'CSCI' and cno = 6461;");
     $t = mysqli_fetch_array($transcriptinfo);
     if (empty($t)) {
         $msg = 'is not eligible to graduate.';
     }
 
-    $credithours = mysqli_query($dbc, "select sum(credits) from transcript a, courses b where a.uid = '$uid' and a.dept = b.dept and a.cno = b.cno;");
+    $credithours = mysqli_query($dbc, "select sum(credits) from transcript a, catalog b where a.t_id = '$uid' and a.dept = b.department and a.cno = b.c_no;");
 	$c = mysqli_fetch_array($credithours);
     if (!empty($c)) {
         $credits = $c[0];
@@ -94,7 +94,7 @@ if ($degree == 'MS') {
         echo 'Error: could not determine gpa<br>';
     }
 
-    $gradesbelowb = mysqli_query($dbc, "select count(grade) from transcript where uid = '$uid' and grade not in (select grade from transcript where uid = '$uid' and (grade = 'A' or grade = 'B' or grade = 'IP'));");
+    $gradesbelowb = mysqli_query($dbc, "select count(grade) from transcript where t_id = '$uid' and grade not in (select grade from transcript where t_id = '$uid' and (grade = 'A' or grade = 'B' or grade = 'IP'));");
 	$grade = mysqli_fetch_array($gradesbelowb);
     if (!empty($grade)) {
         $grades = $grade[0];
@@ -107,7 +107,7 @@ if ($degree == 'MS') {
     }
 }
 else {
-    $gpainfo = mysqli_query($dbc, "select gpa from student where uid = '$uid';");
+    $gpainfo = mysqli_query($dbc, "select gpa from student where u_id = '$uid';");
     $g = mysqli_fetch_array($gpainfo);
     if (!empty($g)) {
         $gpa = $g[0];
@@ -119,7 +119,7 @@ else {
         echo 'Error: could not determine gpa<br>';
     }
 
-    $credithours = mysqli_query($dbc, "select sum(credits) from transcript a, courses b where a.uid = '$uid' and a.dept = b.dept and a.cno = b.cno;");
+    $credithours = mysqli_query($dbc, "select sum(credits) from transcript a, catalog b where a.t_id = '$uid' and a.dept = b.department and a.cno = b.c_no;");
 	$c = mysqli_fetch_array($credithours);
     if (!empty($c)) {
         $credits = $c[0];
@@ -131,7 +131,7 @@ else {
         echo 'Error: could not determine gpa<br>';
     }
 
-    $corecredithours = mysqli_query($dbc, "select sum(credits) from transcript a, courses b where a.uid = '$uid' and b.dept = 'CSCI' and a.dept = b.dept and a.cno = b.cno;");
+    $corecredithours = mysqli_query($dbc, "select sum(credits) from transcript a, catalog b where a.t_id = '$uid' and b.department = 'CSCI' and a.dept = b.department and a.cno = b.c_no;");
 	$cc = mysqli_fetch_array($corecredithours);
     if (!empty($cc)) {
         $corecredits = $cc[0];
@@ -143,7 +143,7 @@ else {
         echo 'Error: could not determine gpa<br>';
     }
 
-    $gradesbelowb = mysqli_query($dbc, "select count(grade) from transcript where uid = '$uid' and grade not in (select grade from transcript where uid = '$uid' and (grade = 'A' or grade = 'B' or grade = 'IP'));");
+    $gradesbelowb = mysqli_query($dbc, "select count(grade) from transcript where t_id = '$uid' and grade not in (select grade from transcript where t_id = '$uid' and (grade = 'A' or grade = 'B' or grade = 'IP'));");
 	$grade = mysqli_fetch_array($gradesbelowb);
     if (!empty($grade)) {
         $grades = $grade[0];
@@ -156,7 +156,7 @@ else {
     }
 }
 
-$studentname = mysqli_query($dbc, "select fname, lname from user where uid = '$uid';");
+$studentname = mysqli_query($dbc, "select fname, lname from student where u_id = '$uid';");
 $sn = mysqli_fetch_array($studentname);
     if (!empty($sn)) {
         $fname = $sn[0];
