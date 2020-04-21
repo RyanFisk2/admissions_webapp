@@ -11,9 +11,10 @@ session_start();
     $grade = 'IP';
 
     $cno =  $_GET['cno'];
+    $dept = $_GET['dept'];
 
     // TO DO: TIME CONFLICTS AND PRE_REQS
-	$enroll_course_t = "SELECT start_time FROM schedule WHERE crn='".$_GET['crn']."'";
+	/*$enroll_course_t = "SELECT start_time FROM schedule WHERE crn='".$_GET['crn']."'";
 	$enroll_course_t = mysqli_fetch_array (mysqli_query ($dbc, $enroll_course_t));
 	$enroll_course_t = $enroll_course_t['start_time'];
 	
@@ -27,10 +28,10 @@ session_start();
 	if (!$courses) {
 		$enroll = "INSERT courses_taken (u_id, crn, grade) VALUES ($uid, $crn, '$grade')";
 		mysqli_query($dbc, $enroll);
-		header("Location: course.php?cno=$cno");
+		header("Location: course.php?cno=$cno&dept=$dept");
 	} else { // Print error message
-		header("Location: course.php?cno=$cno&conflict=$error");
-	}
+		header("Location: course.php?cno=$cno&dept=$dept&conflict=$error");
+	}*/
 
     $class_registering_for_query = "SELECT * FROM schedule, catalog WHERE crn=$crn AND course_id=c_id";
     // die(mysqli_query($dbc, $class_registering_for_query));
@@ -44,8 +45,8 @@ session_start();
         $course_id = $class_data["course_id"];
         $day = $class_data["day"];
         $term = $class_data["semester"];
-        // $start_time = strtotime($class_data["start_time"]);
-        // $end_time = strtotime($class_data["end_time"]);
+        //$start_time = strtotime($class_data["start_time"]);
+        //$end_time = strtotime($class_data["end_time"]);
         }
         // die($course_id . " " . $day . " " . $term . " " . $crn_course_registering_for);
     }
@@ -87,7 +88,9 @@ session_start();
         $crns_taken = array();
         if ($courses_taken_data && mysqli_num_rows($courses_taken_data) > 0) {
             while ($row = mysqli_fetch_assoc($courses_taken_data)) {
-                array_push($crns_taken, $row['crn']);
+                if(strcmp($row['grade'], "IP") != 0){
+                    array_push($crns_taken, $row['crn']);
+                }
             }
         }
 
@@ -128,22 +131,22 @@ session_start();
 
         $enroll = "INSERT courses_taken (u_id, crn, grade) VALUES ($uid, $crn, '$grade')";
         mysqli_query($dbc, $enroll);
-        header("Location: course.php?cno=$cno");
+        header("Location: course.php?cno=$cno&dept=$dept");
 
     } else {
         if ( $prereq1_conflict == 1) {
             $error="pre1false";
-            header("Location: course.php?cno=$cno&conflict=$error");
+            header("Location: course.php?cno=$cno&dept=$dept&conflict=$error");
         }
 
         if ( $prereq2_conflict == 1) {
             $error="pre2false";
-            header("Location: course.php?cno=$cno&conflict=$error");
+            header("Location: course.php?cno=$cno&dept=$dept&conflict=$error");
         }
 
         if ( $prereq1_conflict == 1 && $prereq2_conflict == 1) {
             $error="noprereqs";
-            header("Location: course.php?cno=$cno&conflict=$error");
+            header("Location: course.php?cno=$cno&dept=$dept&conflict=$error");
         }
     }
 
