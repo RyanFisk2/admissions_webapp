@@ -13,32 +13,10 @@ session_start();
     $cno =  $_GET['cno'];
     $dept = $_GET['dept'];
 
-    // TO DO: TIME CONFLICTS AND PRE_REQS
-	/*$enroll_course_t = "SELECT start_time FROM schedule WHERE crn='".$_GET['crn']."'";
-	$enroll_course_t = mysqli_fetch_array (mysqli_query ($dbc, $enroll_course_t));
-	$enroll_course_t = $enroll_course_t['start_time'];
-	
-	$courses = "SELECT start_time FROM schedule, courses_taken 
-				WHERE start_time='". $enroll_course_t ."' and u_id='". $uid ."'";
-	echo $courses;
-	$courses = mysqli_query ($dbc, $courses);
-
-	$error = "Error: time conflict with class you are currently enrolled in";
-	// If student is not registered for another course at this time, register normally
-	if (!$courses) {
-		$enroll = "INSERT courses_taken (u_id, crn, grade) VALUES ($uid, $crn, '$grade')";
-		mysqli_query($dbc, $enroll);
-		header("Location: course.php?cno=$cno&dept=$dept");
-	} else { // Print error message
-		header("Location: course.php?cno=$cno&dept=$dept&conflict=$error");
-	}*/
-
     $class_registering_for_query = "SELECT * FROM schedule, catalog WHERE crn=$crn AND course_id=c_id";
-    // die(mysqli_query($dbc, $class_registering_for_query));
     $class_registering_for_result = mysqli_query($dbc, $class_registering_for_query);
     $crn_course_registering_for = trim($_GET['crn']);
 
-    // $class_registering_for_data = mysqli_fetch_array($class_registering_for_result);
     if ($class_registering_for_result && mysqli_num_rows($class_registering_for_result) > 0) {
         while ($class_data = mysqli_fetch_assoc($class_registering_for_result)) {
         // Get crn, day, semester, start_time, and end_time for each course the student is currently enrolled in
@@ -48,10 +26,7 @@ session_start();
         $start_time = $class_data["start_time"];
         $end_time = $class_data["end_time"];
         $year = $class_data["year"];
-        //$start_time = strtotime($class_data["start_time"]);
-        //$end_time = strtotime($class_data["end_time"]);
         }
-        // die($course_id . " " . $day . " " . $term . " " . $crn_course_registering_for);
     }
 
         // Check for pre-requisite conflits
@@ -100,7 +75,6 @@ session_start();
             }
         }
 
-        // die(implode($crns_taken));
                 if (!empty($prereq1)) {
                     list($dept1, $c_no1) = explode(" ", $prereq1);
                     $prereq1_cno = $c_no1;
@@ -121,9 +95,6 @@ session_start();
                     $cid_query = "SELECT crn FROM schedule s, catalog c WHERE c.c_no='$prereq2_cno' AND s.course_id=c.c_id";
                     $crn_prereq2_data = mysqli_fetch_assoc(mysqli_query($dbc, $cid_query));
                     $crn_prereq2 = $crn_prereq2_data['crn'];
-
-                    // array_push($prereq_crns, $crn_prereq2);
-                    // die("CRN Prereq2: " .$crn_prereq2 . " " . "CRN: " . $row['crn']);
 
                     if ( in_array($crn_prereq2, $crns_taken) ) {
                         $prereq2_conflict = 0;
