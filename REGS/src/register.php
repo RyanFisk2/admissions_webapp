@@ -45,6 +45,9 @@ session_start();
         $course_id = $class_data["course_id"];
         $day = $class_data["day"];
         $term = $class_data["semester"];
+        $start_time = $class_data["start_time"];
+        $end_time = $class_data["end_time"];
+        $year = $class_data["year"];
         //$start_time = strtotime($class_data["start_time"]);
         //$end_time = strtotime($class_data["end_time"]);
         }
@@ -82,7 +85,7 @@ session_start();
 
         // Get crn from pre-req course numbers (c_no)
 
-        $courses_taken_query = "SELECT * FROM courses_taken WHERE u_id=$uid";
+        $courses_taken_query = "SELECT * FROM courses_taken c, schedule s WHERE c.u_id=$uid and c.crn=s.crn";
         $courses_taken_data = mysqli_query($dbc, $courses_taken_query);
 
         $crns_taken = array();
@@ -90,6 +93,9 @@ session_start();
             while ($row = mysqli_fetch_assoc($courses_taken_data)) {
                 if(strcmp($row['grade'], "IP") != 0){
                     array_push($crns_taken, $row['crn']);
+                }
+                if($day == $row['day'] && $term == $row['semester'] && $year == $row['year'] && $start_time <= $row['start_time'] && $end_time >= $row['start_time']){
+                    $time_conflict = 1;
                 }
             }
         }
@@ -124,10 +130,9 @@ session_start();
                     }
                 }
 
-
     $error = "";
 
-    if ( $prereq1_conflict == 0 && $prereq2_conflict == 0) {
+    if ( $prereq1_conflict == 0 && $prereq2_conflict == 0 && $time_conflict == 0) {
 
         $enroll = "INSERT courses_taken (u_id, crn, grade) VALUES ($uid, $crn, '$grade')";
         mysqli_query($dbc, $enroll);
@@ -146,6 +151,11 @@ session_start();
 
         if ( $prereq1_conflict == 1 && $prereq2_conflict == 1) {
             $error="noprereqs";
+            header("Location: course.php?cno=$cno&dept=$dept&conflict=$error");
+        }
+
+        if( $time_conflict == 1){
+            $error="timeconflict";
             header("Location: course.php?cno=$cno&dept=$dept&conflict=$error");
         }
     }
