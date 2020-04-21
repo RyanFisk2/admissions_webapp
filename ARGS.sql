@@ -52,6 +52,7 @@ degree varchar(3),
 gpa decimal(3,2),
 gradapp int,
 form1status int,
+advisor int,
 primary key (u_id),
 foreign key (u_id) references users(id)
 );
@@ -76,7 +77,9 @@ create table alumni(
     lname varchar(20) NOT NULL,
     degree varchar(3),
     gpa decimal(3,2),
+	email varchar(30),
     gradyear int,
+	addr varchar(50) NOT NULL,
     primary key (a_id),
     foreign key (a_id) references users(id)
 );
@@ -387,14 +390,14 @@ INSERT INTO users (id, p_level, password) VALUES (00001235, 7, 'pwrd14');
 INSERT INTO users (id, p_level, password) VALUES (00001236, 7, 'pwrd15');
 
 /* left it out for now but do we want 0.00 or 4.00 as starting state for GPA */
-INSERT INTO student (u_id, fname, lname, addr, email, major, degree, gradapp, form1status) VALUES (88888888, 'Billie', 'Holiday', '11111 Street St. City, ST 22222', 'jacobpritchard9@gwu.edu', 'Computer Science', 'MS', 0, 0);
-INSERT INTO student (u_id, fname, lname, addr, email, major, degree, gradapp, form1status) VALUES (99999999, 'Diana', 'Krall', '33333 Drive Dr. City, ST 44444', 'jacobpritchard9@gwu.edu', 'Computer Science', 'MS', 0, 0);
-INSERT INTO student (u_id, fname, lname, addr, email, major, degree, gradapp, form1status) VALUES (23456789, 'Ella', 'Fitzgerald', '12121 Street Dr. City, ST 22325', 'jacobpritchard9@gwu.edu', 'Computer Science', 'PhD', 0, 0);
-INSERT INTO student (u_id, fname, lname, addr, email, major, degree, gpa, gradapp, form1status) VALUES (87654321, 'Eva', 'Cassidy', '34373 Drive St. City, ST 47424', 'jacobpritchard9@gwu.edu', 'Computer Science', 'MS', '3.40', 0, 1);
-INSERT INTO student (u_id, fname, lname, addr, email, major, degree, gpa, gradapp, form1status) VALUES (45678901, 'Jimi', 'Hendrix', '71121 Street Ct. City, ST 12325', 'jacobpritchard9@gwu.edu', 'Computer Science', 'MS', '3.77', 0, 1);
-INSERT INTO student (u_id, fname, lname, addr, email, major, degree, gpa, gradapp, form1status) VALUES (55555555, 'Paul', 'McCartney', '43393 Drive Ct. City, ST 40041', 'jacobpritchard9@gwu.edu', 'Computer Science', 'MS','3.50', 0, 1);
-INSERT INTO student (u_id, fname, lname, addr, email, major, degree, gpa, gradapp, form1status) VALUES (66666666, 'George', 'Harrison', '19010 Street Pl. City, ST 22032', 'jacobpritchard9@gwu.edu', 'Computer Science', 'MS', '2.93', 0, 0);
-INSERT INTO student (u_id, fname, lname, addr, email, major, degree, gpa, gradapp, form1status) VALUES (12345678, 'Stevie', 'Nicks', '43638 Drive Dr. City, ST 47423', 'jacobpritchard9@gwu.edu', 'Computer Science', 'PhD', '3.58', 0, 1);
+INSERT INTO student (u_id, fname, lname, addr, email, major, degree, gradapp, form1status, advisor) VALUES (88888888, 'Billie', 'Holiday', '11111 Street St. City, ST 22222', 'jacobpritchard9@gwu.edu', 'Computer Science', 'MS', 0, 0, 10000012);
+INSERT INTO student (u_id, fname, lname, addr, email, major, degree, gradapp, form1status, advisor) VALUES (99999999, 'Diana', 'Krall', '33333 Drive Dr. City, ST 44444', 'jacobpritchard9@gwu.edu', 'Computer Science', 'MS', 0, 0, 10000009);
+INSERT INTO student (u_id, fname, lname, addr, email, major, degree, gradapp, form1status, advisor) VALUES (23456789, 'Ella', 'Fitzgerald', '12121 Street Dr. City, ST 22325', 'jacobpritchard9@gwu.edu', 'Computer Science', 'PhD', 0, 0, 10000002);
+INSERT INTO student (u_id, fname, lname, addr, email, major, degree, gpa, gradapp, form1status, advisor) VALUES (87654321, 'Eva', 'Cassidy', '34373 Drive St. City, ST 47424', 'jacobpritchard9@gwu.edu', 'Computer Science', 'MS', '3.40', 0, 0, 10000011);
+INSERT INTO student (u_id, fname, lname, addr, email, major, degree, gpa, gradapp, form1status, advisor) VALUES (45678901, 'Jimi', 'Hendrix', '71121 Street Ct. City, ST 12325', 'jacobpritchard9@gwu.edu', 'Computer Science', 'MS', '3.77', 0, 0, 10000010);
+INSERT INTO student (u_id, fname, lname, addr, email, major, degree, gpa, gradapp, form1status, advisor) VALUES (55555555, 'Paul', 'McCartney', '43393 Drive Ct. City, ST 40041', 'jacobpritchard9@gwu.edu', 'Computer Science', 'MS','3.50', 0, 0, 10000002);
+INSERT INTO student (u_id, fname, lname, addr, email, major, degree, gpa, gradapp, form1status, advisor) VALUES (66666666, 'George', 'Harrison', '19010 Street Pl. City, ST 22032', 'jacobpritchard9@gwu.edu', 'Computer Science', 'MS', '2.93', 0, 0, 10000010);
+INSERT INTO student (u_id, fname, lname, addr, email, major, degree, gpa, gradapp, form1status, advisor) VALUES (12345678, 'Stevie', 'Nicks', '43638 Drive Dr. City, ST 47423', 'jacobpritchard9@gwu.edu', 'Computer Science', 'PhD', '3.58', 0, 0, 10000012);
 
 
 INSERT INTO faculty (f_id, fname, lname, addr, email, dept, reviewer) VALUES (10000002, 'Bhagi', 'Narahari', '55555 Road Rd. City, ST 66666', 'jacobpritchard9@gwu.edu', 'CSCI', 1);
@@ -410,8 +413,8 @@ INSERT INTO faculty (f_id, fname, lname, addr, email, dept, reviewer) VALUES (10
 INSERT INTO faculty (f_id, fname, lname, addr, email, dept, reviewer) VALUES (10000012, 'Sarah', 'Morin', '91283 C St. Washington, D.C. 16513', 'jacobpritchard9@gwu.edu', 'CSCI', 0);
 INSERT INTO faculty (f_id, fname, lname, addr, email, dept, reviewer) VALUES (10000013, 'Kevin', 'Deems', '62157 N St. Washington, D.C. 12891', 'jacobpritchard9@gwu.edu', 'CSCI', 0);
 
-INSERT INTO alumni (a_id, fname, lname, degree, gpa, gradyear) VALUES (77777777, 'Eric', 'Clapton', 'MS', '3.30', 2014);
-INSERT INTO alumni (a_id, fname, lname, degree, gpa, gradyear) VALUES (34567890, 'Kurt', 'Cobain', 'PhD', '3.75', 2015);
+INSERT INTO alumni (a_id, fname, lname, degree, gpa, gradyear, email, addr) VALUES (77777777, 'Eric', 'Clapton', 'MS', '3.30', 2014, 'eric@gwu.edu', '3435 Avenue St. City, ST 41441');
+INSERT INTO alumni (a_id, fname, lname, degree, gpa, gradyear, email, addr) VALUES (34567890, 'Kurt', 'Cobain', 'PhD', '3.75', 2015, 'kurt@gwu.edu', '5256 Place Ave. City, ST 25468');
 
 /*Not Done Yet, need to figure out the table first
 INSERT INTO applicant () VALUES ();
@@ -496,12 +499,3 @@ INSERT INTO prereqs(course_Id, prereq1, prereq2) VALUES (16, 'CSCI 6283', 'CSCI 
 INSERT INTO prereqs(course_Id, prereq1, prereq2) VALUES (17, 'CSCI 6212', NULL);
 INSERT INTO prereqs(course_Id, prereq1, prereq2) VALUES (18, 'CSCI 6461','CSCI 6212');
 INSERT INTO prereqs(course_Id, prereq1, prereq2) VALUES (19, 'CSCI 6284', NULL);
-
-INSERT INTO advises(advisor, advisee) VALUES (10000012, 88888888);
-INSERT INTO advises(advisor, advisee) VALUES (10000009, 99999999);
-INSERT INTO advises(advisor, advisee) VALUES (10000002, 23456789);
-INSERT INTO advises(advisor, advisee) VALUES (10000011, 87654321);
-INSERT INTO advises(advisor, advisee) VALUES (10000010, 45678901);
-INSERT INTO advises(advisor, advisee) VALUES (10000002, 55555555);
-INSERT INTO advises(advisor, advisee) VALUES (10000010, 66666666);
-INSERT INTO advises(advisor, advisee) VALUES (10000012, 12345678);
