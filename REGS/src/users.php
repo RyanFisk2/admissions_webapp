@@ -2,7 +2,7 @@
 require_once ('header.php'); 
 session_start();
 
-if (!isset ($_SESSION["id"]) || strcmp ($_SESSION["p_level"], "Admin") != 0) {
+if (!isset ($_SESSION["id"]) || $_SESSION["p_level"] != 1) {
     header("Location: login.php");
 }
 
@@ -71,7 +71,7 @@ if (isset ($_GET['id'])) {
 					echo '<td class="align-middle">';
 					
 					// Only allow a working delete button if this isn't the admin
-					if (strcmp ($u['p_level'], "Admin") == 0) {
+					if ($u['p_level'] == 1) {
 						echo '<button class="btn btn-secondary" disabled> Delete </button>';
 					} else {
 						echo '<a href="users.php?id='. $u['id'] .'" class="btn btn-primary"> Delete </a>';

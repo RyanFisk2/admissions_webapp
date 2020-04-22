@@ -31,7 +31,6 @@ DROP TABLE IF EXISTS schedule CASCADE;
 DROP TABLE IF EXISTS courses_taken CASCADE;
 DROP TABLE IF EXISTS courses_taught CASCADE;
 DROP TABLE IF EXISTS prereqs CASCADE;
-DROP TABLE IF EXISTS advises CASCADE;
 
 create table users(
 id int UNIQUE,
@@ -77,9 +76,9 @@ create table alumni(
     lname varchar(20) NOT NULL,
     degree varchar(3),
     gpa decimal(3,2),
-	email varchar(30),
+    email varchar(30),
     gradyear int,
-	addr varchar(50) NOT NULL,
+    addr varchar(50) NOT NULL,
     primary key (a_id),
     foreign key (a_id) references users(id)
 );
@@ -348,14 +347,6 @@ primary key (course_Id, prereq1),
 foreign key (course_Id) references catalog(c_id)
 );
 
-create table advises(
-advisor int NOT NULL,
-advisee int NOT NULL,
-primary key (advisor, advisee),
-foreign key (advisor) references faculty(f_id),
-foreign key (advisee) references student(u_id)
-);
-
 SET FOREIGN_KEY_CHECKS = 1;
 
 INSERT INTO users (id, p_level, password) VALUES (10000000, 1, 'admin');
@@ -383,8 +374,8 @@ INSERT INTO users (id, p_level, password) VALUES (66666666, 5, 'pwrd7');
 INSERT INTO users (id, p_level, password) VALUES (12345678, 5, 'pwrd8');
 INSERT INTO users (id, p_level, password) VALUES (77777777, 6, 'pwrd9');
 INSERT INTO users (id, p_level, password) VALUES (34567890, 6, 'pwrd10');
-INSERT INTO users (id, p_level, password) VALUES (33333333, 7, 'pwrd11');/*not sure what Lennon's ID is*/
-INSERT INTO users (id, p_level, password) VALUES (44444444, 7, 'pwrd12');/*not sure what Ringo's ID is*/
+INSERT INTO users (id, p_level, password) VALUES (15555555, 7, 'pwrd11');
+INSERT INTO users (id, p_level, password) VALUES (16666666, 7, 'pwrd12');
 INSERT INTO users (id, p_level, password) VALUES (00001234, 7, 'pwrd13');
 INSERT INTO users (id, p_level, password) VALUES (00001235, 7, 'pwrd14');
 INSERT INTO users (id, p_level, password) VALUES (00001236, 7, 'pwrd15');

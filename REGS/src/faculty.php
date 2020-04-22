@@ -2,7 +2,7 @@
 require_once ('header.php');
 session_start();
 
-if (!isset ($_SESSION["id"]) || strcmp ($_SESSION["p_level"], "Admin") != 0) {
+if (!isset ($_SESSION["id"]) || $_SESSION["p_level"] != 1) {
     header("Location: login.php");
 }
 

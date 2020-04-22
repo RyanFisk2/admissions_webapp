@@ -66,7 +66,7 @@
 			$dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 
             // If current user is not a student, show a dropdown menu to select a student
-            if (isset ($_SESSION['p_level']) && strcmp ($_SESSION['p_level'], 'Student') != 0) {
+            if (isset ($_SESSION['p_level']) && $_SESSION['p_level'] != 5) {
                 echo '
                     <div class="row mt-5">
                         <div class="dropdown">
@@ -113,7 +113,7 @@
             }
           
 			$id = ""; 
-			if (isset ($_GET['student']) && strcmp ($_SESSION['p_level'], 'Student') != 0) {
+			if (isset ($_GET['student']) && $_SESSION['p_level'] != 5) {
 				$id = $_GET['student'];
 			}
 			else if (isset ($_SESSION['id'])) { 
@@ -190,13 +190,13 @@
             }
 
 			// Check if transcript is empty and this is a student
-			if ($empty_transcript && strcmp ($_SESSION['p_level'], "Student") == 0) {
+			if ($empty_transcript && $_SESSION['p_level'] == 5) {
 				echo '<div class="container pt-3">
 					      <h4 class="pl-1 font-weight-lighter"> <small>
 						    You have not taken any classes and are not currently registered for any.
 						  </small></h4>
 					  </div>';
-			} else if(strcmp($_SESSION['p_level'], "Student") != 0){
+			} else if($_SESSION['p_level'] != 5){
 				echo '<div class="container pt-3">
 					      <h4 class="pl-1 font-weight-lighter"> <small>
 							Student has not taken any classes and is not currently registered for any.

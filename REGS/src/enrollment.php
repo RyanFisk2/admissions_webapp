@@ -9,7 +9,7 @@
 			header("Location: login.php");
 		}
 
-		if (strcmp ($_SESSION['p_level'], "Student") == 0) {
+		if ($_SESSION['p_level'] == 5) {
 			header("Location: home.php");
 		}	
 
@@ -41,7 +41,7 @@
 				$grade = $_POST['U'. $s['u_id']];
 
 				// If this is not a faculty, then grades can be editied infinitely	
-				if (strcmp ($_SESSION['p_level'], "Faculty") != 0) {
+				if ($_SESSION['p_level'] != 4) {
 					$update_query = 'UPDATE courses_taken SET grade="'. $grade .'" 
 									 WHERE u_id="'. $s['u_id'] .'" and crn="'. $s['crn'] .'"';
 					mysqli_query ($dbc, $update_query);
@@ -101,7 +101,7 @@
 					}
 
 					// Check if grade has been set OR this is not a faculty	
-					if (strcmp ($s['grade'], "IP") == 0 || strcmp ($_SESSION['p_level'], "Faculty") != 0) {
+					if (strcmp ($s['grade'], "IP") == 0 || $_SESSION['p_level'] != 4) {
 						// Add a dropdown to enter grade 
 						echo '<td class="align-middle"> 
 								<form action="grades.php?cno='. $_GET['cno'] .'" method="post">';

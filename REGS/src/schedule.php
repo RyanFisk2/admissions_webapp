@@ -11,9 +11,9 @@
 			header ('Location: home.php');
 		}
 
-		if (strcmp ($_SESSION['p_level'], "Student") == 0) {
+		if ($_SESSION['p_level'] == 5) {
 			$descrip = " Click on a course's title to see more details or drop the course.";
-		} else if (strcmp ($_SESSION['p_level'], "Faculty") == 0) {
+		} else if ($_SESSION['p_level'] == 4) {
 			$descrip = " Click on a course's title to see view enrollment in a course or change student's grades.";
 		}
 	?>
@@ -102,10 +102,10 @@
 <?php
 
 	// Check which type of user this is
-	if (strcmp ($_SESSION['p_level'], 'Student') == 0) {
+	if ($_SESSION['p_level'] == 5) {
 		$id_type = "u_id";
 		$courses_type = "taken";
-	} else if (strcmp ($_SESSION['p_level'], 'Faculty') == 0){ 
+	} else if ($_SESSION['p_level'] == 4){ 
 		$id_type = "f_id";
 		$courses_type = "taught";
 	} else {
@@ -167,7 +167,7 @@
 	}
 
 	// Find all classes this student is taking
-	if (strcmp ($_SESSION['p_level'], "Student") == 0) {
+	if ($_SESSION['p_level'] == 5) {
 		$query = 'SELECT semester, year, day, start_time, c_no, fname, lname, title, department 
 				  FROM faculty, schedule, courses_taken, catalog, courses_taught
 				  WHERE u_id="'. $_SESSION['id'] .'" and courses_taken.crn=schedule.crn 
@@ -176,7 +176,7 @@
 
 		$link = "course.php?cno=";
 
-	} else if (strcmp ($_SESSION['p_level'], "Faculty") == 0) {
+	} else if ($_SESSION['p_level'] == 4) {
 		$query = 'SELECT semester, year, day, start_time, c_no, title, department, lname, fname 
 				  FROM faculty, schedule, catalog, courses_taught
 				  WHERE courses_taught.f_id="'. $_SESSION['id'] .'" 

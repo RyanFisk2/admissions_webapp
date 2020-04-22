@@ -105,7 +105,7 @@
                             $enrollement_results = mysqli_query($dbc, $enrollment_query);
                            
 							// Only show an enroll/drop button if this is a student 
-							if (strcmp ($_SESSION['p_level'], "Student") == 0) {
+							if (strcmp ($_SESSION['p_level'], 5) == 0) {
 								if (empty(mysqli_fetch_array($enrollement_results))) { ?>
 									<td> <a href="register.php?crn=<?php echo $crn ?>&cno=<?php echo $c_no ?>" class="btn btn-primary btn-sm rounded-2 px-3">Enroll</a> </td>
 								<?php } else { ?>

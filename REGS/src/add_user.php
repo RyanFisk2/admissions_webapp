@@ -23,6 +23,7 @@
 
   // Clear the error message
   $error_msg = "";
+  $error = 0;
   // TODO: If the user isn't logged in, try to log them in
   if (!empty($_POST)) {
     if (isset($_POST['submit'])) {
@@ -33,8 +34,16 @@
       $user_privilege = mysqli_real_escape_string($dbc, trim($_POST['plevel']));
       if (!empty($user_username) && !empty($user_privilege)) {
         // TODO: Look up the username and password in the database
-        $query = "INSERT INTO users (id, p_level, password) VALUES ('$user_username', '$user_privilege', '$user_username')";
-        $data = mysqli_query($dbc, $query);
+        $plevel = 0;
+        if(strcmp($user_privilege,"Student") == 0){
+          $plevel = 5;
+          $query = "INSERT INTO users (id, p_level, password) VALUES ('$user_username', '$plevel', '$user_username')";
+          $data = mysqli_query($dbc, $query);
+        }else if(strcmp($user_privilege,"Faculty") == 0){
+          $plevel = 4;
+          $query = "INSERT INTO users (id, p_level, password) VALUES ('$user_username', '$plevel', '$user_username')";
+          $data = mysqli_query($dbc, $query);
+        }
         // If The log-in is OK
         if ($data) {
           //TODO: redirect to index.php
@@ -44,11 +53,13 @@
         else {
           // The username/password are incorrect so set an error message
           $error_msg = 'Sorry, you must enter a valid user id and privilege level to create a new user.';
+          $error = 1;
         }
       }
       else {
         // The username/password weren't entered so set an error message
         $error_msg = 'Sorry, you must enter a user id and privilege level to create a new user.';
+        $error = 1;
       }
     }
   }
@@ -75,7 +86,7 @@
             <div class="col-12">
               <input type="submit" value="Create User" class="btn btn-primary btn-lg px-5" name="submit">
 <?php
-  if (empty($_SESSION['id'])) {
+  if ($error == 1) {
     echo '<br><br><p class="text-danger">' . $error_msg . '</p>';
   }
 ?>

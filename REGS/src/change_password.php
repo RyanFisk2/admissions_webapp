@@ -23,21 +23,21 @@
 
     switch ($permLevel) {
         
-        case 'Student':
+        case 5:
         $userTable = 'student';
         $idFormat = 'u_id';
         break;
 
-        case 'Faculty':
+        case 4:
         $userTable = 'faculty';
         $idFormat = 'f_id';
         break;
 
-        case 'Admin':
+        case 1:
         header("Location: home.php");
         break;
 
-        case 'GS':
+        case 2:
         header("Location: home.php");
         break;
 

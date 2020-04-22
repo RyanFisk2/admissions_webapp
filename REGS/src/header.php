@@ -66,7 +66,7 @@
 				// Switch over perm level to figure out what to display in header	
 				if (isset ($_SESSION['p_level'])) {
 					switch ($_SESSION['p_level']) {
-						case "Faculty":
+						case 4:
 							echo '
 								<li>
 								  <a href="account.php" class="nav-link text-left">Account Info</a>
@@ -79,7 +79,7 @@
 								</li>
 							';
 							break;
-						case "Student":
+						case 5:
 							echo '	
 								<li>
 								  <a href="account.php" class="nav-link text-left">Account Info</a>
@@ -95,7 +95,7 @@
 								</li>			
 							';
 							break;
-						case "GS":
+						case 2:
 							echo '	
 								<li>
 								  <a href="grades.php" class="nav-link text-left">Grades</a>
@@ -105,7 +105,7 @@
 								</li>
 							';
 							break;
-						case "Admin":	
+						case 1:	
 							echo '	
 								<li>
 								  <a href="add_user.php">Add User</a>

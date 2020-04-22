@@ -20,7 +20,8 @@
         header("Location: login.php");
     }
 
-    $permLevel = $id = "";
+    $permLevel = 0;
+    $id = "";
 
     include('php/connectvars.php');
     if($_SESSION['id'] != 10000000){
@@ -34,11 +35,11 @@
         $_SESSION['p_level1'] = "Faculty";
     }
 
-    if($_SESSION['p_level1'] == "Student"){
-        $permLevel = "Student";
+    if($_SESSION['p_level1'] == 5){
+        $permLevel = 5;
         $id = $_SESSION['id1'];
-    }else if($_SESSION['p_level1'] == "Faculty"){
-        $permLevel = "Faculty";
+    }else if($_SESSION['p_level1'] == 4){
+        $permLevel = 4;
         $id = $_SESSION['id1'];
     }
 
@@ -51,23 +52,23 @@
 
     switch ($permLevel) {
         
-        case 'Student':
+        case 5:
         $userTable = 'student';
         $idFormat = 'u_id';
         break;
 
-        case 'Faculty':
+        case 4:
         $userTable = 'faculty';
         $idFormat = 'f_id';
         break;
 
-        case 'Admin':
+        case 1:
         if($_SESSION['id'] != 10000000){
             header("Location: home.php");
         }
         break;
 
-        case 'GS':
+        case 2:
         if($_SESSION['id'] != 10000000){
             header("Location: home.php");
         }

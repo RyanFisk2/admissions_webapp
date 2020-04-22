@@ -62,7 +62,7 @@
 
 		$plevel = $_SESSION['p_level'];
 
-		if (strcmp ($plevel, "Student") == 0) {
+		if ($plevel == 5) {
 			header ('Location: home.php');
 		}
 
@@ -74,7 +74,7 @@
 
 		// If this is a faculty, need to add WHERE clause to specify only the 
 		// classes they are teaching
-		if (strcmp ($plevel, "Faculty") == 0) {
+		if ($plevel == 4) {
 			$query = $query . ' , schedule, courses_taught WHERE courses_taught.f_id="'. $_SESSION['id'] .'" 
 								and courses_taught.crn=schedule.crn 
 								and schedule.course_id=catalog.c_id';
