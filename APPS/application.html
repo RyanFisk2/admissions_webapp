@@ -1,0 +1,298 @@
+<div class="bg-light border-right" id="sidebar-wrapper">
+	<div id="side-nav-list" class="list-group list-group-flush"></div>
+</div>
+
+<div id="page-content-wrapper">
+
+<div class="row">
+<div class="col-xl-9 mx-auto">
+<form id="personalInfo" class="screen">
+	<h2 align="center">Application Info</h2>
+	<div class="form-row">
+		<div class="form-group col-md-2">
+		  <label for="degree">Degree Sought</label>
+		  <select name="degree" class="form-control">
+		    <option value="null">Choose...</option>
+		    <option value="PhD">PhD</option>
+		    <option value="MS">MS</option>
+		  </select>
+		</div>
+		<div class="form-group col-md-4">
+		  <label for="term">Term</label>
+		  <select name="term" class="form-control">
+		    <option value="null">Choose...</option>
+		    <option value="2020-08">Fall 2020</option>
+		    <option value="2021-01">Spring 2021</option>
+		  </select>
+		</div>
+	</div>
+	<div class="form-row">
+		<div class="form-group col-md-8">
+			<div class="form-group">
+				<label for="interest">Areas of Interest</label>
+				<input type="text" class="form-control" name="interest" placeholder="Algorithmic game theory, fairness & bias in machine learning, ...">
+			</div>
+		</div>
+	</div>
+	<h2 align="center">Personal Info</h2>
+	<div class="form-group">
+		<label for="address1">Address</label>
+		<input type="text" class="form-control" name="address1" placeholder="1234 Main St">
+	</div>
+	<div class="form-group">
+		<label for="address2">Address 2</label>
+		<input type="text" class="form-control" name="address2" placeholder="Apartment, studio, or floor">
+	</div>
+	<div class="form-row">
+		<div class="form-group col-md-6">
+		  <label for="city">City</label>
+		  <input type="text" class="form-control" name="city">
+		</div>
+		<div class="form-group col-md-4">
+		  <label for="state">State</label>
+		  <select name="state" class="form-control">
+		    <option value="null">Choose...</option>
+		    <option value="DC">DC</option>
+		  </select>
+		</div>
+		<div class="form-group col-md-2">
+		  <label for="zip">Zip</label>
+		  <input type="text" class="form-control" name="zip">
+		</div>
+	</div>
+</form>
+
+<div id="priorDegrees" class="form-container screen">
+	<h2 align="center">Prior Degrees</h2>
+	<form id="priorDegrees1" class="template">
+		<div class="form-row">
+			<div class="form-group col-md-2">
+			  <label for="degreeType"></label>
+			  <select name="degreeType" class="form-control">
+			    <option value="null">Choose...</option>
+			    <option value="PhD">PhD</option>
+			    <option value="MS">MS</option>
+			    <option value="BS">BS</option>
+			    <option value="BA">BA</option>
+			  </select>
+			</div>
+			<div class="form-group col-md-1">
+			  <label for="gpa">GPA</label>
+			  <input type="text" class="form-control" name="gpa" placeholder="3.80">
+			</div>
+			<div class="form-group col-md-3">
+				<label for="major">Major/Concentration</label>
+				<input type="text" class="form-control" name="major" placeholder="Computer Science">
+			</div>
+			<div class="form-group col-md-1">
+			  <label for="gradYear">Year</label>
+			  <input type="text" class="form-control" name="gradYear" placeholder="2020">
+			</div>
+			<div class="form-group col-md-4">
+				<label for="institution">Institution</label>
+				<input type="text" class="form-control" name="institution" placeholder="THE George Washington University">
+			</div>
+		</div>
+	</form>
+	<button type="button" onclick="duplicateLastForm('priorDegrees')"><i class="fas fa-plus-circle"></i></button>
+</div>
+
+<div id="testScores" class="screen">
+	<h2 align="center">Test Scores</h2>
+	<div id="testScoresGRE" class="form-container">
+		<h4>GRE</h4>
+		<form id="testScoresGRE1" class="template">
+			<div class="form-row">
+				<div class="form-group col-sm-3">
+			        <label for="examDate">Test Date</label>
+					<input type="date" class="form-control" name="examDate" placeholder="2019-08-18">
+				</div>
+				<div class="form-group col-sm-2">
+				  <label for="quantScore">Quantitative</label>
+				  <input type="text" class="form-control" name="quantScore" placeholder="170">
+				</div>
+				<div class="form-group col-sm-2">
+					<label for="verbalScore">Verbal</label>
+					<input type="text" class="form-control" name="verbalScore" placeholder="170">
+				</div>
+				<div class="form-group col-sm-2">
+				  <label for="writtenScore">Writing</label>
+				  <input type="text" class="form-control" name="writtenScore" placeholder="6.0">
+				</div>
+			</div>
+		</form>
+		<button type="button" onclick="duplicateLastForm('testScoresGRE')"><i class="fas fa-plus-circle"></i></button>
+	</div>
+
+	<div id="testScoresTOEFL" class="form-container">
+		<h4>TOEFL</h4>
+		<form id="testScoresTOEFL1" class="template">
+			<div class="form-row">
+				<div class="form-group col-sm-3">
+			        <label for="examDate">Test Date</label>
+					<input type="date" class="form-control" name="examDate" placeholder="2019-08-18">
+				</div>
+				<div class="form-group col-sm-2">
+				  <label for="totalScore">Score</label>
+				  <input type="text" class="form-control" name="totalScore" placeholder="120">
+				</div>
+			</div>
+		</form>
+		<button type="button" onclick="duplicateLastForm('testScoresTOEFL')"><i class="fas fa-plus-circle"></i></button>
+	</div>
+
+	<div id="testScoresSubject" class="form-container">
+		<h4>GRE Advanced Subject Test</h4>
+		<form id="testScoresSubject1" class="template">
+			<div class="form-row">
+				<div class="form-group col-sm-3">
+			        <label for="examDate">Test Date</label>
+					<input type="date" class="form-control" name="examDate" placeholder="2019-08-18">
+				</div>
+				<div class="form-group col-sm-2">
+				  <label for="totalScore">Score</label>
+				  <input type="text" class="form-control" name="totalScore" placeholder="990">
+				</div>
+				<div class="form-group col-md-2">
+					<label for="subject">Subject</label>
+					<input type="text" class="form-control" name="subject" placeholder="Math">
+				</div>
+			</div>
+		</form>
+		<button type="button" onclick="duplicateLastForm('testScoresSubject')"><i class="fas fa-plus-circle"></i></button>
+	</div>
+</div>
+
+<div id="workExperience" class="screen form-container">
+	<h2 align="center">Work Experience</h2>
+	<form id="workExperience1" class="template">
+		<div class="form-row">
+			<div class="form-group col-sm-3">
+		        <label for="startDate">Start Date</label>
+				<input type="date" class="form-control" name="startDate" placeholder="2019-08-18">
+			</div>
+			<div class="form-group col-sm-3">
+		        <label for="endDate">End Date</label>
+				<input type="date" class="form-control" name="endDate" placeholder="2019-08-18">
+			</div>
+		</div>
+		<div class="form-row">
+			<div class="form-group col-md-4">
+				<label for="position">Position</label>
+				<input type="text" class="form-control" name="position" placeholder="Research Assistant">
+			</div>
+			<div class="form-group col-md-4">
+				<label for="employer">Employer</label>
+				<input type="text" class="form-control" name="employer" placeholder="George Washington University">
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="description">Position Description</label>
+			<textarea class="form-control" rows="5" name="description"></textarea>
+		</div>
+	</form>
+	<button type="button" onclick="duplicateLastForm('workExperience')"><i class="fas fa-plus-circle"></i></button>
+</div>
+
+<div id="transcripts" class="screen status">
+	<h2 align="center">Transcripts</h2>
+	<p>Send in your transcripts to the address listed on our website. When we receive them, they will appear here.</p>
+
+	<div id="transcriptsContainer"></div>
+</div>
+
+<div id="recommendations" class="screen status">
+	<h2 align="center">References</h2>
+	<div class="form-container">
+		<p>When you click submit, a request for a recommendation will be sent to the reference using the provided email.</p>
+		<form id="recommendations1">
+			<h4>Reference 1</h4>
+			<div class="form-row">
+				<div class="form-group col-md-4">
+					<label for="writerName">Name</label>
+					<input type="text" class="form-control" name="writerName" placeholder="Esther Duflo">
+				</div>
+				<div class="form-group col-md-4">
+					<label for="writerEmail">Email</label>
+					<input type="text" class="form-control" name="writerEmail" placeholder="duflo@mit.edu">
+				</div>
+			</div>
+			<div class="form-row">
+				<div class="form-group col-md-4">
+					<label for="writerTitle">Title</label>
+					<input type="text" class="form-control" name="writerTitle" placeholder="Professor of Economics">
+				</div>
+				<div class="form-group col-md-4">
+					<label for="writerEmployer">Employer</label>
+					<input type="text" class="form-control" name="writerEmployer" placeholder="MIT">
+				</div>
+			</div>
+		</form>
+		<form id="recommendations2">
+			<h4>Reference 2</h4>
+			<div class="form-row">
+				<div class="form-group col-md-4">
+					<label for="writerName">Name</label>
+					<input type="text" class="form-control" name="writerName" placeholder="Esther Duflo">
+				</div>
+				<div class="form-group col-md-4">
+					<label for="writerEmail">Email</label>
+					<input type="text" class="form-control" name="writerEmail" placeholder="duflo@mit.edu">
+				</div>
+			</div>
+			<div class="form-row">
+				<div class="form-group col-md-4">
+					<label for="writerTitle">Title</label>
+					<input type="text" class="form-control" name="writerTitle" placeholder="Professor of Economics">
+				</div>
+				<div class="form-group col-md-4">
+					<label for="writerEmployer">Employer</label>
+					<input type="text" class="form-control" name="writerEmployer" placeholder="MIT">
+				</div>
+			</div>
+		</form>
+		<form id="recommendations3">
+			<h4>Reference 3</h4>
+			<div class="form-row">
+				<div class="form-group col-md-4">
+					<label for="writerName">Name</label>
+					<input type="text" class="form-control" name="writerName" placeholder="Esther Duflo">
+				</div>
+				<div class="form-group col-md-4">
+					<label for="writerEmail">Email</label>
+					<input type="text" class="form-control" name="writerEmail" placeholder="duflo@mit.edu">
+				</div>
+			</div>
+			<div class="form-row">
+				<div class="form-group col-md-4">
+					<label for="writerTitle">Title</label>
+					<input type="text" class="form-control" name="writerTitle" placeholder="Professor of Economics">
+				</div>
+				<div class="form-group col-md-4">
+					<label for="writerEmployer">Employer</label>
+					<input type="text" class="form-control" name="writerEmployer" placeholder="MIT">
+				</div>
+			</div>
+		</form>
+	</div>
+
+	<p>When we have received your recommendation letters, an update will appear here.</p>
+
+	<div id="recommendationsContainer"></div>
+</div>
+
+<div id="status" class="screen status">
+	<h2 align="center">Application Status</h2>
+
+	<div class="form-container">
+		<p>Before you submit your application, check that all information is complete and correct. You will not be able to make changes after you press submit. You will still be able to monitor your transcripts and references in this portal.</p>
+		<button type="button" onclick="submitApplication()">Submit Application</button>
+	</div>
+
+	<div id="statusContainer"></div>
+</div>
+
+</div>
+</div>
+
+</div>
