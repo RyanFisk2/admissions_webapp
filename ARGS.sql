@@ -31,6 +31,8 @@ DROP TABLE IF EXISTS schedule CASCADE;
 DROP TABLE IF EXISTS courses_taken CASCADE;
 DROP TABLE IF EXISTS courses_taught CASCADE;
 DROP TABLE IF EXISTS prereqs CASCADE;
+DROP TABLE IF EXISTS student_transcript CASCADE;
+
 
 create table users(
 id int UNIQUE,
@@ -140,18 +142,30 @@ create table transcript (
 	applicationID int(8),
 	pathToFile varchar(25),
 	received DATE,
-    	t_id int, /* changed from uid to t_id to reference a student's id as a foreign key */
-    	dept varchar(4),
-    	cno int,
-    	grade varchar(2),
-    	semesterid int,
-        inform1 bool,
-        /* primary key (t_id, dept, cno), old primary key from Ads.sql if still needed otherwise delete*/
+    t_id int, /* changed from uid to t_id to reference a student's id as a foreign key */
+    dept varchar(4),
+    cno int,
+    grade varchar(2),
+    semesterid int,
+    inform1 bool,
+    /* primary key (t_id, dept, cno), old primary key from Ads.sql if still needed otherwise delete*/
 
 	primary key (applicationID),
 	foreign key (applicationID) references application_form (applicationID) ON UPDATE CASCADE ON DELETE CASCADE,
 	foreign key (semesterid) references semester(semesterid),
-        foreign key (t_id) references student(u_id) /* added this line */
+    foreign key (t_id) references student(u_id) /* added this line */
+);
+
+create table student_transcript (
+	t_id int, 
+	dept varchar(4),
+    cno int,
+    grade varchar(2),
+    semesterid int,
+    inform1 bool,
+	primary key (t_id, dept, cno), 
+	foreign key (semesterid) references semester(semesterid),
+    foreign key (t_id) references users(id)
 );
 
 
@@ -369,7 +383,7 @@ INSERT INTO users (id, p_level, password) VALUES (99999999, 5, 'pword');
 INSERT INTO users (id, p_level, password) VALUES (23456789, 5, 'pwrd3');
 INSERT INTO users (id, p_level, password) VALUES (87654321, 5, 'pwrd4');
 INSERT INTO users (id, p_level, password) VALUES (45678901, 5, 'pwrd5');
-INSERT INTO users (id, p_level, password) VALUES (55555555, 5, 'pwrd6');
+INSERT INTO users (id, p_level, password) VALUES (1444444, 5, 'pwrd6');
 INSERT INTO users (id, p_level, password) VALUES (66666666, 5, 'pwrd7');
 INSERT INTO users (id, p_level, password) VALUES (12345678, 5, 'pwrd8');
 INSERT INTO users (id, p_level, password) VALUES (77777777, 6, 'pwrd9');
@@ -384,11 +398,11 @@ INSERT INTO users (id, p_level, password) VALUES (00001236, 7, 'pwrd15');
 INSERT INTO student (u_id, fname, lname, addr, email, major, degree, gradapp, form1status, advisor) VALUES (88888888, 'Billie', 'Holiday', '11111 Street St. City, ST 22222', 'jacobpritchard9@gwu.edu', 'Computer Science', 'MS', 0, 0, 10000012);
 INSERT INTO student (u_id, fname, lname, addr, email, major, degree, gradapp, form1status, advisor) VALUES (99999999, 'Diana', 'Krall', '33333 Drive Dr. City, ST 44444', 'jacobpritchard9@gwu.edu', 'Computer Science', 'MS', 0, 0, 10000009);
 INSERT INTO student (u_id, fname, lname, addr, email, major, degree, gradapp, form1status, advisor) VALUES (23456789, 'Ella', 'Fitzgerald', '12121 Street Dr. City, ST 22325', 'jacobpritchard9@gwu.edu', 'Computer Science', 'PhD', 0, 0, 10000002);
-INSERT INTO student (u_id, fname, lname, addr, email, major, degree, gpa, gradapp, form1status, advisor) VALUES (87654321, 'Eva', 'Cassidy', '34373 Drive St. City, ST 47424', 'jacobpritchard9@gwu.edu', 'Computer Science', 'MS', '3.40', 0, 0, 10000011);
+INSERT INTO student (u_id, fname, lname, addr, email, major, degree, gpa, gradapp, form1status, advisor) VALUES (87654321, 'Eva', 'Cassidy', '34373 Drive St. City, ST 47424', 'jacobpritchard9@gwu.edu', 'Computer Science', 'MS', '3.40', 0, 1, 10000011);
 INSERT INTO student (u_id, fname, lname, addr, email, major, degree, gpa, gradapp, form1status, advisor) VALUES (45678901, 'Jimi', 'Hendrix', '71121 Street Ct. City, ST 12325', 'jacobpritchard9@gwu.edu', 'Computer Science', 'MS', '3.77', 0, 0, 10000010);
-INSERT INTO student (u_id, fname, lname, addr, email, major, degree, gpa, gradapp, form1status, advisor) VALUES (55555555, 'Paul', 'McCartney', '43393 Drive Ct. City, ST 40041', 'jacobpritchard9@gwu.edu', 'Computer Science', 'MS','3.50', 0, 0, 10000002);
+INSERT INTO student (u_id, fname, lname, addr, email, major, degree, gpa, gradapp, form1status, advisor) VALUES (1444444, 'Paul', 'McCartney', '43393 Drive Ct. City, ST 40041', 'jacobpritchard9@gwu.edu', 'Computer Science', 'MS','3.50', 0, 1, 10000002);
 INSERT INTO student (u_id, fname, lname, addr, email, major, degree, gpa, gradapp, form1status, advisor) VALUES (66666666, 'George', 'Harrison', '19010 Street Pl. City, ST 22032', 'jacobpritchard9@gwu.edu', 'Computer Science', 'MS', '2.93', 0, 0, 10000010);
-INSERT INTO student (u_id, fname, lname, addr, email, major, degree, gpa, gradapp, form1status, advisor) VALUES (12345678, 'Stevie', 'Nicks', '43638 Drive Dr. City, ST 47423', 'jacobpritchard9@gwu.edu', 'Computer Science', 'PhD', '3.58', 0, 0, 10000012);
+INSERT INTO student (u_id, fname, lname, addr, email, major, degree, gpa, gradapp, form1status, advisor) VALUES (12345678, 'Stevie', 'Nicks', '43638 Drive Dr. City, ST 47423', 'jacobpritchard9@gwu.edu', 'Computer Science', 'PhD', '3.58', 0, 1, 10000012);
 
 
 INSERT INTO faculty (f_id, fname, lname, addr, email, dept, reviewer) VALUES (10000002, 'Bhagi', 'Narahari', '55555 Road Rd. City, ST 66666', 'jacobpritchard9@gwu.edu', 'CSCI', 1);
@@ -457,6 +471,126 @@ INSERT INTO schedule (course_id, section_no, semester, year, day, start_time, en
 
 INSERT INTO courses_taken(u_id, crn, grade) VALUES (88888888, 2, 'IP');
 INSERT INTO courses_taken(u_id, crn, grade) VALUES (88888888, 3, 'IP');
+
+INSERT INTO semester(semesterid, semester, year) VALUES (1, "FALL", 2016);
+INSERT INTO semester(semesterid, semester, year) VALUES (2, "SPRING", 2017);
+INSERT INTO semester(semesterid, semester, year) VALUES (3, "FALL", 2017);
+INSERT INTO semester(semesterid, semester, year) VALUES (4, "SPRING", 2018);
+INSERT INTO semester(semesterid, semester, year) VALUES (5, "FALL", 2018);
+INSERT INTO semester(semesterid, semester, year) VALUES (6, "SPRING", 2019);
+INSERT INTO semester(semesterid, semester, year) VALUES (7, "FALL", 2019);
+INSERT INTO semester(semesterid, semester, year) VALUES (8, "SPRING", 2020);
+INSERT INTO semester(semesterid, semester, year) VALUES (9, "FALL", 2020);
+INSERT INTO semester(semesterid, semester, year) VALUES (10, "SPRING", 2021);
+INSERT INTO semester(semesterid, semester, year) VALUES (11, "FALL", 2021);
+INSERT INTO semester(semesterid, semester, year) VALUES (12, "SPRING", 2022);
+
+INSERT INTO student_transcript(t_id, dept, cno, grade, semesterid, inform1) VALUES (88888888, "CSCI", "6461", "IP", 8, 0);
+INSERT INTO student_transcript(t_id, dept, cno, grade, semesterid, inform1) VALUES (88888888, "CSCI", "6212", "IP", 8, 0);
+
+INSERT INTO student_transcript(t_id, dept, cno, grade, semesterid, inform1) VALUES (87654321, "CSCI", "6221", "A", 3, 1); /*Eva Cassidy*/
+INSERT INTO student_transcript(t_id, dept, cno, grade, semesterid, inform1) VALUES (87654321, "CSCI", "6212", "A", 3, 1);
+INSERT INTO student_transcript(t_id, dept, cno, grade, semesterid, inform1) VALUES (87654321, "CSCI", "6461", "A", 4, 1);
+INSERT INTO student_transcript(t_id, dept, cno, grade, semesterid, inform1) VALUES (87654321, "CSCI", "6232", "A", 4, 1);
+INSERT INTO student_transcript(t_id, dept, cno, grade, semesterid, inform1) VALUES (87654321, "CSCI", "6233", "A", 5, 1);
+INSERT INTO student_transcript(t_id, dept, cno, grade, semesterid, inform1) VALUES (87654321, "CSCI", "6284", "A", 5, 1);
+INSERT INTO student_transcript(t_id, dept, cno, grade, semesterid, inform1) VALUES (87654321, "CSCI", "6286", "A", 6, 1);
+INSERT INTO student_transcript(t_id, dept, cno, grade, semesterid, inform1) VALUES (87654321, "CSCI", "6241", "C", 6, 1);
+INSERT INTO student_transcript(t_id, dept, cno, grade, semesterid, inform1) VALUES (87654321, "CSCI", "6246", "C", 7, 1);
+INSERT INTO student_transcript(t_id, dept, cno, grade, semesterid, inform1) VALUES (87654321, "CSCI", "6262", "C", 8, 1);
+
+INSERT INTO form1 (f1_id, dept, cno) VALUES (87654321, "CSCI", "6221");
+INSERT INTO form1 (f1_id, dept, cno) VALUES (87654321, "CSCI", "6212");
+INSERT INTO form1 (f1_id, dept, cno) VALUES (87654321, "CSCI", "6461");
+INSERT INTO form1 (f1_id, dept, cno) VALUES (87654321, "CSCI", "6232");
+INSERT INTO form1 (f1_id, dept, cno) VALUES (87654321, "CSCI", "6233");
+INSERT INTO form1 (f1_id, dept, cno) VALUES (87654321, "CSCI", "6284");
+INSERT INTO form1 (f1_id, dept, cno) VALUES (87654321, "CSCI", "6286");
+INSERT INTO form1 (f1_id, dept, cno) VALUES (87654321, "CSCI", "6241");
+INSERT INTO form1 (f1_id, dept, cno) VALUES (87654321, "CSCI", "6246");
+INSERT INTO form1 (f1_id, dept, cno) VALUES (87654321, "CSCI", "6262");
+
+INSERT INTO student_transcript(t_id, dept, cno, grade, semesterid, inform1) VALUES (45678901, "CSCI", "6221", "A", 3, 0); /*Jimi Hendrix*/
+INSERT INTO student_transcript(t_id, dept, cno, grade, semesterid, inform1) VALUES (45678901, "CSCI", "6212", "A", 3, 0);
+INSERT INTO student_transcript(t_id, dept, cno, grade, semesterid, inform1) VALUES (45678901, "CSCI", "6461", "A", 4, 0);
+INSERT INTO student_transcript(t_id, dept, cno, grade, semesterid, inform1) VALUES (45678901, "CSCI", "6232", "A", 4, 0);
+INSERT INTO student_transcript(t_id, dept, cno, grade, semesterid, inform1) VALUES (45678901, "CSCI", "6233", "A", 5, 0);
+INSERT INTO student_transcript(t_id, dept, cno, grade, semesterid, inform1) VALUES (45678901, "CSCI", "6284", "A", 5, 0);
+INSERT INTO student_transcript(t_id, dept, cno, grade, semesterid, inform1) VALUES (45678901, "CSCI", "6286", "A", 6, 0);
+INSERT INTO student_transcript(t_id, dept, cno, grade, semesterid, inform1) VALUES (45678901, "CSCI", "6241", "A", 6, 0);
+INSERT INTO student_transcript(t_id, dept, cno, grade, semesterid, inform1) VALUES (45678901, "ECE", "6241", "B", 7, 0);
+INSERT INTO student_transcript(t_id, dept, cno, grade, semesterid, inform1) VALUES (45678901, "ECE", "6242", "B", 8, 0);
+INSERT INTO student_transcript(t_id, dept, cno, grade, semesterid, inform1) VALUES (45678901, "MATH", "6210", "B", 8, 0);
+
+INSERT INTO student_transcript(t_id, dept, cno, grade, semesterid, inform1) VALUES (1444444, "CSCI", "6221", "A", 3, 1); /*Paul McCartney*/
+INSERT INTO student_transcript(t_id, dept, cno, grade, semesterid, inform1) VALUES (1444444, "CSCI", "6212", "A", 3, 1);
+INSERT INTO student_transcript(t_id, dept, cno, grade, semesterid, inform1) VALUES (1444444, "CSCI", "6461", "A", 4, 1);
+INSERT INTO student_transcript(t_id, dept, cno, grade, semesterid, inform1) VALUES (1444444, "CSCI", "6232", "A", 4, 1);
+INSERT INTO student_transcript(t_id, dept, cno, grade, semesterid, inform1) VALUES (1444444, "CSCI", "6233", "A", 5, 1);
+INSERT INTO student_transcript(t_id, dept, cno, grade, semesterid, inform1) VALUES (1444444, "CSCI", "6241", "B", 5, 1);
+INSERT INTO student_transcript(t_id, dept, cno, grade, semesterid, inform1) VALUES (1444444, "CSCI", "6246", "B", 6, 1);
+INSERT INTO student_transcript(t_id, dept, cno, grade, semesterid, inform1) VALUES (1444444, "CSCI", "6262", "B", 6, 1);
+INSERT INTO student_transcript(t_id, dept, cno, grade, semesterid, inform1) VALUES (1444444, "CSCI", "6283", "B", 7, 1);
+INSERT INTO student_transcript(t_id, dept, cno, grade, semesterid, inform1) VALUES (1444444, "CSCI", "6242", "B", 8, 1);
+
+INSERT INTO form1 (f1_id, dept, cno) VALUES (1444444, "CSCI", "6221"); 
+INSERT INTO form1 (f1_id, dept, cno) VALUES (1444444, "CSCI", "6212");
+INSERT INTO form1 (f1_id, dept, cno) VALUES (1444444, "CSCI", "6461");
+INSERT INTO form1 (f1_id, dept, cno) VALUES (1444444, "CSCI", "6232");
+INSERT INTO form1 (f1_id, dept, cno) VALUES (1444444, "CSCI", "6233");
+INSERT INTO form1 (f1_id, dept, cno) VALUES (1444444, "CSCI", "6241");
+INSERT INTO form1 (f1_id, dept, cno) VALUES (1444444, "CSCI", "6246");
+INSERT INTO form1 (f1_id, dept, cno) VALUES (1444444, "CSCI", "6262");
+INSERT INTO form1 (f1_id, dept, cno) VALUES (1444444, "CSCI", "6283");
+INSERT INTO form1 (f1_id, dept, cno) VALUES (1444444, "CSCI", "6242");
+
+INSERT INTO student_transcript(t_id, dept, cno, grade, semesterid, inform1) VALUES (66666666, "ECE", "6242", "C", 1, 0); /*George Harrison*/
+INSERT INTO student_transcript(t_id, dept, cno, grade, semesterid, inform1) VALUES (66666666, "CSCI", "6221", "B", 1, 0);
+INSERT INTO student_transcript(t_id, dept, cno, grade, semesterid, inform1) VALUES (66666666, "CSCI", "6461", "B", 2, 0);
+INSERT INTO student_transcript(t_id, dept, cno, grade, semesterid, inform1) VALUES (66666666, "CSCI", "6232", "B", 2, 0);
+INSERT INTO student_transcript(t_id, dept, cno, grade, semesterid, inform1) VALUES (66666666, "CSCI", "6233", "B", 3, 0);
+INSERT INTO student_transcript(t_id, dept, cno, grade, semesterid, inform1) VALUES (66666666, "CSCI", "6241", "B", 4, 0);
+INSERT INTO student_transcript(t_id, dept, cno, grade, semesterid, inform1) VALUES (66666666, "CSCI", "6246", "B", 6, 0);
+INSERT INTO student_transcript(t_id, dept, cno, grade, semesterid, inform1) VALUES (66666666, "CSCI", "6284", "B", 6, 0);
+INSERT INTO student_transcript(t_id, dept, cno, grade, semesterid, inform1) VALUES (66666666, "CSCI", "6283", "B", 7, 0);
+INSERT INTO student_transcript(t_id, dept, cno, grade, semesterid, inform1) VALUES (66666666, "CSCI", "6242", "B", 8, 0);
+
+INSERT INTO student_transcript(t_id, dept, cno, grade, semesterid, inform1) VALUES (12345678, "CSCI", "6221", "A", 3, 1); /*Stevie Nicks*/
+INSERT INTO student_transcript(t_id, dept, cno, grade, semesterid, inform1) VALUES (12345678, "CSCI", "6212", "A", 3, 1);
+INSERT INTO student_transcript(t_id, dept, cno, grade, semesterid, inform1) VALUES (12345678, "CSCI", "6461", "A", 4, 1);
+INSERT INTO student_transcript(t_id, dept, cno, grade, semesterid, inform1) VALUES (12345678, "CSCI", "6232", "A", 4, 1);
+INSERT INTO student_transcript(t_id, dept, cno, grade, semesterid, inform1) VALUES (12345678, "CSCI", "6233", "A", 5, 1);
+INSERT INTO student_transcript(t_id, dept, cno, grade, semesterid, inform1) VALUES (12345678, "CSCI", "6284", "A", 5, 1);
+INSERT INTO student_transcript(t_id, dept, cno, grade, semesterid, inform1) VALUES (12345678, "CSCI", "6286", "A", 6, 1);
+INSERT INTO student_transcript(t_id, dept, cno, grade, semesterid, inform1) VALUES (12345678, "CSCI", "6241", "B", 6, 1);
+INSERT INTO student_transcript(t_id, dept, cno, grade, semesterid, inform1) VALUES (12345678, "CSCI", "6246", "B", 7, 1);
+INSERT INTO student_transcript(t_id, dept, cno, grade, semesterid, inform1) VALUES (12345678, "CSCI", "6262", "B", 8, 1);
+INSERT INTO student_transcript(t_id, dept, cno, grade, semesterid, inform1) VALUES (12345678, "CSCI", "6283", "B", 7, 1);
+INSERT INTO student_transcript(t_id, dept, cno, grade, semesterid, inform1) VALUES (12345678, "CSCI", "6242", "B", 8, 1);
+
+INSERT INTO form1 (f1_id, dept, cno) VALUES (12345678, "CSCI", "6221"); 
+INSERT INTO form1 (f1_id, dept, cno) VALUES (12345678, "CSCI", "6212"); 
+INSERT INTO form1 (f1_id, dept, cno) VALUES (12345678, "CSCI", "6261"); 
+INSERT INTO form1 (f1_id, dept, cno) VALUES (12345678, "CSCI", "6232"); 
+INSERT INTO form1 (f1_id, dept, cno) VALUES (12345678, "CSCI", "6233"); 
+INSERT INTO form1 (f1_id, dept, cno) VALUES (12345678, "CSCI", "6284"); 
+INSERT INTO form1 (f1_id, dept, cno) VALUES (12345678, "CSCI", "6286"); 
+INSERT INTO form1 (f1_id, dept, cno) VALUES (12345678, "CSCI", "6241"); 
+INSERT INTO form1 (f1_id, dept, cno) VALUES (12345678, "CSCI", "6246"); 
+INSERT INTO form1 (f1_id, dept, cno) VALUES (12345678, "CSCI", "6262"); 
+INSERT INTO form1 (f1_id, dept, cno) VALUES (12345678, "CSCI", "6283"); 
+INSERT INTO form1 (f1_id, dept, cno) VALUES (12345678, "CSCI", "6242"); 
+
+INSERT INTO student_transcript(t_id, dept, cno, grade, semesterid, inform1) VALUES (77777777, "CSCI", "6221", "B", 3, 0); /*Eric Clapton*/
+INSERT INTO student_transcript(t_id, dept, cno, grade, semesterid, inform1) VALUES (77777777, "CSCI", "6212", "B", 3, 0);
+INSERT INTO student_transcript(t_id, dept, cno, grade, semesterid, inform1) VALUES (77777777, "CSCI", "6461", "B", 4, 0);
+INSERT INTO student_transcript(t_id, dept, cno, grade, semesterid, inform1) VALUES (77777777, "CSCI", "6232", "B", 4, 0);
+INSERT INTO student_transcript(t_id, dept, cno, grade, semesterid, inform1) VALUES (77777777, "CSCI", "6233", "B", 5, 0);
+INSERT INTO student_transcript(t_id, dept, cno, grade, semesterid, inform1) VALUES (77777777, "CSCI", "6241", "B", 5, 0);
+INSERT INTO student_transcript(t_id, dept, cno, grade, semesterid, inform1) VALUES (77777777, "CSCI", "6242", "B", 6, 0);
+INSERT INTO student_transcript(t_id, dept, cno, grade, semesterid, inform1) VALUES (77777777, "CSCI", "6283", "A", 6, 0);
+INSERT INTO student_transcript(t_id, dept, cno, grade, semesterid, inform1) VALUES (77777777, "CSCI", "6284", "A", 6, 0);
+INSERT INTO student_transcript(t_id, dept, cno, grade, semesterid, inform1) VALUES (77777777, "CSCI", "6286", "A", 6, 0);
 
 INSERT INTO courses_taught(f_id, crn) VALUES (10000003, 1);
 INSERT INTO courses_taught(f_id, crn) VALUES (10000002, 2);
