@@ -117,8 +117,8 @@
 
 	// Find all unique semesters for this student
 	$query = 'SELECT semester, year
-			  FROM schedule, courses_' . $courses_type .
-			 ' WHERE ' . $id_type . '="'. $_SESSION['id'] .'"
+			  FROM schedule, semester, courses_' . $courses_type .
+			 ' WHERE ' . $id_type . '="'. $_SESSION['id'] .'" and sem=semesterid and schedule.crn=courses_'.$courses_type.'.crn
 			  GROUP BY semester, year;';
 	$semesters = mysqli_query ($dbc, $query);
 
@@ -169,20 +169,16 @@
 	// Find all classes this student is taking
 	if ($_SESSION['p_level'] == 5) {
 		$query = 'SELECT semester, year, day, start_time, c_no, fname, lname, title, department 
-				  FROM faculty, schedule, courses_taken, catalog, courses_taught
+				  FROM faculty, schedule, courses_taken, catalog, courses_taught, semester
 				  WHERE u_id="'. $_SESSION['id'] .'" and courses_taken.crn=schedule.crn 
 					and schedule.course_id=catalog.c_id and faculty.f_id=courses_taught.f_id
-					and courses_taught.crn=courses_taken.crn';
-
-		$link = "course.php?cno=";
-
+					and courses_taught.crn=courses_taken.crn and sem=semesterid';
 	} else if ($_SESSION['p_level'] == 4) {
 		$query = 'SELECT semester, year, day, start_time, c_no, title, department, lname, fname 
-				  FROM faculty, schedule, catalog, courses_taught
+				  FROM faculty, schedule, catalog, courses_taught, semester
 				  WHERE courses_taught.f_id="'. $_SESSION['id'] .'" 
 					and courses_taught.crn=schedule.crn and schedule.course_id=catalog.c_id
-					and faculty.f_id=courses_taught.f_id';
-		$link = "grades.php?cno=";
+					and faculty.f_id=courses_taught.f_id and sem=semesterid';
 	}
 
 	// Finish printing the current semester
@@ -231,10 +227,17 @@
 
 								// If this class meets on this day, print it in the correct spot on schedule
 								if ($row != false and strcmp ($row['day'], $d) == 0) { 
-									$cno = $row['c_no']; ?>
-									<b><a href="<?php echo $link . $cno; ?>"><?php echo $row['department'] . ' ' . $row['c_no'] . '</b></a>: <br>' . 
+									$cno = $row['c_no']; 
+									$dept = $row['department']; 
+									if($_SESSION['p_level'] == 5){?>
+									<b><a href="course.php?cno=<?php echo $cno ?>&dept=<?php echo $dept ?>"><?php echo $row['department'] . ' ' . $row['c_no'] . '</b></a>: <br>' . 
 										$row['title'] . ' ' . '<br>' . 
 										'<i> Instructor: ' . $row['fname'] . ' ' . $row['lname'] , '</i>';
+									}else if($_SESSION['p_level'] == 4){?>
+										<b><a href="grades.php?cno=<?php echo $cno ?>"><?php echo $row['department'] . ' ' . $row['c_no'] . '</b></a>: <br>' . 
+										$row['title'] . ' ' . '<br>' . 
+										'<i> Instructor: ' . $row['fname'] . ' ' . $row['lname'] , '</i>';
+									}
 									$row = mysqli_fetch_array ($t1);
 								} else { // Keep spacing consistent even if there is no data to print
 									echo '<br><br><br>';
@@ -257,10 +260,17 @@
 
 								// If this class meets on this day, print it in the correct spot on schedule
 								if ($row != false and strcmp ($row['day'], $d) == 0) { 
-									$cno = $row['c_no']; ?>
-									<b><a href="course.php?cno=<?php echo $cno ?>"><?php echo $row['department'] . ' ' . $row['c_no'] . '</b></a>: <br>' . 
+									$cno = $row['c_no']; 
+									$dept = $row['department'];
+									if($_SESSION['p_level'] == 5){?>
+									<b><a href="course.php?cno=<?php echo $cno ?>&dept=<?php echo $dept ?>"><?php echo $row['department'] . ' ' . $row['c_no'] . '</b></a>: <br>' . 
 										$row['title'] . ' ' . '<br>' . 
 										'<i> Instructor: ' . $row['fname'] . ' ' . $row['lname'] , '</i>';
+									}else if($_SESSION['p_level'] == 4){?>
+										<b><a href="grades.php?cno=<?php echo $cno ?>"><?php echo $row['department'] . ' ' . $row['c_no'] . '</b></a>: <br>' . 
+										$row['title'] . ' ' . '<br>' . 
+										'<i> Instructor: ' . $row['fname'] . ' ' . $row['lname'] , '</i>';
+									}
 									$row = mysqli_fetch_array ($t2);
 								} else { // Keep spacing consistent even if there is no data to print
 									echo '<br><br><br>';
@@ -282,10 +292,17 @@
 								
 								// If this class meets on this day, print it in the correct spot on schedule
 								if ($row != false and strcmp ($row['day'], $d) == 0) { 
-									$cno = $row['c_no']; ?>
-									<b><a href="course.php?cno=<?php echo $cno ?>"><?php echo $row['department'] . ' ' . $row['c_no'] . '</b></a>: <br>' . 
+									$cno = $row['c_no']; 
+									$dept = $row['department'];
+									if($_SESSION['p_level'] == 5){?>
+									<b><a href="course.php?cno=<?php echo $cno ?>&dept=<?php echo $dept ?>"><?php echo $row['department'] . ' ' . $row['c_no'] . '</b></a>: <br>' . 
 										$row['title'] . ' ' . '<br>' . 
 										'<i> Instructor: ' . $row['fname'] . ' ' . $row['lname'] , '</i>';
+									}else if($_SESSION['p_level'] == 4){?>
+										<b><a href="grades.php?cno=<?php echo $cno ?>"><?php echo $row['department'] . ' ' . $row['c_no'] . '</b></a>: <br>' . 
+										$row['title'] . ' ' . '<br>' . 
+										'<i> Instructor: ' . $row['fname'] . ' ' . $row['lname'] , '</i>';
+									}
 									$row = mysqli_fetch_array ($t3);
 								} else { // Keep spacing consistent even if there is no data to print
 									echo '<br><br><br>';

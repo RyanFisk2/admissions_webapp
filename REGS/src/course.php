@@ -49,7 +49,7 @@
 
                         <?php
                         
-                        $course_query = "SELECT * FROM schedule WHERE crn=$crn";
+                        $course_query = "SELECT * FROM schedule, semester WHERE crn=$crn and sem=semesterid";
 
                         $query_results = mysqli_query($dbc, $course_query);
 
@@ -103,7 +103,7 @@
 								if (empty(mysqli_fetch_array($enrollement_results))) { ?>
 									<td> <a href="register.php?crn=<?php echo $crn ?>&cno=<?php echo $c_no ?>&dept=<?php echo $dept1 ?>" class="btn btn-primary btn-sm rounded-2 px-3">Enroll</a> </td>
 								<?php } else { ?>
-									<td> <a href="drop.php?crn=<?php echo $crn ?>&cno=<?php echo $c_no ?>&dept=<?php echo $dept1 ?>" class="btn btn-danger btn-sm rounded-2 px-3">Drop</a> </td>
+									<td> <a href="drop.php?crn=<?php echo $crn ?>&cno=<?php echo $c_no ?>&dept=<?php echo "CSCI" ?>" class="btn btn-danger btn-sm rounded-2 px-3">Drop</a> </td>
 								<?php } ?>
 									</tr>
 							<?php
@@ -121,10 +121,6 @@
     </div>
 
   </div>
-  <!-- .site-wrap -->
-
-  <!-- loader -->
-  <!-- <div id="loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#51be78"/></svg></div> -->
 
 </body>
 

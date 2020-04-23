@@ -23,7 +23,7 @@
 		$course = $course['department'] . " " . $course['c_no'] . ": " . $course['title'];
 
 		// Query for all the students in this course
-		$query = 'SELECT student.u_id, fname, lname, email, grade, courses_taken.crn
+		$query = 'SELECT student.u_id, fname, lname, email, grade, courses_taken.crn, department
 						  FROM student, courses_taken, schedule, catalog
 						  WHERE student.u_id=courses_taken.u_id
 							and courses_taken.crn=schedule.crn 
@@ -45,6 +45,8 @@
 					$update_query = 'UPDATE courses_taken SET grade="'. $grade .'" 
 									 WHERE u_id="'. $s['u_id'] .'" and crn="'. $s['crn'] .'"';
 					mysqli_query ($dbc, $update_query);
+					$update_query1 = 'UPDATE student_transcript SET grade="'. $grade .'" WHERE t_id="'. $s['u_id'] .'" and cno="'. $_GET['cno'] .'" and dept="'. $s['department'] .'"';
+					mysqli_query($dbc, $update_query1);
 
 					// Set the last update so the select menu for the grade can be made 
 					// green to show user that the changes have been made
@@ -55,6 +57,8 @@
 					$update_query = 'UPDATE courses_taken SET grade="'. $grade .'" 
 									 WHERE u_id="'. $s['u_id'] .'" and crn="'. $s['crn'] .'"';
 					mysqli_query ($dbc, $update_query);
+					$update_query1 = 'UPDATE student_transcript SET grade="'. $grade .'" WHERE t_id="'. $s['u_id'] .'" and cno="'. $_GET['cno'] .'" and dept="'. $s['department'] .'"';
+					mysqli_query($dbc, $update_query1);
 				}
 			}
 		}

@@ -13,7 +13,7 @@ session_start();
     $cno =  $_GET['cno'];
     $dept = $_GET['dept'];
 
-    $class_registering_for_query = "SELECT * FROM schedule, catalog WHERE crn=$crn AND course_id=c_id";
+    $class_registering_for_query = "SELECT * FROM schedule, catalog, semester WHERE crn=$crn AND course_id=c_id and sem=semesterid";
     $class_registering_for_result = mysqli_query($dbc, $class_registering_for_query);
     $crn_course_registering_for = trim($_GET['crn']);
 
@@ -26,6 +26,7 @@ session_start();
         $start_time = $class_data["start_time"];
         $end_time = $class_data["end_time"];
         $year = $class_data["year"];
+        $sem = $class_data["semesterid"];
         }
     }
 
@@ -60,7 +61,7 @@ session_start();
 
         // Get crn from pre-req course numbers (c_no)
 
-        $courses_taken_query = "SELECT * FROM courses_taken c, schedule s WHERE c.u_id=$uid and c.crn=s.crn";
+        $courses_taken_query = "SELECT * FROM courses_taken c, schedule s, semeseter x WHERE c.u_id=$uid and c.crn=s.crn and s.sem=x.semesterid";
         $courses_taken_data = mysqli_query($dbc, $courses_taken_query);
 
         $crns_taken = array();
@@ -107,6 +108,8 @@ session_start();
 
         $enroll = "INSERT courses_taken (u_id, crn, grade) VALUES ($uid, $crn, '$grade')";
         mysqli_query($dbc, $enroll);
+        $enroll1 = "INSERT INTO student_transcript (t_id, dept, cno, grade, semesterid, inform1) VALUES ($uid, '$dept', $cno, '$grade', $sem, 0)";
+        mysqli_query($dbc, $enroll1);
         header("Location: course.php?cno=$cno&dept=$dept");
 
     } else {
