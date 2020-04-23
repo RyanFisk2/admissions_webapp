@@ -17,17 +17,11 @@
     $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
     
     $c_no = $_GET["cno"];
-    $cid_query = "SELECT crn FROM schedule s, catalog c WHERE c.c_no=$c_no AND s.course_id=c.c_id";
+    $dept1 = $_GET["dept"];
+    $cid_query = "SELECT crn, title FROM catalog, schedule WHERE department='$dept1' AND c_no=$c_no AND course_id=c_id";
     $cid = mysqli_fetch_array(mysqli_query($dbc, $cid_query));
     $crn  = $cid['crn'];
-
-    $query = "SELECT * from catalog WHERE c_no=$c_no";
-
-    $results = mysqli_query($dbc, $query);
-    $data = mysqli_fetch_array($results);
-
-    $title = $data["title"];
-    $dept = $data["department"];
+    $title = $cid['title'];
 
     $instructor_query = "SELECT fname, lname FROM faculty a, courses_taught b WHERE a.f_id=b.f_id AND crn=$crn";
     $instructor_data = mysqli_fetch_array(mysqli_query($dbc, $instructor_query));
@@ -48,7 +42,7 @@
             <div class="row">
                 <div class="col-lg mx-auto align-self-center">
                         <h2 class="section-title-underline mb-5">
-                            <span><?php echo $dept ?> <?php echo $c_no ?>: <?php echo $title ?></span>
+                            <span><?php echo $dept1 ?> <?php echo $c_no ?>: <?php echo $title ?></span>
                         </h2>
                         
                         <p><strong class="text-black d-block">Instructor:</strong><?php echo $fname ?> <?php echo $lname ?></p><br>   
@@ -107,9 +101,9 @@
 							// Only show an enroll/drop button if this is a student 
 							if (strcmp ($_SESSION['p_level'], 5) == 0) {
 								if (empty(mysqli_fetch_array($enrollement_results))) { ?>
-									<td> <a href="register.php?crn=<?php echo $crn ?>&cno=<?php echo $c_no ?>" class="btn btn-primary btn-sm rounded-2 px-3">Enroll</a> </td>
+									<td> <a href="register.php?crn=<?php echo $crn ?>&cno=<?php echo $c_no ?>&dept=<?php echo $dept1 ?>" class="btn btn-primary btn-sm rounded-2 px-3">Enroll</a> </td>
 								<?php } else { ?>
-									<td> <a href="drop.php?crn=<?php echo $crn ?>&cno=<?php echo $c_no ?>" class="btn btn-danger btn-sm rounded-2 px-3">Drop</a> </td>
+									<td> <a href="drop.php?crn=<?php echo $crn ?>&cno=<?php echo $c_no ?>&dept=<?php echo $dept1 ?>" class="btn btn-danger btn-sm rounded-2 px-3">Drop</a> </td>
 								<?php } ?>
 									</tr>
 							<?php
