@@ -48,7 +48,7 @@
 		  <div class="row mb-4 justify-content-center text-center">
 		  <label><?php echo $searchstudent['fname'].' '; echo $searchstudent['lname'] . ' &nbsp;&nbsp;'; ?></label>
 		  <form action='gradaudit.php'>
-		  <input type="hidden" name="uid" value="<?php echo $searchstudent['uid']?>" />
+		  <input type="hidden" name="uid" value="<?php echo $searchstudent['u_id']?>" />
 		  <input type="submit" class="button" name="decision" value="Run Audit" />
 		  </form>
 		  <br>
