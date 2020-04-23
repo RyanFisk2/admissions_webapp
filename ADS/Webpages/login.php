@@ -1,90 +1,131 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link href="https://fonts.googleapis.com/css?family=Muli:300,400,700,900" rel="stylesheet">
+  <link rel="stylesheet" href="fonts/icomoon/style.css">
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/jquery-ui.css">
+  <link rel="stylesheet" href="css/owl.carousel.min.css">
+  <link rel="stylesheet" href="css/owl.theme.default.min.css">
+  <link rel="stylesheet" href="css/owl.theme.default.min.css">
+  <link rel="stylesheet" href="css/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="css/bootstrap-datepicker.css">
+  <link rel="stylesheet" href="fonts/flaticon/font/flaticon.css">
+  <link rel="stylesheet" href="css/aos.css">
+  <link href="css/jquery.mb.YTPlayer.min.css" media="all" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
 <?php
-	
-	session_start(); //Starts the session
+  require_once('connectvars.php');
+  // TODO: Start the session
+  session_start();
+  // Clear the error message
+  $error_msg = "";
+  // TODO: If the user isn't logged in, try to log them in
+  if (!empty($_POST)) {
+    if (isset($_POST['submit'])) {
+      // Connect to the database
+      $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
+      // Grab the user-entered log-in data
+      $user_username = mysqli_real_escape_string($dbc, trim($_POST['username']));
+      $user_password = mysqli_real_escape_string($dbc, trim($_POST['password']));
+      if (!empty($user_username) && !empty($user_password)) {
+        // TODO: Look up the username and password in the database
+        $query = "SELECT * FROM users WHERE id = '$user_username' and password = '$user_password'";
+        $data = mysqli_query($dbc, $query);
+        // If The log-in is OK
+        if (mysqli_num_rows($data) == 1) {
+          $row = mysqli_fetch_array($data);
+          //TODO: so set the user ID and username session vars
+          $_SESSION['id'] = $row['id'];
+          $_SESSION['password'] = $row['password'];
+          $_SESSION['p_level'] = $row['p_level'];
+          $_SESSION['id1'] = "";
+		  $_SESSION['p_level1'] = 0;
+		  
+		  $_SESSION['user_id'] = $row['id']; //ADS
+		  $_SESSION['acc_type'] = $row['p_level']; //ADS
+		  $_SESSION['gpacalc'] = false; //ADS
 
-	$error_msg = ""; //Start with no error msg
-	
-	$pg_title = "Login";
-	//require_once('header.php');
-	echo '<div class="login">';
-	echo '<link href="login_stylesheet.css" rel="stylesheet" type="text/css">';
-	echo '<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">';
-
-	//This php block will handle login validation
-	if ($_SERVER["REQUEST_METHOD"] == "POST"){
-		// Connect to the database
-		require_once('connectvars.php');
-		$dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
-
-		// Grab the user-entered log-in data TODO update w/ pyterhub
-		$user_username = mysqli_real_escape_string($dbc, trim($_POST['username']));
-		$user_password = mysqli_real_escape_string($dbc, trim($_POST['password']));
-
-		//For temp testing, we will not use dbc connection
-		$user_username = trim($_POST['username']);
-		$user_password = trim($_POST['password']);
-
-		if (!empty($user_username) && !empty($user_password)) {
-			$query = "SELECT * FROM users WHERE id='$user_username' AND password='$user_password'";
-          	$data = mysqli_query($dbc, $query);
-			
-			if (!$data){
-				$error_msg = 'Please enter valid username and password';
-			}
-          	else if (mysqli_num_rows($data) == 1) {
-				$row = mysqli_fetch_array($data);
-
-            	$_SESSION['user_id'] = $row['id'];
-				$_SESSION['acc_type'] = $row['p_level'];
-
-				//Go to homepage
-				$_SESSION['gpacalc'] = false;
-            	header('Location:index.php');
-			}
-			else {
-				$error_msg = 'Please enter valid username and password';
-				//$error_msg = mysqli_num_rows($data);
-			}
-		}
-		else{
-			$error_msg = 'Please enter valid username and password';
-		}
-	}
-
-	echo '<body>';
-
-	if (empty($_SESSION['user_id'])){
-		echo '<p class="error">' . $error_msg . '</p>';
-	
+          //TODO: redirect to index.php
+          if($row['id'] == $row['password']){
+            $home_url = "set_info.php";
+            header('Location: ' . $home_url);
+          }else{
+            $home_url = "superindex.php";
+            header('Location: ' . $home_url);
+          }
+        }
+        else {
+          // The username/password are incorrect so set an error message
+          $error_msg = 'Sorry, you must enter a valid user id and password to log in.';
+        }
+      }
+      else {
+        // The username/password weren't entered so set an error message
+        $error_msg = 'Sorry, you must enter your user id and password to log in.';
+      }
+    }
+  }
 ?>
 
-<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-	<fieldset>
-			<h2><img src="CW_logo.png" alt="Logo" width="120" height="85"></h2>
-      		<h1>Log In</h1>
-      		<label for="username"><i class="glyphicon glyphicon-user"></i></label>
-      		<input type="text" name="username" placeholder="Username" /><br />
-      		<label for="password"><i class="glyphicon glyphicon-lock"></i></label>
-      		<input type="password" name="password" placeholder="Password"/>
-    	</fieldset>
-    	<input type="submit" value="Log In" name="submit" />
-	</form>
-</div>
+<body>
+  <!-- Navigation -->
+  <!-- Page Content -->
+  <div class="site-section">
+  <div class="container">
 
+  <div class="row justify-content-center text-center">
+      <div class="col-md-2 mb-2">
+        <img src="images/icon.svg" class="rounded" alt="">
+        <!-- <p style="color: #00158B;" >Farm Fresh</p> -->
+      </div>
+  </div>
 
-
+  <div class="row justify-content-center">
+      <div class="col-md-5">
+        <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+          <div class="row">
+            <div class="col-md-12 form-group">
+              <label for="username">ID: </label>
+              <input type="text" id="username" name="username" class="form-control form-control-lg">
+            </div>
+            <div class="col-md-12 form-group">
+              <label for="pword">Password: </label>
+              <input type="password" id="pword" name="password" class="form-control form-control-lg">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <input type="submit" value="Log In" class="btn btn-primary btn-lg px-5" name="submit">
 <?php
-	}
-
-	else{
-		echo '<p class="login">You are logged in as ' . $_SESSION['user_id'] . '. Please wait up to 5 seconds to be redirected to homepage.</p>';
-		echo '<meta http-equiv = "refresh" content = "4; url=index.php" />';
-	}
-
-	//require_once('footer.php');
+  if (empty($_SESSION['id'])) {
+    echo '<br><br><p class="text-danger">' . $error_msg . '</p>';
+  }
 ?>
+              </div>
+            </div>
+        </form>
+      </div>
+    </div>
+	</div>
+  <div id="loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#51be78"/></svg></div>
+  <script src="js/jquery-3.3.1.min.js"></script>
+  <script src="js/jquery-migrate-3.0.1.min.js"></script>
+  <script src="js/jquery-ui.js"></script>
+  <script src="js/popper.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/owl.carousel.min.js"></script>
+  <script src="js/jquery.stellar.min.js"></script>
+  <script src="js/jquery.countdown.min.js"></script>
+  <script src="js/bootstrap-datepicker.min.js"></script>
+  <script src="js/jquery.easing.1.3.js"></script>
+  <script src="js/aos.js"></script>
+  <script src="js/jquery.fancybox.min.js"></script>
+  <script src="js/jquery.sticky.js"></script>
+  <script src="js/jquery.mb.YTPlayer.min.js"></script>
+  <script src="js/main.js"></script>
 </body>
- </html>
-
-
+</html>
