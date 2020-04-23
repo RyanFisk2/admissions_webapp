@@ -142,18 +142,9 @@ create table transcript (
 	applicationID int(8),
 	pathToFile varchar(25),
 	received DATE,
-    t_id int, /* changed from uid to t_id to reference a student's id as a foreign key */
-    dept varchar(4),
-    cno int,
-    grade varchar(2),
-    semesterid int,
-    inform1 bool,
-    /* primary key (t_id, dept, cno), old primary key from Ads.sql if still needed otherwise delete*/
 
 	primary key (applicationID),
-	foreign key (applicationID) references application_form (applicationID) ON UPDATE CASCADE ON DELETE CASCADE,
-	foreign key (semesterid) references semester(semesterid),
-    foreign key (t_id) references student(u_id) /* added this line */
+	foreign key (applicationID) references application_form (applicationID) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 create table student_transcript (
@@ -327,8 +318,7 @@ create table schedule(
 crn int AUTO_INCREMENT,
 course_id int NOT NULL,
 section_no int NOT NULL,
-semester varchar(20) NOT NULL,
-year YEAR NOT NULL,
+sem int NOT NULL,
 day char(1) NOT NULL,
 start_time TIME NOT NULL,
 end_time TIME NOT NULL,
@@ -448,26 +438,26 @@ INSERT INTO catalog (department, c_no, title, credits) VALUES ('ECE', 6241, 'Com
 INSERT INTO catalog (department, c_no, title, credits) VALUES ('ECE', 6242, 'Information Theory', 2);
 INSERT INTO catalog (department, c_no, title, credits) VALUES ('MATH', 6210, 'Logic', 2);
 
-INSERT INTO schedule (course_id, section_no, semester, year, day, start_time, end_time) VALUES (1, 1, 'Fall', 2020, 'M', '15:00', '17:30');
-INSERT INTO schedule (course_id, section_no, semester, year, day, start_time, end_time) VALUES (2, 1, 'Fall', 2020, 'T', '15:00', '17:30');
-INSERT INTO schedule (course_id, section_no, semester, year, day, start_time, end_time) VALUES (3, 1, 'Fall', 2020, 'W', '15:00', '17:30');
-INSERT INTO schedule (course_id, section_no, semester, year, day, start_time, end_time) VALUES (5, 1, 'Fall', 2020, 'M', '18:00', '20:30');
-INSERT INTO schedule (course_id, section_no, semester, year, day, start_time, end_time) VALUES (6, 1, 'Fall', 2020, 'T', '18:00', '20:30');
-INSERT INTO schedule (course_id, section_no, semester, year, day, start_time, end_time) VALUES (7, 1, 'Fall', 2020, 'W', '18:00', '20:30');
-INSERT INTO schedule (course_id, section_no, semester, year, day, start_time, end_time) VALUES (8, 1, 'Fall', 2020, 'R', '18:00', '20:30');
-INSERT INTO schedule (course_id, section_no, semester, year, day, start_time, end_time) VALUES (9, 1, 'Fall', 2020, 'T', '15:00', '17:30');
-INSERT INTO schedule (course_id, section_no, semester, year, day, start_time, end_time) VALUES (11, 1, 'Fall', 2020, 'M', '18:00', '20:30');
-INSERT INTO schedule (course_id, section_no, semester, year, day, start_time, end_time) VALUES (12, 1, 'Fall', 2020, 'M', '15:30', '18:00');
-INSERT INTO schedule (course_id, section_no, semester, year, day, start_time, end_time) VALUES (10, 1, 'Fall', 2020, 'R', '18:00', '20:30');
-INSERT INTO schedule (course_id, section_no, semester, year, day, start_time, end_time) VALUES (13, 1, 'Fall', 2020, 'W', '18:00', '20:30');
-INSERT INTO schedule (course_id, section_no, semester, year, day, start_time, end_time) VALUES (14, 1, 'Fall', 2020, 'T', '18:00', '20:30');
-INSERT INTO schedule (course_id, section_no, semester, year, day, start_time, end_time) VALUES (15, 1, 'Fall', 2020, 'M', '18:00', '20:30');
-INSERT INTO schedule (course_id, section_no, semester, year, day, start_time, end_time) VALUES (16, 1, 'Fall', 2020, 'W', '18:00', '20:30');
-INSERT INTO schedule (course_id, section_no, semester, year, day, start_time, end_time) VALUES (19, 1, 'Fall', 2020, 'W', '15:00', '17:30');
-INSERT INTO schedule (course_id, section_no, semester, year, day, start_time, end_time) VALUES (20, 1, 'Fall', 2020, 'M', '18:00', '20:30');
-INSERT INTO schedule (course_id, section_no, semester, year, day, start_time, end_time) VALUES (21, 1, 'Fall', 2020, 'T', '18:00', '20:30');
-INSERT INTO schedule (course_id, section_no, semester, year, day, start_time, end_time) VALUES (22, 1, 'Fall', 2020, 'W', '18:00', '20:30');
-INSERT INTO schedule (course_id, section_no, semester, year, day, start_time, end_time) VALUES (18, 1, 'Fall', 2020, 'R', '16:00', '18:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (1, 1, 8, 'M', '15:00', '17:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (2, 1, 8, 'T', '15:00', '17:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (3, 1, 8, 'W', '15:00', '17:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (5, 1, 8, 'M', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (6, 1, 8, 'T', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (7, 1, 8, 'W', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (8, 1, 8, 'R', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (9, 1, 8, 'T', '15:00', '17:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (11, 1, 8, 'M', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (12, 1, 8, 'M', '15:30', '18:00');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (10, 1, 8, 'R', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (13, 1, 8, 'W', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (14, 1, 8, 'T', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (15, 1, 8, 'M', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (16, 1, 8, 'W', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (19, 1, 8, 'W', '15:00', '17:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (20, 1, 8, 'M', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (21, 1, 8, 'T', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (22, 1, 8, 'W', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (18, 1, 8, 'R', '16:00', '18:30');
 
 INSERT INTO courses_taken(u_id, crn, grade) VALUES (88888888, 2, 'IP');
 INSERT INTO courses_taken(u_id, crn, grade) VALUES (88888888, 3, 'IP');
