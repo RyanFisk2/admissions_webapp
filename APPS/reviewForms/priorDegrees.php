@@ -47,31 +47,16 @@
 					</tr>";
 			}
 
-			//link previous and next pages
-			$prevURL = "./qualifications.php";
-			$nextURL = "./letters.php";
+		?>
+		</table>
 
-			echo"<button class='btn btn-primary' id='prev' onclick='newPage($prevURL, $applicationID)'>Back</button>";
-			echo"<button class='btn btn-primary' id='next' onclick='newPage($nextURL, $applicationID)'>Next</button>";
+		<?php
+
+			echo"<button class='btn btn-primary' id='prev' onclick='loadForm(\"./qualifications.php?applicationID=$applicationID\")'>Back</button>";
+			echo"<button class='btn btn-primary' id='next' onclick='loadForm(\"./letters.php?applicationID=$applicationID\")'>Next</button>";
 
 		?>
 
-		<script>
-
-			function newPage (url, applicationID) {
-				var xhttp = new XMLHttpRequest();
-
-				xhttp.onreadystatechange = function() {
-					if((this.readyState == 4) && (this.status == 200)){
-						document.getElementById('content').innerHTML = this.responseText;
-					}
-				};
-
-				xhttp.open("GET", url + "?applicationID=" + applicationID, true);
-				xhttp.setRequestHeader("Content-Type", "application-x-www-urlencoded");
-				xhttp.send();
-			}
-		</script>
 
 </body>
 </html>

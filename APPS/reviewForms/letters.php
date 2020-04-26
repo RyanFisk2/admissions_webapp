@@ -68,6 +68,9 @@
 					}
 						
 				}
+
+				echo<"button class='btn btn-primary' onclick='loadForm(\"./priorDegrees.php?applicationID=$applicationID\")'>Back</button>";
+				echo"<button class='btn btn-primary' onclick='loadForm(\"./submitRecommendation.php?applicantID=$applicantID\")'>Next</button>";
 			?>
 
 	</body>

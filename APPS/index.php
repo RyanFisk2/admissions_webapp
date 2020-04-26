@@ -5,8 +5,8 @@
 	}
 	require_once('appvars.php');
 	require_once('includes/utils.php');
-	require_once('../REGS/src/header.php');
-	require_once('includes/connectvars.php');
+	require_once('includes/header.php');
+	//require_once('includes/connectvars.php');
 
 	# temporary automatic sign in
 	// $_SESSION["userID"] = 44444444;
@@ -14,11 +14,10 @@
 
 <body>  
 
-	<?php require_once('includes/nav.php'); ?>
 
 	<div id="content">
 		<?php
-	    	require_once('home.php');
+		require_once('home.php');	    		
 	    ?>  
 	</div>
 

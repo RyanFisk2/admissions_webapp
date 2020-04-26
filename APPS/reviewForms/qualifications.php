@@ -26,7 +26,7 @@
 		$advGREQuery = "SELECT * FROM Adv_GRE WHERE applicationID = '$applicationID'";
 		$advGREResult = mysqli_query($dbc, $advGREQuery);
 
-		require_once('../includes/reviewHeader.php');
+		//require_once('../includes/reviewHeader.php');
 	?>
 
 
@@ -108,30 +108,11 @@
 
 		<?php
 
-			//assign URLs for previous form and next form
-			$nextURL = "./priorDegrees.php";
-			$prevURL = "../review.php";
-
-			//create buttons to go to the previous and next page
-			echo "<button class='btn btn-primary' id='prev' onclick='newPage($nextURL, $applicationID)'>Back</button>";
-			echo "<button class='btn btn-primary' id='next' onclick='newPage($nextURL, $applicationID)'>Next</button>";
+		//create buttons to go to the previous and next page
+		echo "<button class='btn btn-primary' id='prev' onclick='loadPage(\"./review.php?applicantID=$applicantID\")'>Back</button>";
+		echo "<button class='btn btn-primary' id='next' onclick='loadPage(\"./reviewForms/eriorDegrees.php?applicationID=$applicationID\")'>Next</button>";
 		?>
 
-		<script>
-			function newPage(url, applicationID) {
-				var xhttp = new XMLHttpRequest();
-				console.log("in newpage function");
-				xhttp.onreadystatechange = function() {
-					if((this.readyState == 4) && (this.status == 200)){
-						document.getElementByID('content').innerHTML = this.responseText;
-					}
-				};
-
-				xhttp.open("GET", url + "?applicationID=" + applicationID, true);
-				xhttp.setRequestHeader("Content-Type", "application-x-www-urlencoded");
-				xhttp.send();
-			}
-		</script>
 	</body>
 
 </html>

@@ -40,18 +40,29 @@
 
 		// add data to database and go to index page		
 		if ($check){
-			if (empty($mname)){
-				$fullname = $fname . " " . $lname ;
+			//fencepost loop to check for duplicate entries
+			$userID = rand(0000, 99999999);
+			$checkDupQuery = "SELECT * FROM users WHERE id = '$userID'";
+			$dupResult = mysqli_query($dbc, $checkDupQuery);
+
+			while(mysqli_num_rows($dupResult) > 0){
+				//randomly generated ID already in database
+				echo"regenerating random id";
+				$userID = rand(0, 99999999);
+				$dupResult = mysqli_query($dbc, $checkDupQuery);
 			}
-			else{
-				$fullname = $fname . " " . $mname. " " . $lname ;
-			}
+
 			//insert value into database
-			$query = "INSERT INTO user (username, password, name, email, roleID) VALUES ('" . $user_username . "', '" . $pass ."', '" . $fullname ."', '" . $email ."', 1)";
-			try_query($dbc, $query, 'create account');
+			$query = "INSERT INTO users (id, p_level, password) VALUES ('$userID', 7, '$pass')";
+			try_insert($dbc, $query, 'create account');
+
+			//add user info to applicants table
+			$ssn = rand(0, 999999999);
+			$appQuery = "INSERT INTO applicant  VALUES ('$userID', '$fname', '$lname', 'n/a', '$ssn', 0)";
+			try_insert($dbc, $appQuery, 'add applicant');
 
 			//set session
-			$query = "SELECT userID, username, name, roleID FROM user WHERE username LIKE '" . $user_username . "' AND password LIKE '" . $pass . "'"; 	
+			$query = "SELECT id, p_level FROM users WHERE id = '$userID' AND password = '$pass'"; 	
 			// echo $query;	
 			$data = mysqli_query($dbc, $query);	
 
@@ -59,10 +70,17 @@
 			if (mysqli_num_rows($data) == 1) {	
 				$row = mysqli_fetch_array($data);	
 
-				$_SESSION['userID'] = $row["userID"];	
-				$_SESSION['username'] = $row["username"];
-				$_SESSION['name'] = $row["name"];
-				$_SESSION['role'] = $row["roleID"];	
+				$_SESSION['id'] = $row["id"];	
+				$_SESSION['p_level'] = $row["p_level"];
+
+				//email user their login info
+				$msg = "Thank you for signing up!  
+					Your login id is " .$_SESSION['id'] ."  
+					Your password is " .$pass;
+
+				$msg = wordwrap($msg, 70);
+
+				mail($email, "Your Account Info", $msg);	
 				
 			}
 			header('Location: ' . '../index.php');	

@@ -1,6 +1,7 @@
 <!DOCTYPE HTML>
 <?php	
-	require_once('utils.php');	
+	require_once('utils.php');
+	//require_once('header.php');
 
 	// Clear the error message	
 	$error_msg = "";	
@@ -10,7 +11,7 @@
 		header('Location: ' . 'signup.php');	
 	}	
 	// if the user isn't logged in, try to log them in	
-	if (!isset($_SESSION['userID'])) {	
+	if (!isset($_SESSION['id'])) {	
 		if (isset($_POST['submit'])) {	
 			//echo 'running login logic';	
 			// Connect to the database	
@@ -22,7 +23,7 @@
 
 			if (!empty($user_username) && !empty($user_password)) {	
 				// TODO: Look up the username and password in the database	
-				$query = "SELECT userID, username, name, roleID FROM user WHERE username LIKE '" . $user_username . "' AND password LIKE '" . $user_password . "'";  	
+				$query = "SELECT id, p_level  FROM users WHERE id = '$user_username' AND password = '$user_password'";  	
 				// echo $query;	
 				$data = mysqli_query($dbc, $query);	
 
@@ -30,10 +31,8 @@
 				if (mysqli_num_rows($data) == 1) {	
 					$row = mysqli_fetch_array($data);	
 					echo "valid login";
-					$_SESSION['userID'] = $row["userID"];	
-					$_SESSION['username'] = $row["username"];
-					$_SESSION['name'] = $row["name"];
-					$_SESSION['role'] = $row["roleID"];
+					$_SESSION['id'] = $row["id"];	
+					$_SESSION['p_level'] = $row["p_level"];
 					//TODO: redirect to index.php 	
 					header('Location: ' . '../index.php');	
 				}	
