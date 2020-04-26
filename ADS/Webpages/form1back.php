@@ -58,7 +58,7 @@ $row = mysqli_fetch_array($data);
 
 //master check
 if(strcmp($row[0], 'MS') == 0 && $corecourse == 30 && $totalcredits >=30 && $csCredits >= 25){
-	$query = "UPDATE transcript set inform1 = 'false' WHERE t_id = '$uid'";
+	$query = "UPDATE student_transcript set inform1 = 'false' WHERE t_id = '$uid'";
        	$data = mysqli_query($dbc, $query);
 
 	$query = "delete from form1 WHERE f1_id = '$uid'";
@@ -67,7 +67,7 @@ if(strcmp($row[0], 'MS') == 0 && $corecourse == 30 && $totalcredits >=30 && $csC
 	for($i = 1; $i < 13; $i++){
         	$id =  $_POST['course'.$i];
 		$dept= $_POST['cdept'.$i];
-		$query = "UPDATE transcript set inform1 = 'true' WHERE dept='$dept' AND cno='$id' AND t_id = '$uid'";
+		$query = "UPDATE student_transcript set inform1 = 'true' WHERE dept='$dept' AND cno='$id' AND t_id = '$uid'";
         	$data = mysqli_query($dbc, $query);
 		$query = "INSERT INTO form1 VALUES ($uid, '$dept', $id)";
                 $data = mysqli_query($dbc, $query);
@@ -82,7 +82,7 @@ if(strcmp($row[0], 'MS') == 0 && $corecourse == 30 && $totalcredits >=30 && $csC
 //phdcheck
 if(strcmp($row[0], 'PhD') == 0 && $corecourse == 1 && $totalcredits >= 36 && $csCredits >= 35){
 
-	$query = "UPDATE transcript set inform1 = 'false' WHERE t_id = '$uid'";
+	$query = "UPDATE student_transcript set inform1 = 'false' WHERE t_id = '$uid'";
        	$data = mysqli_query($dbc, $query);
 	
 	$query = "delete from form1 WHERE f1_id = '$uid'";
@@ -93,7 +93,7 @@ if(strcmp($row[0], 'PhD') == 0 && $corecourse == 1 && $totalcredits >= 36 && $cs
 	for($i = 1; $i < 13; $i++){
                 $id =  $_POST['course'.$i];
                 $dept= $_POST['cdept'.$i];
-                $query = "UPDATE transcript set inform1 = 'true' WHERE dept='$dept' AND cno='$id' AND t_id = '$uid'";
+                $query = "UPDATE student_transcript set inform1 = 'true' WHERE dept='$dept' AND cno='$id' AND t_id = '$uid'";
                 $data = mysqli_query($dbc, $query);
 		$query = "INSERT INTO form1 VALUES ($uid, '$dept', $id)";
                 $data = mysqli_query($dbc, $query);

@@ -26,7 +26,8 @@
 					<div class="row mb-4 justify-content-center text-center">
           				<div class="col-lg-4 mb-4">
             				<h2 class="section-title-underline mb-4">
-              				<span>Home</span>
+							  <span>Home</span>
+							  <br><br>
             				</h2>
           				</div>
         			</div>
@@ -96,7 +97,8 @@
 					<div class="row mb-4 justify-content-center text-center">
           				<div class="col-lg-4 mb-4">
             				<h2 class="section-title-underline mb-4">
-              				<span>Home</span>
+							  <span>Home</span>
+							  <br><br>
             				</h2>
           				</div>
         			</div>
@@ -137,7 +139,8 @@
 					<div class="row mb-4 justify-content-center text-center">
           				<div class="col-lg-4 mb-4">
             				<h2 class="section-title-underline mb-4">
-              				<span>Home</span>
+							  <span>Home</span>
+							  <br><br>
             				</h2>
           				</div>
         			</div>
@@ -240,7 +243,8 @@
 					<div class="row mb-4 justify-content-center text-center">
           				<div class="col-lg-4 mb-4">
             				<h2 class="section-title-underline mb-4">
-              				<span>Home</span>
+							  <span>Home</span>
+							  <br><br>
             				</h2>
           				</div>
         			</div>
@@ -332,7 +336,8 @@
 					<div class="row mb-4 justify-content-center text-center">
           				<div class="col-lg-4 mb-4">
             				<h2 class="section-title-underline mb-4">
-              				<span>Home</span>
+							  <span>Home</span>
+							  <br><br>
             				</h2>
           				</div>
         			</div>
@@ -439,13 +444,13 @@
 
 <?php
 	//require_once('footer.php');
-	if (isset($_SESSION['gpacalc']))
+	/*if (isset($_SESSION['gpacalc']))
 	if (!($_SESSION['gpacalc'])){
 		$dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 		$query = "SELECT id, p_level FROM users WHERE p_level=5 OR p_level=6";
     	$data = mysqli_query($dbc, $query);
 		while ($row = mysqli_fetch_array($data)){
-			$query2 = "SELECT grade FROM transcript WHERE t_id='" . $row['id'] . "'";
+			$query2 = "SELECT grade FROM student_transcript WHERE t_id='" . $row['id'] . "'";
 			$data2 = mysqli_query($dbc, $query2);
 			$totalClasses = 0.00;
 			$totalCred = 0.00;
@@ -479,7 +484,7 @@
 			}
 			if ($totalClasses != 0.00){
 				$gpa = $totalCred/$totalClasses;
-				if ($row['account'] == 1){
+				if ($row['p_level'] == 5){
 					$query3 = "UPDATE student SET gpa='".$gpa."' WHERE u_id='" . $row['id'] . "'";
 				}
 				else
@@ -488,7 +493,7 @@
 			}
 		}
 		$_SESSION['gpacalc'] = true;
-	}
+	}*/
 ?>
 </body>
 </html>

@@ -60,9 +60,6 @@
           if (isset($_SESSION['acc_type'])) {
           echo '
             <li>
-              <a href="index.php" class="nav-link text-left">Advising Home</a>
-            </li>
-            <li>
               <a href="reset.php" class="nav-link text-left">Reset Database</a>
             </li>
           ';

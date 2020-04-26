@@ -5,7 +5,7 @@
 	}
 	require_once('appvars.php');
 	require_once('includes/utils.php');
-	require_once('includes/header.php');
+	require_once('../REGS/src/header.php');
 	require_once('includes/connectvars.php');
 
 	# temporary automatic sign in
