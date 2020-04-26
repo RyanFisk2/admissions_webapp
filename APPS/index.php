@@ -13,7 +13,9 @@
 ?>
 
 <body>  
-
+<style>
+	.content { margin: 200px; }
+</style>
 
 	<div id="content">
 	<?php
