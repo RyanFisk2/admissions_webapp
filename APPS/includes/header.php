@@ -104,14 +104,15 @@
 							';
 							break;
 						case 2:
-							echo '	
+							/*echo '	
 								<li>
 								  <a href="grades.php" class="nav-link text-left">Grades</a>
 								</li>
 								<li>
 								  <a href="transcript.php" class="nav-link text-left">Transcripts</a>
 								</li>
-							';
+';*/
+							echo"<button class='small btn btn-primary px-4 py-2 rounded-0' onclick='loadForm(\"applicants.php\")'>Review Applicants</button>";
 							break;
 						case 1:	
 							echo '	

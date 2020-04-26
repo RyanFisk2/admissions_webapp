@@ -73,6 +73,7 @@
 
 	<?php
 		echo"<button class='btn btn-primary' onclick='loadForm(\"./reviewForms/priorDegrees.php?applicationID=$applicationID\")'>Back</button>";
-        	echo"<button class='btn btn-primary' onclick='loadForm(\"./reviewForms/recDecision.php?applicationtID=$applicationID\")'>Next</button>";
+		if($_SESSION['p_level'] == 4) echo"<button class='btn btn-primary' onclick='loadForm(\"./reviewForms/recDecision.php?applicationtID=$applicationID\")'>Next</button>";
+		else echo "<button class='btn btn-primary' onclick='loadForm(\"./reviewForms/facultyReviews.php?applicationID=$applicationID\")'Next</button>";
 	?>
 </html>

@@ -39,7 +39,7 @@
 			$fID = $review['facultyID'];
 			$rec = $review['suggested_decision'];
 
-			$fNameQuery = "SELECT name FROM user WHERE userID = '$fID'";
+			$fNameQuery = "SELECT fname, lname FROM faculty WHERE f_id = '$fID'";
 			$facultyResult = mysqli_query($dbc, $fNameQuery);
 			$facultyInfo = mysqli_fetch_array($facultyResult);
 
@@ -53,12 +53,13 @@
 			$rating = mysqli_fetch_array($scoreResult);
 			$score = $rating['AVG(score)'];
 
-			$name = $facultyInfo['name'];
+			$fname = $facultyInfo['fname'];
+			$lname = $facultyInfo['lname'];
 			$reasons = $review['reasons'];
 			$comments = $review['comments'];
 
 			echo "<tr>
-					<td>$name</td>
+					<td>$fname $lname</td>
 					<td>$score</td>
 					<td>$recommendation</td>
 				</tr>
