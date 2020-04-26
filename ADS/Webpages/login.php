@@ -43,11 +43,11 @@
           $_SESSION['password'] = $row['password'];
           $_SESSION['p_level'] = $row['p_level'];
           $_SESSION['id1'] = "";
-		  $_SESSION['p_level1'] = 0;
+		      $_SESSION['p_level1'] = 0;
 		  
-		  $_SESSION['user_id'] = $row['id']; //ADS
-		  $_SESSION['acc_type'] = $row['p_level']; //ADS
-		  $_SESSION['gpacalc'] = false; //ADS
+		      $_SESSION['user_id'] = $row['id']; //ADS
+		      $_SESSION['acc_type'] = $row['p_level']; //ADS
+		      $_SESSION['gpacalc'] = false; //ADS
 
           //TODO: redirect to index.php
           if($row['id'] == $row['password']){
