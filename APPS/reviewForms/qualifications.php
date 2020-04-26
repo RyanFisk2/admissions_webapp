@@ -109,8 +109,8 @@
 		<?php
 
 		//create buttons to go to the previous and next page
-		echo "<button class='btn btn-primary' id='prev' onclick='loadPage(\"./review.php?applicantID=$applicantID\")'>Back</button>";
-		echo "<button class='btn btn-primary' id='next' onclick='loadPage(\"./reviewForms/eriorDegrees.php?applicationID=$applicationID\")'>Next</button>";
+		echo "<button class='btn btn-primary' id='prev' onclick='loadForm(\"./review.php?applicantID=$applicantID\")'>Back</button>";
+		echo "<button class='btn btn-primary' id='next' onclick='loadForm(\"./reviewForms/priorDegrees.php?applicationID=$applicationID\")'>Next</button>";
 		?>
 
 	</body>

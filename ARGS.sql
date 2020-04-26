@@ -614,3 +614,11 @@ INSERT INTO prereqs(course_Id, prereq1, prereq2) VALUES (16, 'CSCI 6283', 'CSCI 
 INSERT INTO prereqs(course_Id, prereq1, prereq2) VALUES (17, 'CSCI 6212', NULL);
 INSERT INTO prereqs(course_Id, prereq1, prereq2) VALUES (18, 'CSCI 6461','CSCI 6212');
 INSERT INTO prereqs(course_Id, prereq1, prereq2) VALUES (19, 'CSCI 6284', NULL);
+
+INSERT ignore INTO decisions (decisionID, description) VALUES
+(0, 'Application Incomplete'),
+(1, 'Application Complete and Under Review'),
+(2, 'Admitted'),
+(3, 'Admitted With Aid'),
+(4, 'Rejected');
+

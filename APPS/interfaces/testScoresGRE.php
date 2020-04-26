@@ -24,7 +24,7 @@
 		foreach ($keys as $key) {
 			$query .= "'" . $_POST[$key] . "', ";
 		}
-		$query .= ($_POST["verbalScore"] + $_POST["quantScore"] + $_POST["writtenScore"]) . ", ";
+		$query .= ($_POST["quantScore"] + $_POST["verbalScore"] + $_POST["writtenScore"]) . ", ";
 		$query .= $_SESSION["applicationID"] . ")";
 		try_insert($dbc, $query, "Added score to database.");
 	}

@@ -52,8 +52,8 @@
 
 		<?php
 
-			echo"<button class='btn btn-primary' id='prev' onclick='loadForm(\"./qualifications.php?applicationID=$applicationID\")'>Back</button>";
-			echo"<button class='btn btn-primary' id='next' onclick='loadForm(\"./letters.php?applicationID=$applicationID\")'>Next</button>";
+			echo"<button class='btn btn-primary' id='prev' onclick='loadForm(\"./reviewForms/qualifications.php?applicationID=$applicationID\")'>Back</button>";
+			echo"<button class='btn btn-primary' id='next' onclick='loadForm(\"./reviewForms/letters.php?applicationID=$applicationID\")'>Next</button>";
 
 		?>
 

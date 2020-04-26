@@ -7,7 +7,7 @@
 	$keys = array("writerName", "writerEmail", "writerTitle", "writerEmployer");
 
 	$query = "SELECT writerName, writerEmail, received FROM rec_letter ";
-	$query .= "WHERE applicationID = " . $_SESSION["appID"];
+	$query .= "WHERE applicationID = " . $_SESSION["applicationID"];
 	$data = try_query($dbc, $query, NULL);
 
 

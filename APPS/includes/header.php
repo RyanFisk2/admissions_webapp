@@ -36,9 +36,9 @@
 
   <link rel="stylesheet" href="css/style.css">
 
-</head>
+<!-- </head> 
 
-<body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
+<body data-spy="scroll" data-target=".site-navbar-target" data-offset="300"> -->
 
   <div class="site-wrap">
 
@@ -69,7 +69,7 @@
 				if (isset ($_SESSION['p_level'])) {
 					switch ($_SESSION['p_level']) {
 						case 7:
-							echo "<button class='small btn btn-primary px-4 py-2 rounded-0' onclick='loadForm(\"application.php\");'>My Application</button";
+							echo "<button class='small btn btn-primary px-4 py-2 rounded-0' id='appForm' onclick='loadForm(\"application.php\")'>My Application</button";
 							echo "  ";
 							break;
 
@@ -85,7 +85,7 @@
 								  <a href="grades.php" class="nav-link text-left">Grades</a>
 								</li>
 							';*/
-							echo"<button class='small btn btn-primary px-4 py-2 rounded-0' onclick='loadForm(\"applicants.php\");'>Review Applicants</button>";
+							echo"<button class='small btn btn-primary px-4 py-2 rounded-0' onclick='loadForm(\"applicants.php\")'>Review Applicants</button>";
 							break;
 						case 5:
 							echo '	
@@ -164,6 +164,7 @@
   <script src="js/jquery.mb.YTPlayer.min.js"></script>
   <script src="js/main.js"></script>
 
-</body>
+<!-- </body> -->
+</head>
 
 </html>

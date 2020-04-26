@@ -8,7 +8,7 @@
 
 	if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 		$query = "SELECT writerName, writerEmail, writerTitle, writerEmployer FROM rec_letter ";
-		$query .= "WHERE applicationID = " . $_SESSION["appID"];
+		$query .= "WHERE applicationID = " . $_SESSION["applicationID"];
 		$data = try_query($dbc, $query, NULL);
 		$output = array();
 		while ($row = mysqli_fetch_row($data)) {
@@ -22,7 +22,7 @@
 		foreach ($keys as $key) {
 			$query .= "'" . $_POST[$key] . "', ";
 		}
-		$query .= $_SESSION["appID"] . ")";
+		$query .= $_SESSION["applicationID"] . ")";
 		$letter_id = try_insert($dbc, $query, "Added letter writer to database.");
 
 		$url = ROOT_URL . "/recommendation.php?id=" . $letter_id;

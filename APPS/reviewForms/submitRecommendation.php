@@ -5,7 +5,7 @@
 	<?php
 		session_start();
 
-		$fID = $_SESSION['userID'];
+		$fID = $_SESSION['id'];
 
 		require_once('../includes/connectvars.php');
 		$dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);

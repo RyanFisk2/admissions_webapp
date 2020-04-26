@@ -16,7 +16,7 @@
 
 
 	<div id="content">
-		<?php
+	<?php
 		require_once('home.php');	    		
 	    ?>  
 	</div>

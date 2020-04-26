@@ -102,7 +102,7 @@
 
 	
 	<?php
-		echo"<button class='btn btn-primary' id='next' onclick='loadForm(\"./reviewForms/qualifications.php?applicantID=$applicantID\")'>Next</button>";
+		echo"<button class='btn btn-primary' id='next' onclick='loadForm(\"./reviewForms/qualifications.php?applicationID=$applicationID\")'>Next</button>";
 	?>		
 
 	</div>

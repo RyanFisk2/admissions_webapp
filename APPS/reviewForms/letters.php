@@ -19,7 +19,7 @@
 			$letterResult = mysqli_query($dbc, $letterQuery);
 			require_once('../includes/reviewHeader.php');
 
-			$fID = $_SESSION['userID'];
+			$fID = $_SESSION['id'];
 
 
 		?>
@@ -68,11 +68,11 @@
 					}
 						
 				}
-
-				echo<"button class='btn btn-primary' onclick='loadForm(\"./priorDegrees.php?applicationID=$applicationID\")'>Back</button>";
-				echo"<button class='btn btn-primary' onclick='loadForm(\"./submitRecommendation.php?applicantID=$applicantID\")'>Next</button>";
 			?>
-
 	</body>
 
+	<?php
+		echo"<button class='btn btn-primary' onclick='loadForm(\"./reviewForms/priorDegrees.php?applicationID=$applicationID\")'>Back</button>";
+        	echo"<button class='btn btn-primary' onclick='loadForm(\"./reviewForms/recDecision.php?applicationtID=$applicationID\")'>Next</button>";
+	?>
 </html>
