@@ -36,7 +36,7 @@ DROP TABLE IF EXISTS student_transcript CASCADE;
 
 create table users(
 id int UNIQUE,
-p_level int NOT NULL, /* 1 for admin, 2 for gs, 3 for chair, 4 for faculty, 5 for students, 6 for alumni, 7 for applicants*/
+p_level int NOT NULL, /* 1 for admin, 2 for gs, 4 for faculty, 5 for students, 6 for alumni, 7 for applicants*/
 password varchar(20) NOT NULL,
 primary key (id)
 );
@@ -67,6 +67,7 @@ addr varchar(50) NOT NULL,
 email varchar(30) NOT NULL,
 dept varchar(4) NOT NULL,
 reviewer int(1) NOT NULL, /*1 means reviewer, 0 means not reviewer*/
+chair int(1), /*1 means chairman, 0 means not chairman, only 1 chairman allowed*/
 primary key (f_id),
 foreign key (f_id) references users(id)
 );
@@ -355,7 +356,7 @@ SET FOREIGN_KEY_CHECKS = 1;
 
 INSERT INTO users (id, p_level, password) VALUES (10000000, 1, 'admin');
 INSERT INTO users (id, p_level, password) VALUES (10000001, 2, 'gs123');
-INSERT INTO users (id, p_level, password) VALUES (10000111, 3, 'Chairman');
+INSERT INTO users (id, p_level, password) VALUES (10000111, 4, 'Chairman');
 INSERT INTO users (id, p_level, password) VALUES (10000002, 4, 'bhagiweb');
 INSERT INTO users (id, p_level, password) VALUES (10000003, 4, 'choi123');
 INSERT INTO users (id, p_level, password) VALUES (10000004, 4, 'PASS');
@@ -394,7 +395,7 @@ INSERT INTO student (u_id, fname, lname, addr, email, major, degree, gpa, gradap
 INSERT INTO student (u_id, fname, lname, addr, email, major, degree, gpa, gradapp, form1status, advisor) VALUES (66666666, 'George', 'Harrison', '19010 Street Pl. City, ST 22032', 'jacobpritchard9@gwu.edu', 'Computer Science', 'MS', '2.93', 0, 0, 10000010);
 INSERT INTO student (u_id, fname, lname, addr, email, major, degree, gpa, gradapp, form1status, advisor) VALUES (12345678, 'Stevie', 'Nicks', '43638 Drive Dr. City, ST 47423', 'jacobpritchard9@gwu.edu', 'Computer Science', 'PhD', '3.58', 0, 1, 10000012);
 
-
+INSERT INTO faculty (f_id, fname, lname, addr, email, dept, reviewer, chair) VALUES (10000111, 'Robert', 'Pless', '33579 Street Rd. City, ST 12854', 'jacobpritchard9@gwu.edu', 'CSCI', 1, 1);
 INSERT INTO faculty (f_id, fname, lname, addr, email, dept, reviewer) VALUES (10000002, 'Bhagi', 'Narahari', '55555 Road Rd. City, ST 66666', 'jacobpritchard9@gwu.edu', 'CSCI', 1);
 INSERT INTO faculty (f_id, fname, lname, addr, email, dept, reviewer) VALUES (10000003, 'Hyeong-Ah', 'Choi', '77777 Place Pl. City, ST 88888', 'jacobpritchard9@gwu.edu', 'CSCI', 0);
 INSERT INTO faculty (f_id, fname, lname, addr, email, dept, reviewer) VALUES (10000004, 'Roxana', 'Leontie', '99999 F St. Washington, D.C. 11111', 'jacobpritchard9@gwu.edu', 'CSCI', 0);
@@ -415,28 +416,28 @@ INSERT INTO alumni (a_id, fname, lname, degree, gpa, gradyear, email, addr) VALU
 INSERT INTO applicant () VALUES ();
 INSERT INTO applicant () VALUES ();*/
 
-INSERT INTO catalog (department, c_no, title, credits) VALUES ('CSCI', 6221, 'SW Paradigms', 3);
-INSERT INTO catalog (department, c_no, title, credits) VALUES ('CSCI', 6461, 'Computer Architecture', 3);
-INSERT INTO catalog (department, c_no, title, credits) VALUES ('CSCI', 6212, 'Algorithms', 3);
-INSERT INTO catalog (department, c_no, title, credits) VALUES ('CSCI', 6220, 'Machine Learning', 3);
-INSERT INTO catalog (department, c_no, title, credits) VALUES ('CSCI', 6232, 'Networks 1', 3);
-INSERT INTO catalog (department, c_no, title, credits) VALUES ('CSCI', 6233, 'Networks 2', 3);
-INSERT INTO catalog (department, c_no, title, credits) VALUES ('CSCI', 6241, 'Database 1', 3);
-INSERT INTO catalog (department, c_no, title, credits) VALUES ('CSCI', 6242, 'Database 2', 3);
-INSERT INTO catalog (department, c_no, title, credits) VALUES ('CSCI', 6246, 'Compilers', 3);
-INSERT INTO catalog (department, c_no, title, credits) VALUES ('CSCI', 6260, 'Multimedia', 3);
-INSERT INTO catalog (department, c_no, title, credits) VALUES ('CSCI', 6251, 'Cloud Computing', 3);
-INSERT INTO catalog (department, c_no, title, credits) VALUES ('CSCI', 6254, 'SW Engineering', 3);
-INSERT INTO catalog (department, c_no, title, credits) VALUES ('CSCI', 6262, 'Graphics 1', 3);
-INSERT INTO catalog (department, c_no, title, credits) VALUES ('CSCI', 6283, 'Security 1', 3);
-INSERT INTO catalog (department, c_no, title, credits) VALUES ('CSCI', 6284, 'Cryptography', 3);
-INSERT INTO catalog (department, c_no, title, credits) VALUES ('CSCI', 6286, 'Network Security', 3);
-INSERT INTO catalog (department, c_no, title, credits) VALUES ('CSCI', 6325, 'Algorithms 2', 3);
-INSERT INTO catalog (department, c_no, title, credits) VALUES ('CSCI', 6339, 'Embedded Systems', 3);
-INSERT INTO catalog (department, c_no, title, credits) VALUES ('CSCI', 6384, 'Cryptography 2', 3);
-INSERT INTO catalog (department, c_no, title, credits) VALUES ('ECE', 6241, 'Communication Theory', 3);
-INSERT INTO catalog (department, c_no, title, credits) VALUES ('ECE', 6242, 'Information Theory', 2);
-INSERT INTO catalog (department, c_no, title, credits) VALUES ('MATH', 6210, 'Logic', 2);
+INSERT INTO catalog (department, c_no, title, credits) VALUES ("CSCI", 6221, 'SW Paradigms', 3);
+INSERT INTO catalog (department, c_no, title, credits) VALUES ("CSCI", 6461, 'Computer Architecture', 3);
+INSERT INTO catalog (department, c_no, title, credits) VALUES ("CSCI", 6212, 'Algorithms', 3);
+INSERT INTO catalog (department, c_no, title, credits) VALUES ("CSCI", 6220, 'Machine Learning', 3);
+INSERT INTO catalog (department, c_no, title, credits) VALUES ("CSCI", 6232, 'Networks 1', 3);
+INSERT INTO catalog (department, c_no, title, credits) VALUES ("CSCI", 6233, 'Networks 2', 3);
+INSERT INTO catalog (department, c_no, title, credits) VALUES ("CSCI", 6241, 'Database 1', 3);
+INSERT INTO catalog (department, c_no, title, credits) VALUES ("CSCI", 6242, 'Database 2', 3);
+INSERT INTO catalog (department, c_no, title, credits) VALUES ("CSCI", 6246, 'Compilers', 3);
+INSERT INTO catalog (department, c_no, title, credits) VALUES ("CSCI", 6260, 'Multimedia', 3);
+INSERT INTO catalog (department, c_no, title, credits) VALUES ("CSCI", 6251, 'Cloud Computing', 3);
+INSERT INTO catalog (department, c_no, title, credits) VALUES ("CSCI", 6254, 'SW Engineering', 3);
+INSERT INTO catalog (department, c_no, title, credits) VALUES ("CSCI", 6262, 'Graphics 1', 3);
+INSERT INTO catalog (department, c_no, title, credits) VALUES ("CSCI", 6283, 'Security 1', 3);
+INSERT INTO catalog (department, c_no, title, credits) VALUES ("CSCI", 6284, 'Cryptography', 3);
+INSERT INTO catalog (department, c_no, title, credits) VALUES ("CSCI", 6286, 'Network Security', 3);
+INSERT INTO catalog (department, c_no, title, credits) VALUES ("CSCI", 6325, 'Algorithms 2', 3);
+INSERT INTO catalog (department, c_no, title, credits) VALUES ("CSCI", 6339, 'Embedded Systems', 3);
+INSERT INTO catalog (department, c_no, title, credits) VALUES ("CSCI", 6384, 'Cryptography 2', 3);
+INSERT INTO catalog (department, c_no, title, credits) VALUES ("ECE", 6241, 'Communication Theory', 3);
+INSERT INTO catalog (department, c_no, title, credits) VALUES ("ECE", 6242, 'Information Theory', 2);
+INSERT INTO catalog (department, c_no, title, credits) VALUES ("MATH", 6210, 'Logic', 2);
 
 INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (1, 1, 8, 'M', '15:00', '17:30');
 INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (2, 1, 8, 'T', '15:00', '17:30');

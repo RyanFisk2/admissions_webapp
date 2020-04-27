@@ -62,6 +62,11 @@
         $idFormat = 'f_id';
         break;
 
+        case 6:
+        $userTable = 'alumni';
+        $idFormat = 'a_id';
+        break;
+
         case 1:
         if($_SESSION['id'] != 10000000){
             header("Location: home.php");
