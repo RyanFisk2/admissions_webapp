@@ -11,6 +11,8 @@
 <?php
 	require_once('superindexheader.php');
 
+if (isset($_SESSION['acc_type'])){
+
     require_once('connectvars.php');
     
     $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
@@ -38,7 +40,7 @@
 <?php	
   	if (isset($_SESSION['user_id'])) {
 		if (isset($_SESSION['acc_type'])){
-			if($_SESSION['acc_type'] == 5){ //Student
+			if($_SESSION['acc_type'] == 5 || $_SESSION['acc_type'] == 6){ //Student and alumni
 			?>
 			<div class="site-section">
       			<div class="container">
@@ -80,9 +82,9 @@
 			</div>
 			<?php 
 			}
-			else if($_SESSION['acc_type'] == 6){ //Alumni only needs ads system
+			/*else if($_SESSION['acc_type'] == 6){ //Alumni only needs ads system
                 header('Location:index.php');
-            }
+            }*/
             else if($_SESSION['acc_type'] == 7){ //Applicant only needs apps system
                 header('Location:../../APPS/index.php');
             }
@@ -203,5 +205,6 @@
 		}
 		$_SESSION['gpacalc'] = true;
 	}
+}
 ?>
 </body>
