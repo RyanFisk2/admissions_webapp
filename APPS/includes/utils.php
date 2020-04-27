@@ -20,11 +20,15 @@
       return dirname($_SERVER["PHP_SELF"]) . '/' . $file;
     }
     function try_insert($dbc, $query, $success) {
-      if (mysqli_query($dbc, $query)) {
-        if (!is_null($success)) echo "Success: " . $success . '<br>';
-        return $dbc->insert_id;
-      }
-      else throw new Exception('Error with query ' . $query . ': ' . mysqli_error($dbc));
+	    if (mysqli_query($dbc, $query)) {
+		    echo "in outer if";
+		    if (!is_null($success)) echo "Success: " . $success . '<br>';
+		    echo $dbc->insert_id;
+        	return $dbc->insert_id;
+	    }else if (mysqli_connect_errno()){
+		    echo "Failed to connect to DB";
+	    }
+      	    else throw new Exception('Error with query ' . $query . ': ' . mysqli_error($dbc));
     }
     function try_query($dbc, $query, $success) {
       if ($result = mysqli_query($dbc, $query)) {

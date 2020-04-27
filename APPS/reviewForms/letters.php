@@ -19,7 +19,7 @@
 			$letterResult = mysqli_query($dbc, $letterQuery);
 			require_once('../includes/reviewHeader.php');
 
-			$fID = $_SESSION['userID'];
+			$fID = $_SESSION['id'];
 
 
 		?>
@@ -69,7 +69,11 @@
 						
 				}
 			?>
-
 	</body>
 
+	<?php
+		echo"<button class='btn btn-primary' onclick='loadForm(\"./reviewForms/priorDegrees.php?applicationID=$applicationID\")'>Back</button>";
+		if($_SESSION['p_level'] == 4) echo"<button class='btn btn-primary' onclick='loadForm(\"./reviewForms/recDecision.php?applicationtID=$applicationID\")'>Next</button>";
+		else echo "<button class='btn btn-primary' onclick='loadForm(\"./reviewForms/facultyReviews.php?applicationID=$applicationID\")'Next</button>";
+	?>
 </html>

@@ -2,10 +2,10 @@
 <?php
 	// Logout logic from Steed's HW4. Needs updating.
 	session_start();
-	if (isset($_SESSION["userID"])) {
+	if (isset($_SESSION["id"])) {
 		$_SESSION = array();
 		session_destroy();
-		echo "<script>alert('Log Out');document.location.reload()</script>";
+		header('Location: ' . '../index.php');
 	}
 	if(isset($_POST["back"])) {
 	 // Redirect them to the login page
