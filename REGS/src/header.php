@@ -51,7 +51,7 @@
               <ul class="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block">
                 <li>
                   <div class="site-logo">
-                  <a href="home.php" class="d-block">
+                  <a href="../../ADS/Webpages/superindex.php" class="d-block">
                     <img src="images/logo.png" alt="Image" class="img-fluid">
                   </a>
                   </div>
@@ -118,6 +118,19 @@
                 </li>
 							';
 							break;
+            case 7:
+              header('Location: ../../ADS/Webpages/superindex.php');
+              break;
+            case 6:
+              echo '  
+                <li>
+                  <a href="account.php" class="nav-link text-left">Account Info</a>
+                </li>
+                <li>
+                  <a href="transcript.php" class="nav-link text-left">Transcript</a>
+                </li>     
+              ';
+              break;
 					}
 				}
 
