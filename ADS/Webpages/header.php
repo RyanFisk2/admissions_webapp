@@ -48,7 +48,7 @@
                 <li>
                 <div class="site-logo">
                   <a href="superindex.php" class="d-block">
-                  <img src="apps_logo.png" alt="Image" class="img-fluid" height="100" width="115">
+                  <img src="images/logotry3.png" alt="Image" class="img-fluid" height="100" width="115">
                   </a>
                 </div>
                 </li>
