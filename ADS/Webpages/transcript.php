@@ -66,7 +66,7 @@
 
 		echo '</table>';
 	}
-	if($_SESSION['acc_type'] == 4){ //New faculty
+	if($_SESSION['acc_type'] == 4){ //Faculty
 				?>
 				<div class="row mb-4 justify-content-center text-center">
 					<form>
@@ -95,7 +95,7 @@
 						echo '<tr><th>Department</th><th>Course Number</th><th>Grade</th><th>Semester</th></tr>';
 						
 					}
-                       	$query = "SELECT * FROM student_transcript t, semester s WHERE t.semesterid = s.semesterid && t.t_id='" . $uid['u_id'] . "'";
+                       	$query = "SELECT * FROM student_transcript t, semester s WHERE t.semesterid = s.semesterid && t.t_id='" . $uid['u_id'] . "' ORDER BY t.semesterid ASC";
 						$dbc1 = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
                         $data1 = mysqli_query($dbc1, $query);
 

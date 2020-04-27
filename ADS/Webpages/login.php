@@ -38,16 +38,16 @@
         // If The log-in is OK
         if (mysqli_num_rows($data) == 1) {
           $row = mysqli_fetch_array($data);
-          //TODO: so set the user ID and username session vars
-          $_SESSION['id'] = $row['id'];
+          
+          $_SESSION['id'] = $row['id']; //Begin regs session vars
           $_SESSION['password'] = $row['password'];
           $_SESSION['p_level'] = $row['p_level'];
           $_SESSION['id1'] = "";
-		  $_SESSION['p_level1'] = 0;
+		      $_SESSION['p_level1'] = 0; //End Regs session vars
 		  
-		  $_SESSION['user_id'] = $row['id']; //ADS
-		  $_SESSION['acc_type'] = $row['p_level']; //ADS
-		  $_SESSION['gpacalc'] = false; //ADS
+		      $_SESSION['user_id'] = $row['id']; //ADS
+		      $_SESSION['acc_type'] = $row['p_level']; //ADS
+		      $_SESSION['gpacalc'] = false; //ADS
 
           //TODO: redirect to index.php
           if($row['id'] == $row['password']){
