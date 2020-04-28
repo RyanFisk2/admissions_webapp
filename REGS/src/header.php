@@ -57,7 +57,10 @@
                   </div>
                 </li>
                 <li>
-                  <a href="home.php" class="nav-link text-left">Home</a>
+                  <a href="../../ADS/Webpages/superindex.php" class="nav-link text-left">Home</a>
+                </li>
+                <li>
+                  <a href="home.php" class="nav-link text-left">REGS Home</a>
                 </li>
 			<?php
 
