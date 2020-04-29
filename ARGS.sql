@@ -374,7 +374,7 @@ INSERT INTO users (id, p_level, password) VALUES (99999999, 5, 'pword');
 INSERT INTO users (id, p_level, password) VALUES (23456789, 5, 'pwrd3');
 INSERT INTO users (id, p_level, password) VALUES (87654321, 5, 'pwrd4');
 INSERT INTO users (id, p_level, password) VALUES (45678901, 5, 'pwrd5');
-INSERT INTO users (id, p_level, password) VALUES (1444444, 5, 'pwrd6');
+INSERT INTO users (id, p_level, password) VALUES (14444444, 5, 'pwrd6');
 INSERT INTO users (id, p_level, password) VALUES (66666666, 5, 'pwrd7');
 INSERT INTO users (id, p_level, password) VALUES (12345678, 5, 'pwrd8');
 INSERT INTO users (id, p_level, password) VALUES (77777777, 6, 'pwrd9');
@@ -391,7 +391,7 @@ INSERT INTO student (u_id, fname, lname, addr, email, major, degree, gradapp, fo
 INSERT INTO student (u_id, fname, lname, addr, email, major, degree, gradapp, form1status, advisor) VALUES (23456789, 'Ella', 'Fitzgerald', '12121 Street Dr. City, ST 22325', 'jacobpritchard9@gwu.edu', 'Computer Science', 'PhD', 0, 0, 10000002);
 INSERT INTO student (u_id, fname, lname, addr, email, major, degree, gpa, gradapp, form1status, advisor) VALUES (87654321, 'Eva', 'Cassidy', '34373 Drive St. City, ST 47424', 'jacobpritchard9@gwu.edu', 'Computer Science', 'MS', '3.40', 0, 1, 10000011);
 INSERT INTO student (u_id, fname, lname, addr, email, major, degree, gpa, gradapp, form1status, advisor) VALUES (45678901, 'Jimi', 'Hendrix', '71121 Street Ct. City, ST 12325', 'jacobpritchard9@gwu.edu', 'Computer Science', 'MS', '3.77', 0, 0, 10000010);
-INSERT INTO student (u_id, fname, lname, addr, email, major, degree, gpa, gradapp, form1status, advisor) VALUES (1444444, 'Paul', 'McCartney', '43393 Drive Ct. City, ST 40041', 'jacobpritchard9@gwu.edu', 'Computer Science', 'MS','3.50', 0, 2, 10000002);
+INSERT INTO student (u_id, fname, lname, addr, email, major, degree, gpa, gradapp, form1status, advisor) VALUES (14444444, 'Paul', 'McCartney', '43393 Drive Ct. City, ST 40041', 'jacobpritchard9@gwu.edu', 'Computer Science', 'MS','3.50', 0, 2, 10000002);
 INSERT INTO student (u_id, fname, lname, addr, email, major, degree, gpa, gradapp, form1status, advisor) VALUES (66666666, 'George', 'Harrison', '19010 Street Pl. City, ST 22032', 'jacobpritchard9@gwu.edu', 'Computer Science', 'MS', '2.93', 0, 0, 10000010);
 INSERT INTO student (u_id, fname, lname, addr, email, major, degree, gpa, gradapp, form1status, advisor) VALUES (12345678, 'Stevie', 'Nicks', '43638 Drive Dr. City, ST 47423', 'jacobpritchard9@gwu.edu', 'Computer Science', 'PhD', '3.58', 0, 1, 10000012);
 
