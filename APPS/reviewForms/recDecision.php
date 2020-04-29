@@ -10,7 +10,7 @@
 		$dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 
 		$applicationID = $_GET['applicationID'];
-		$query = "SELECT userID FROM application_form WHERE applicationID = '$applicationID'";
+		$query = "SELECT userID FROM application_form WHERE applicationID = $applicationID";
 
 		$result = mysqli_query($dbc, $query);
 		$info = mysqli_fetch_array($result);
@@ -26,7 +26,7 @@
 <body>
 
 	<h2 align="center">Recommended Decision</h2>
-<?php echo"<form method='post' action='./reviewForms/submitRecommendation.php?applicantID=$applicantID'>"; ?>
+	<form method="post" action="./reviewForms/submitRecommendation.php?applicantID=<?php echo $applicantID; ?>">
 			
 		<label for="reject">Reject</label>
 		<input type="radio" name="rating" id="reject" value="0">
@@ -52,6 +52,7 @@
 
 		<button name="submit" class="btn btn-primary">Submit</button>
 	</form>
+
 
 </body>
 

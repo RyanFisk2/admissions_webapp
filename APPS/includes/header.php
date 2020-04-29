@@ -4,7 +4,7 @@
 <style>
 
   .stick-wrapper {
-    position: fixed;
+    position: relative;
 
   }
 
@@ -51,14 +51,18 @@
               <ul class="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block">
                 <li>
                   <div class="site-logo">
-                  <a href="home.php" class="d-block">
-                    <img src="images/logo.png" alt="Image" class="img-fluid">
+                  <a href="index.php" class="d-block">
+                    <img src="img/apps_logo.png" alt="Image" class="img-fluid">
                   </a>
                   </div>
                 </li>
                 <li>
-                  <a href="index.php" class="nav-link text-left">Home</a>
-                </li>
+		  <a href="../ADS/Webpages/superindex.php" class="nav-link text-left">Home</a>
+		</li>
+		<li>
+		  <a href="index.php" class="nav-link text-left">Application Home</a>
+		</li>
+
 			<?php
 
 				if(!(isset($_SESSION))){
@@ -69,7 +73,7 @@
 				if (isset ($_SESSION['p_level'])) {
 					switch ($_SESSION['p_level']) {
 						case 7:
-							echo "<button class='small btn btn-primary px-4 py-2 rounded-0' id='appForm' onclick='loadForm(\"application.php\")'>My Application</button";
+							//echo "<button class='small btn btn-primary px-4 py-2 rounded-0' id='appForm' onclick='loadForm(\"application.php\")'>My Application</button";
 							echo "  ";
 							break;
 
@@ -85,7 +89,7 @@
 								  <a href="grades.php" class="nav-link text-left">Grades</a>
 								</li>
 							';*/
-							echo"<button class='small btn btn-primary px-4 py-2 rounded-0' onclick='loadForm(\"applicants.php\")'>Review Applicants</button>";
+							//echo"<button class='small btn btn-primary px-4 py-2 rounded-0' onclick='loadForm(\"applicants.php\")'>Review Applicants</button>";
 							break;
 						case 5:
 							echo '	
@@ -112,7 +116,7 @@
 								  <a href="transcript.php" class="nav-link text-left">Transcripts</a>
 								</li>
 ';*/
-							echo"<button class='small btn btn-primary px-4 py-2 rounded-0' onclick='loadForm(\"applicants.php\")'>Review Applicants</button>";
+							//echo"<button class='small btn btn-primary px-4 py-2 rounded-0' onclick='loadForm(\"applicants.php\")'>Review Applicants</button>";
 							break;
 						case 1:	
 							echo '	

@@ -37,12 +37,12 @@
 
 	//query for applicants (roleID 1) that have submitted the application (submitted = 1)
 	$getApplicants = "SELECT applicant.fname, applicant.lname, applicant.app_id
-				FROM applicant, users
-				WHERE users.p_level = '7' AND users.id = applicant.app_id";
+				FROM applicant, users, application_form
+				WHERE users.p_level = '7' AND users.id = applicant.app_id AND users.id = application_form.userID AND application_form.submitted = 1";
 	$applicantResult = mysqli_query($dbc, $getApplicants);
 
-	$role = $_SESSION['p_level'];
-	$fID = $_SESSION['id'];
+	$role = $_SESSION['acc_type'];
+	$fID = $_SESSION['user_id'];
 
 	echo "<br/>
 	<div id='content'>

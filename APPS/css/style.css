@@ -27,6 +27,11 @@ h1, h2, h3, h4, h5,
 .border-2 {
   border-width: 2px; }
 
+.content {
+	margin: 0 auto;
+	margin-top: 63.94px;
+}
+
 .text-black {
   color: #000 !important; }
 
@@ -846,7 +851,7 @@ h1, h2, h3, h4, h5,
   left: 0;
   margin: 0 auto;
   z-index: 1;
-  margin-top: -33.94px;
+  margin-top: 63.94px;
   background: #ccc; }
   .feature-1 .icon-wrapper > span, .person .icon-wrapper > span {
     width: 96px;

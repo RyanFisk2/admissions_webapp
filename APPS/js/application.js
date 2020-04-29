@@ -366,7 +366,7 @@ function submitFormElement(url, form) {
 		console.log("attempting to submit", form, "to", url);
 		serializedData = form.serialize()
 		//console.log(serializedData);
-		if (serializedData != "" && !form.hasClass("template")) {
+		if (serializedData != "") {
 			console.log("posting data", serializedData, "to", url);
 			$.ajax({
 				type: "POST",
