@@ -398,9 +398,11 @@ INSERT INTO faculty (f_id, fname, lname, addr, email, dept, reviewer) VALUES (10
 INSERT INTO alumni (a_id, fname, lname, degree, gpa, gradyear, email, addr) VALUES (77777777, 'Eric', 'Clapton', 'MS', '3.30', 2014, 'eric@gwu.edu', '3435 Avenue St. City, ST 41441');
 INSERT INTO alumni (a_id, fname, lname, degree, gpa, gradyear, email, addr) VALUES (34567890, 'Kurt', 'Cobain', 'PhD', '3.75', 2015, 'kurt@gwu.edu', '5256 Place Ave. City, ST 25468');
 
-/*Not Done Yet, need to figure out the table first
-INSERT INTO applicant () VALUES ();
-INSERT INTO applicant () VALUES ();*/
+INSERT INTO applicant (app_id, fname, lname, degree, ssn, app_status) VALUES (15555555, 'John', 'Lennon', 'MS', 111111111, 1);
+INSERT INTO applicant (app_id, fname, lname, degree, ssn, app_status) VALUES (16666666, 'Ringo', 'Starr', 'MS', 222111111, 0);
+INSERT INTO applicant (app_id, fname, lname, degree, ssn, app_status) VALUES (00001234, 'Louis', 'Armstrong', 'MS', 555111111, 1);
+INSERT INTO applicant (app_id, fname, lname, degree, ssn, app_status) VALUES (00001235, 'Aretha', 'Franklin', 'MS', 666111111, 1);
+INSERT INTO applicant (app_id, fname, lname, degree, ssn, app_status) VALUES (00001236, 'Carlos', 'Santana', 'PhD', 777111111, 1);
 
 INSERT INTO catalog (department, c_no, title, credits) VALUES ("CSCI", 6221, 'SW Paradigms', 3);
 INSERT INTO catalog (department, c_no, title, credits) VALUES ("CSCI", 6461, 'Computer Architecture', 3);
