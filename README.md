@@ -4,7 +4,7 @@ Phase 2 || Members: Ryan, Jacob, Lucas || Advisor: Billy &amp; Huzefa
 ## Important login credentials for your web app
 
 ## Landing page link
-http://http://gwupyterhub.seas.gwu.edu/~sp20DBp2-DB_Team/DB_Team/ADS/Webpages/superindex.php
+http://gwupyterhub.seas.gwu.edu/~sp20DBp2-DB_Team/DB_Team/ADS/Webpages/superindex.php
  
 #### Admin
 
