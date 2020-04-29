@@ -99,7 +99,7 @@ Phase 2 || Members: Ryan, Jacob, Lucas || Advisor: Billy &amp; Huzefa
 *ID#:* 34567890 <br>
 *Password:* pwrd10 <br>
 
-#### Alumni
+#### Applicants
 
 1. John Lennon - <br>
 *ID#:* 15555555 <br>
