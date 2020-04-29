@@ -4,8 +4,9 @@
 <head>
     <title>Transcript - Farm Fresh Regs</title>
     <?php
-      require_once ('header.php'); 
-		  session_start();
+      header('Location: ../../ADS/Webpages/transcript.php')
+      //require_once ('header.php'); 
+		  //session_start();
 	  ?>
 
 	<style>

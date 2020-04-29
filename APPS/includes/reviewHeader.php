@@ -34,7 +34,7 @@
                 		<button class='btn btn-primary' id='degrees' onclick='loadForm(\"$degrees$applicationID\");'>Prior Degrees</button><br/>
 				<button class='btn btn-primary' id='letters' onclick='loadForm(\"$letters$applicationID\");'>Recommendations</button><br/>";
 
-			if($_SESSION['role'] == 4){
+			if($_SESSION['p_level'] == 4){
 				echo "<button class='btn btn-primary' id='rev' onclick='loadForm(\"$recDecision$applicationID\");'>Review</button><br/>";
 			}else{
 				echo"<button class='btn btn-primary' id='revs' onclick='loadForm(\"$revs$applicationID\");'>Reviews</button><br/>";

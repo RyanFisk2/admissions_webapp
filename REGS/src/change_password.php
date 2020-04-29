@@ -33,6 +33,11 @@
         $idFormat = 'f_id';
         break;
 
+        case 6:
+        $userTable = 'alumni';
+        $idformat = 'a_id';
+        break;
+
         case 1:
         header("Location: home.php");
         break;

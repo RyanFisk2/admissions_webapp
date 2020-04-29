@@ -47,18 +47,21 @@
               <ul class="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block">
                 <li>
                 <div class="site-logo">
-                  <a href="index.php" class="d-block">
-                  <img src="CW_logo.png" alt="Image" class="img-fluid" height="100" width="115">
+                  <a href="superindex.php" class="d-block">
+                  <img src="images/logotry3.png" alt="Image" class="img-fluid" height="100" width="115">
                   </a>
                 </div>
                 </li>
                 <li>
-                  <a href="index.php" class="nav-link text-left">Home</a>
+                  <a href="superindex.php" class="nav-link text-left">Home</a>
                 </li>
   <?php
           session_start();
           if (isset($_SESSION['acc_type'])) {
           echo '
+            <li>
+              <a href="index.php" class="nav-link text-left">Advising Home</a>
+            </li>
             <li>
               <a href="reset.php" class="nav-link text-left">Reset Database</a>
             </li>

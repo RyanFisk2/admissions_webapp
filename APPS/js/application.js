@@ -363,8 +363,10 @@ function submitForm(url, id) {
 
 function submitFormElement(url, form) {
 	if (form.valid()) {
+		console.log("attempting to submit", form, "to", url);
 		serializedData = form.serialize()
-		if (serializedData != "" && !form.hasClass("template")) {
+		//console.log(serializedData);
+		if (serializedData != "") {
 			console.log("posting data", serializedData, "to", url);
 			$.ajax({
 				type: "POST",
@@ -392,7 +394,9 @@ function submitReference(formId) {
 
 function submitFormIterative(url, parentId) {
 	forms = getChildForms(parentId);
-	forms.each(function(index) {
+	console.log("attempting to submit work experience");
+	forms.each(function(index){
+		console.log($(this));
 		submitFormElement(url, $(this));
 	})
 	setTimeout(function() {autoFillIterative(url, parentId);}, asyncTimeout);

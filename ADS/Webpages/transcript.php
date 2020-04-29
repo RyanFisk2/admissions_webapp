@@ -52,7 +52,7 @@
             $namedata = mysqli_fetch_array($data);
 
 
-		$query = "SELECT * FROM transcript t, semester s WHERE t.semesterid = s.semesterid && t.t_id='" . $_SESSION['user_id'] . "'";
+		$query = "SELECT * FROM student_transcript t, semester s WHERE t.semesterid = s.semesterid && t.t_id='" . $_SESSION['user_id'] . "' ORDER BY t.semesterid ASC";
 
                 $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
                 $data = mysqli_query($dbc, $query);
@@ -66,7 +66,7 @@
 
 		echo '</table>';
 	}
-	if($_SESSION['acc_type'] == 4){ //New faculty
+	if($_SESSION['acc_type'] == 4){ //Faculty
 				?>
 				<div class="row mb-4 justify-content-center text-center">
 					<form>
@@ -95,7 +95,7 @@
 						echo '<tr><th>Department</th><th>Course Number</th><th>Grade</th><th>Semester</th></tr>';
 						
 					}
-                       	$query = "SELECT * FROM transcript t, semester s WHERE t.semesterid = s.semesterid && t.t_id='" . $uid['u_id'] . "'";
+                       	$query = "SELECT * FROM student_transcript t, semester s WHERE t.semesterid = s.semesterid && t.t_id='" . $uid['u_id'] . "' ORDER BY t.semesterid ASC";
 						$dbc1 = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
                         $data1 = mysqli_query($dbc1, $query);
 
@@ -119,10 +119,10 @@
 				</div>
 				<?php
 				if(isset($_GET['search'])) {
-					$query = "SELECT * FROM semester m, transcript t, student s WHERE (fname like '%{$_GET['search']}%' or lname like '%{$_GET['search']}%') Having t.semesterid = m.semesterid AND t.t_id = s.u_id ORDER BY t.t_id ASC";/*orders it so its somewhat neat*/
+					$query = "SELECT * FROM semester m, student_transcript t, student s WHERE (fname like '%{$_GET['search']}%' or lname like '%{$_GET['search']}%') Having t.semesterid = m.semesterid AND t.t_id = s.u_id ORDER BY t.t_id ASC";/*orders it so its somewhat neat*/
 				}
 				else{
-					$query = "SELECT * FROM semester m, transcript t, student s Having t.semesterid = m.semesterid AND t.t_id = s.u_id ORDER BY t.t_id ASC";/*orders it so its somewhat neat also can't see alumni transcripts*/
+					$query = "SELECT * FROM semester m, student_transcript t, student s Having t.semesterid = m.semesterid AND t.t_id = s.u_id ORDER BY t.t_id ASC";/*orders it so its somewhat neat also can't see alumni transcripts*/
 				}
                 $dbc1 = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
                 $data1 = mysqli_query($dbc1, $query);

@@ -1,42 +1,49 @@
   
 <!DOCTYPE HTML>
 
-  <!-- Masthead -->
-  <?php
-  if (empty($_SESSION['role'])) { 
-  ?>
-  <header class="masthead text-white text-center">
-    <div class="overlay"></div>
-    <div class="container">
-      <div class="row">
-        <div class="col-xl-9 mx-auto">
-            <h1 class="mb-5">Sign in to continue your application or create an account to apply!</h1>
-        </div>
-      </div>
-    </div>
-  </header>
-  <?php
-  } else {
-  ?>
-  <header class="masthead text-white text-center">
-    <div class="overlay"></div>
-    <div class="container">
-      <div class="row">
-        <div class="col-xl-9 mx-auto">
-            <h1 class="mb-5">Welcome 
-            <?php 
-              echo $_SESSION['name'] . "!"; 
-            ?>
-            </h1>
-            <h1 class="mb-5">Your userID is: 
-            <?php 
-              echo $_SESSION['userID']; 
-            ?>
-            </h1>
-        </div>
-      </div>
-    </div>
-  </header>
-  <?php
-  }
-  ?>
+<!-- Masthead -->
+<?php
+
+	if(!(isset($_SESSION))){
+		session_start();
+	}
+
+	if(!(isset($session['role']))){
+		echo"<body>
+			<h2 align='center'>Sign in to Continue or Application or Create an Account to Apply</h2>
+			</body>";
+	}else{
+		//use role number to get name and information about logged in user
+		$dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
+		$userID = $session['id'];
+
+		if($session['role'] == 7){
+			$userQuery = "SELECT fname, lname
+					FROM applicant
+					WHERE app_id = '$userID'";
+		}else if($session['role'] < 5){
+			$userQuery = "SELECT fname, lname, reviewer
+					FROM faculty
+					WHERE f_id = '$userID'";
+		}
+
+		$result = mysqli_query($dbc, $userQuery);
+
+		$userInfo = mysqli_fetch_array($result);
+
+		if($userInfo["reviewer"]){
+			$session['reviewer'] = $reviewer = $userInfo["reviewer"];
+		}
+
+		$fname = $userInfo['fname'];
+		$lname = $userInfo['lname'];
+
+		echo"<body>
+			<h2 align='center'>Welcome $fname $lname </h2><br/>
+			</body>";
+
+	}
+
+?>
+
+

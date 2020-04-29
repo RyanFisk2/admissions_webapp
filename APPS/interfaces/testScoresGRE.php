@@ -8,7 +8,7 @@
 
 	if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 		$query = "SELECT examDate, quantScore, verbalScore, writtenScore FROM GRE_score ";
-		$query .= "WHERE applicationID = " . $_SESSION["appID"];
+		$query .= "WHERE applicationID = " . $_SESSION["applicationID"];
 		$data = try_query($dbc, $query, NULL);
 		$output = array();
 		while ($row = mysqli_fetch_row($data)) {
@@ -24,8 +24,8 @@
 		foreach ($keys as $key) {
 			$query .= "'" . $_POST[$key] . "', ";
 		}
-		$query .= ($_POST["verbalScore"] + $_POST["quantScore"] + $_POST["writtenScore"]) . ", ";
-		$query .= $_SESSION["appID"] . ")";
+		$query .= ($_POST["quantScore"] + $_POST["verbalScore"] + $_POST["writtenScore"]) . ", ";
+		$query .= $_SESSION["applicationID"] . ")";
 		try_insert($dbc, $query, "Added score to database.");
 	}
 

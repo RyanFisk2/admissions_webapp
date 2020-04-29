@@ -5,7 +5,7 @@
 	<?php
 		session_start();
 
-		$fID = $_SESSION['userID'];
+		$fID = $_SESSION['user_id'];
 
 		require_once('../includes/connectvars.php');
 		$dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
@@ -15,7 +15,7 @@
 		if($_SERVER['REQUEST_METHOD'] == 'POST'){
 			$recDecision = $_POST['rating'];
 			$reasons = $_POST['reasons'];
-			if(ctype_alpha($reaons)){
+			if(ctype_alpha($reasons)){
 				$comments = $_POST['comments'];
 				if(ctype_alpha($comments)){
 					$courses = $_POST['courses'];

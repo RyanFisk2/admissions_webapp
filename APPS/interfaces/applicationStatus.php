@@ -7,7 +7,7 @@
 
 	$query = "SELECT decisions.description AS description, application_form.submitted AS submitted FROM application_form ";
 	$query .= "JOIN decisions ON decisions.decisionID = application_form.decision ";
-	$query .= "WHERE application_form.applicationID = " . $_SESSION["appID"];
+	$query .= "WHERE application_form.applicationID = " . $_SESSION["applicationID"];
 	$data = try_query($dbc, $query, NULL);
 	$status = mysqli_fetch_array($data);
 ?>
@@ -22,7 +22,7 @@
 	</thead>
 	<tbody>
 			<tr>
-				<td><?= $_SESSION["appID"] ?></td>
+				<td><?= $_SESSION["applicationID"] ?></td>
 				<td><?= $status["submitted"] ? '<i class="fas fa-check" style="color: green"></i>' : '<i class="fas fa-times" style="color: red"></i>' ?></td>
 				<td><?= $status["description"] ?></td>
 			</tr>

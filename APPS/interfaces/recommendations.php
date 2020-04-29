@@ -8,7 +8,7 @@
 
 	if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 		$query = "SELECT writerName, writerEmail, writerTitle, writerEmployer FROM rec_letter ";
-		$query .= "WHERE applicationID = " . $_SESSION["appID"];
+		$query .= "WHERE applicationID = " . $_SESSION["applicationID"];
 		$data = try_query($dbc, $query, NULL);
 		$output = array();
 		while ($row = mysqli_fetch_row($data)) {
@@ -22,10 +22,10 @@
 		foreach ($keys as $key) {
 			$query .= "'" . $_POST[$key] . "', ";
 		}
-		$query .= $_SESSION["appID"] . ")";
+		$query .= $_SESSION["applicationID"] . ")";
 		$letter_id = try_insert($dbc, $query, "Added letter writer to database.");
 
-		$url = ROOT_URL . "/recommendation.php?id=" . $letter_id;
+		$url = "http://gwupyterhub.seas.gwu.edu/~sp20DBp2-DB_Team/DB_Team/APPS/recommendation.php?id=" . $letter_id;
 		$msg = 'An applicant has requested that you write them a letter of recommendation. Please submit it <a href="' . $url . '">here</a>. Do not share your link with anyone.<br><br>';
 		
 		$header = "From: no-reply@gwupyterhub.seas.gwu.edu\r\n";

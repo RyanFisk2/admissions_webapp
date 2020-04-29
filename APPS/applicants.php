@@ -36,15 +36,16 @@
 	}
 
 	//query for applicants (roleID 1) that have submitted the application (submitted = 1)
-	$getApplicants = "SELECT user.userID, user.name, application_form.applicationID
-				FROM user JOIN application_form ON user.userID = application_form.userID
-				WHERE user.roleID = '1' and application_form.decision = '1'";
+	$getApplicants = "SELECT applicant.fname, applicant.lname, applicant.app_id
+				FROM applicant, users, application_form
+				WHERE users.p_level = '7' AND users.id = applicant.app_id AND users.id = application_form.userID AND application_form.submitted = 1";
 	$applicantResult = mysqli_query($dbc, $getApplicants);
 
-	$role = $_SESSION['role'];
-	$fID = $_SESSION['userID'];
+	$role = $_SESSION['acc_type'];
+	$fID = $_SESSION['user_id'];
 
-	echo "<div id='content'>
+	echo "<br/>
+	<div id='content'>
 		<table style='width:100%' align='center'>
 			<tr>
 				<th>Applicant Name</th>
@@ -53,9 +54,9 @@
 			//add rows to table for each applicant in DB
 			while($applicant = mysqli_fetch_array($applicantResult)){
 				
-				$name = $applicant['name'];
-				$userID = $applicant['userID'];
-				$applicationID = $applicant['applicationID'];
+				$fname = $applicant['fname'];
+				$lname = $applicant['lname'];
+				$userID = $applicant['app_id'];
 
 				$doneQuery = "SELECT * FROM review_form WHERE facultyID = '$fID' AND applicantID = '$userID'";
 				$doneResult = mysqli_query($dbc, $doneQuery);
@@ -63,11 +64,11 @@
 				if(mysqli_num_rows($doneResult) == 0){
 					//this faculty member has not reviewed this applicant yet
 					echo "<tr>
-						<td>$name</td>
+						<td>$fname $lname</td>
 						<td>
 							<!-- sample review button for reviewers -->
 							<!-- button id will be the corresponding applicant id -->
-							<button class='btn btn-primary' id='$userID' onclick='reviewApplicant($userID)'>Review Applicant</button>
+							<button class='small btn btn-primary px-4 py-2 rounded-0' id='$userID' onclick='reviewApplicant($userID)'>Review Applicant</button>
 						</td>
 					
 					</tr>";

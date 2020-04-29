@@ -43,7 +43,7 @@
 		  
 		  <label><?php echo $searchstudent['fname']; echo ' '; echo $searchstudent['lname'] . ' '; ?></label>
 		  <form action='checkform1.php'>
-		  <input type="hidden" name="uid" value="<?php echo $searchstudent['uid']?>" />
+		  <input type="hidden" name="uid" value="<?php echo $searchstudent['u_id']?>" />
 		  <input type="submit" class="button" name="decision" value="Check Form 1" />
 		  </form>
 		  <br>
@@ -63,7 +63,7 @@
 		<div class="row mb-4 justify-content-center text-center">
 		<label><?php echo $student['fname']; echo ' '; echo $student['lname'] . ' &nbsp;'; ?></label>
 		  <form action='checkform1.php'>
-		  <input type="hidden" name="uid" value="<?php echo $student['uid']?>" />
+		  <input type="hidden" name="uid" value="<?php echo $student['u_id']?>" />
 		  <input type="submit" class="button" name="decision" value="Check Form 1" />
 		  </form>
 		  <br>

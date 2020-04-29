@@ -5,20 +5,63 @@
 	}
 	require_once('appvars.php');
 	require_once('includes/utils.php');
-	require_once('../REGS/src/header.php');
-	require_once('includes/connectvars.php');
+	require_once('includes/header.php');
+	//require_once('includes/connectvars.php');
 
 	# temporary automatic sign in
 	// $_SESSION["userID"] = 44444444;
 ?>
 
-<body>  
-
-	<?php require_once('includes/nav.php'); ?>
+<body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">  
+<style>
+	.content { margin: 200px; }
+</style>
 
 	<div id="content">
+	<?php
+		if($_SESSION['acc_type'] == 7){
+
+			?>
+			<div class="site-section">
+			<div class="container">
+			<div class="feature-1 border">
+
+				<div class="icon-wrapper bg-primary">
+					<span class="flaticon-books-1 text-white"></span>
+				</div>
+
+				<div class="feature-1-content">
+					<h2>My Application</h2>
+					<p>Continue your application</p>
+					<p><button class="btn btn-primary px-4 py-2 rounded-0" onclick="loadForm('application.php')">My application</button></p>
+				</div>
+			</div>
+			</div>
+			</div>
 		<?php
-	    	require_once('home.php');
+		}else if ($_SESSION['acc_type'] < 5) {
+
+			?>
+			<div class="site-section">
+			<div class="row">
+			<div class="col">
+			<div class="feature-1 border">
+
+				<div class="icon-wrapper bg-primary">
+					<span class="flaticon-books-1 text-white"></span>
+				</div>
+
+				<div class="feature-1-content">
+					<h2>Review Applicants</h2>
+					<p>Review Current Applicants and Submit Review</p>
+					<p><button class="btn btn-primary px-4 py-2 rounded-0" onclick="loadForm('applicants.php')">Review Applicants</button></p>
+				</div>
+			</div>
+			</div>
+			</div>
+			</div>
+		<?php
+		}
 	    ?>  
 	</div>
 

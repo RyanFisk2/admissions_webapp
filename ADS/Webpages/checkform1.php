@@ -12,7 +12,7 @@
 		<div class="row mb-4 justify-content-center text-center">
           	<div class="col-lg-4 mb-4">
             	<h2 class="section-title-underline mb-4">
-              		<span>Approve Form 1's</span>
+              		<span>Check Form 1's</span>
             	</h2>
           	</div>
 		</div>
@@ -35,11 +35,12 @@
 	else {
 		$query = "SELECT * FROM student WHERE u_id = '$uid'";
 	}
+	
 	$data = mysqli_query($dbc, $query);
 	$studentinfo = mysqli_fetch_array($data);
 	echo '<div class="row mb-4 justify-content-center text-center">';
 
-	echo "User id:".$studentinfo[0]." Name: " . $studentinfo['fname'] . " " . $studentinfo['lname'];
+	echo "User id:".$studentinfo['u_id']." Name: " . $studentinfo['fname'] . " " . $studentinfo['lname'];
 	//echo '<br>';
 	echo '</div>';
 	$query = "SELECT * FROM form1 f, catalog c WHERE c.c_no = f.cno AND f.dept = c.department AND f.f1_id='" . $studentinfo[0] . "'";

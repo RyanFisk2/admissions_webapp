@@ -6,7 +6,7 @@
 
 	if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 		$query = "SELECT address1, address2, city, state, zip, degree, interest, term FROM application_form ";
-		$query .= "WHERE userID = " . $_SESSION["userID"];
+		$query .= "WHERE userID = " . $_SESSION['id'];
 		$data = try_query($dbc, $query, NULL);
 		$keys = array("address1", "address2", "city", "state", "zip", "degree", "interest", "term");
 		$row = mysqli_fetch_row($data);	
@@ -31,7 +31,7 @@
 		if (isset($_POST["term"])) $query .= "term = '" . $_POST["term"] . "', ";
 		if (isset($_POST["degree"])) $query .= "degree = '" . $_POST["degree"] . "'";
 		$query = rtrim($query, ", ");
-		$query .= " WHERE userID = " . $_SESSION["userID"];
+		$query .= " WHERE userID = " . $_SESSION["id"];
 		try_insert($dbc, $query, "Updated database entry with personal info.");
 	}
 ?>
