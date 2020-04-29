@@ -1,10 +1,5 @@
 SET FOREIGN_KEY_CHECKS = 0;
 
-/*removed position table, now part of users table*/
-/*removed courses table because it is covered by catalog, schedule, and prereqs which are vital to regs functionality*/
-/*removed grad_secretary table because it seemed redundant*/
-/*added advises table to simplify users and faculty and streamline schema*/
-/*added applicants table to follow schema and user types*/
 DROP TABLE IF EXISTS users CASCADE;
 DROP TABLE IF EXISTS student CASCADE;
 DROP TABLE IF EXISTS faculty CASCADE;
@@ -73,8 +68,7 @@ foreign key (f_id) references users(id)
 );
 
 create table alumni(
-    /*not sure if more fields are necessary to allow this table to stand alone*/
-    a_id int NOT NULL, /*changed from uid to a_id for foreign key constraints*/
+    a_id int NOT NULL,
     fname varchar(20) NOT NULL,
     lname varchar(20) NOT NULL,
     degree varchar(3),
@@ -87,7 +81,6 @@ create table alumni(
 );
 
 create table applicant(
-/*not sure if more fields are needed or if some need to be removed*/
 app_id int NOT NULL,
 fname varchar(20) NOT NULL,
 lname varchar(20) NOT NULL,
@@ -133,13 +126,12 @@ create table application_form (
 	finalReviewer int(8) DEFAULT NULL,
 
 	primary key (applicationID),
- 	foreign key (userID) references users (id), /* changed from user (userID) to users (id) to fit schema */
- 	foreign key (finalReviewer) references users (id), /* changed from user (userID) to users (id) to fit schema */
+ 	foreign key (userID) references users (id),
+ 	foreign key (finalReviewer) references users (id),
  	foreign key (decision) references decisions (decisionID)
 );
 
 create table transcript (
-	/* combined each of your transcript tables into one, feel free to edit how I did this if needed */
 	applicationID int(8),
 	pathToFile varchar(25),
 	received DATE,
@@ -246,7 +238,6 @@ create table letter_rating (
 	score int(4),
 
 	primary key (facultyID, letterID),
-	/* changed from user (userID) to users (id) to fit schema */
 	constraint FK_letter0 foreign key (facultyID) references users (id) on UPDATE CASCADE ON DELETE CASCADE,
 	constraint FK_letter1 foreign key (letterID) references rec_letter (letterID) ON UPDATE CASCADE ON DELETE CASCADE,
 	constraint FK_letter2 foreign key (applicationID) references application_form (applicationID) ON UPDATE CASCADE ON DELETE CASCADE
@@ -260,7 +251,6 @@ create table deficient_courses (
 	courseName varchar(32),
 
 	primary key (applicantID, courseName),
-	/* changed from user (userID) to users (id) to fit schema */
 	constraint FK_courses0 foreign key (applicantID) references users (id) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
@@ -273,10 +263,8 @@ create table review_form (
 	comments varchar(100),
 
 	primary key (facultyID, applicantID),
-	/* changed from user (userID) to users (id) to fit schema for revForm0 and revForm1 */
 	constraint FK_revForm0 foreign key (facultyID) references users (id) ON UPDATE CASCADE ON DELETE NO ACTION,
 	constraint FK_revForm1 foreign key (applicantID) references users (id) ON UPDATE CASCADE ON DELETE CASCADE,
-	/*constraint FK_revForm2 foreign key (facultyID) references letter_rating (letterID) ON UPDATE CASCADE ON DELETE NO ACTION,*/
 	constraint FK_revForm3 foreign key (applicantID) references deficient_courses (applicantID) ON UPDATE CASCADE ON DELETE NO ACTION
 );
 
@@ -286,7 +274,6 @@ create table final_decision (
 	decision int(4),
 
 	primary key (facultyID, applicantID),
-	/* changed from user (userID) to users (id) to fit schema for facultyID and applicantID */
 	foreign key (facultyID) references users (id) ON UPDATE CASCADE ON DELETE NO ACTION,
 	foreign key (applicantID) references users (id) ON UPDATE CASCADE ON DELETE CASCADE
 );
@@ -299,11 +286,11 @@ create table semester(
 );
 
 create table form1(
-    f1_id int, /* changed from uid to f1_id to reference a student's id as a foreign key */
+    f1_id int,
     dept varchar(4),
     cno int,
     primary key (f1_id, dept, cno),
-    foreign key (f1_id) references student(u_id) /* added this line */
+    foreign key (f1_id) references student(u_id)
 );
 
 CREATE TABLE catalog(
@@ -385,7 +372,6 @@ INSERT INTO users (id, p_level, password) VALUES (00001234, 7, 'pwrd13');
 INSERT INTO users (id, p_level, password) VALUES (00001235, 7, 'pwrd14');
 INSERT INTO users (id, p_level, password) VALUES (00001236, 7, 'pwrd15');
 
-/* left it out for now but do we want 0.00 or 4.00 as starting state for GPA */
 INSERT INTO student (u_id, fname, lname, addr, email, major, degree, gradapp, form1status, advisor) VALUES (88888888, 'Billie', 'Holiday', '11111 Street St. City, ST 22222', 'jacobpritchard9@gwu.edu', 'Computer Science', 'MS', 0, 0, 10000012);
 INSERT INTO student (u_id, fname, lname, addr, email, major, degree, gradapp, form1status, advisor) VALUES (99999999, 'Diana', 'Krall', '33333 Drive Dr. City, ST 44444', 'jacobpritchard9@gwu.edu', 'Computer Science', 'MS', 0, 0, 10000009);
 INSERT INTO student (u_id, fname, lname, addr, email, major, degree, gradapp, form1status, advisor) VALUES (23456789, 'Ella', 'Fitzgerald', '12121 Street Dr. City, ST 22325', 'jacobpritchard9@gwu.edu', 'Computer Science', 'PhD', 0, 0, 10000002);
