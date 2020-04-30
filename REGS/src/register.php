@@ -12,21 +12,19 @@ session_start();
 
     $cno =  $_GET['cno'];
     $dept = $_GET['dept'];
+    $sem1 = $_GET['sem'];
 
-    $class_registering_for_query = "SELECT * FROM schedule, catalog, semester WHERE crn=$crn AND course_id=c_id and sem=semesterid";
+    $class_registering_for_query = "SELECT * FROM schedule WHERE crn=$crn";
     $class_registering_for_result = mysqli_query($dbc, $class_registering_for_query);
-    $crn_course_registering_for = trim($_GET['crn']);
-
-    if ($class_registering_for_result && mysqli_num_rows($class_registering_for_result) > 0) {
+    //$crn_course_registering_for = trim($_GET['crn']);
+    if (mysqli_num_rows($class_registering_for_result) > 0) {
         while ($class_data = mysqli_fetch_assoc($class_registering_for_result)) {
         // Get crn, day, semester, start_time, and end_time for each course the student is currently enrolled in
         $course_id = $class_data["course_id"];
         $day = $class_data["day"];
-        $term = $class_data["semester"];
         $start_time = $class_data["start_time"];
         $end_time = $class_data["end_time"];
-        $year = $class_data["year"];
-        $sem = $class_data["semesterid"];
+        $sem = $class_data["sem"];
         }
     }
 
@@ -61,16 +59,16 @@ session_start();
 
         // Get crn from pre-req course numbers (c_no)
 
-        $courses_taken_query = "SELECT * FROM courses_taken c, schedule s, semeseter x WHERE c.u_id=$uid and c.crn=s.crn and s.sem=x.semesterid";
+        $courses_taken_query = "SELECT * FROM courses_taken c, schedule s WHERE c.u_id=$uid and c.crn=s.crn";
         $courses_taken_data = mysqli_query($dbc, $courses_taken_query);
 
         $crns_taken = array();
-        if ($courses_taken_data && mysqli_num_rows($courses_taken_data) > 0) {
+        if (mysqli_num_rows($courses_taken_data) > 0) {
             while ($row = mysqli_fetch_assoc($courses_taken_data)) {
                 if(strcmp($row['grade'], "IP") != 0){
                     array_push($crns_taken, $row['crn']);
                 }
-                if($day == $row['day'] && $term == $row['semester'] && $year == $row['year'] && $start_time <= $row['start_time'] && $end_time >= $row['start_time']){
+                if($day==$row['day'] && $sem==$row['sem'] && $start_time<=$row['start_time'] && $end_time>=$row['start_time']){
                     $time_conflict = 1;
                 }
             }
@@ -110,27 +108,27 @@ session_start();
         mysqli_query($dbc, $enroll);
         $enroll1 = "INSERT INTO student_transcript (t_id, dept, cno, grade, semesterid, inform1) VALUES ($uid, '$dept', $cno, '$grade', $sem, 0)";
         mysqli_query($dbc, $enroll1);
-        header("Location: course.php?cno=$cno&dept=$dept");
+        header("Location: course.php?cno=$cno&dept=$dept&sem=$sem1");
 
     } else {
         if ( $prereq1_conflict == 1) {
             $error="pre1false";
-            header("Location: course.php?cno=$cno&dept=$dept&conflict=$error");
+            header("Location: course.php?cno=$cno&dept=$dept&sem=$sem1&conflict=$error");
         }
 
         if ( $prereq2_conflict == 1) {
             $error="pre2false";
-            header("Location: course.php?cno=$cno&dept=$dept&conflict=$error");
+            header("Location: course.php?cno=$cno&dept=$dept&sem=$sem1&conflict=$error");
         }
 
         if ( $prereq1_conflict == 1 && $prereq2_conflict == 1) {
             $error="noprereqs";
-            header("Location: course.php?cno=$cno&dept=$dept&conflict=$error");
+            header("Location: course.php?cno=$cno&dept=$dept&sem=$sem1&conflict=$error");
         }
 
         if( $time_conflict == 1){
             $error="timeconflict";
-            header("Location: course.php?cno=$cno&dept=$dept&conflict=$error");
+            header("Location: course.php?cno=$cno&dept=$dept&sem=$sem1&conflict=$error");
         }
     }
 

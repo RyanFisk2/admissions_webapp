@@ -70,15 +70,15 @@
         $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 
 		// Find all classes 
-		$query = 'SELECT department, c_no, title FROM catalog';
+		//$query = 'SELECT department, c_no, title, semester, year FROM catalog';
 
 		// If this is a faculty, need to add WHERE clause to specify only the 
 		// classes they are teaching
 		if ($plevel == 4) {
-			$query = $query . ' , schedule, courses_taught WHERE courses_taught.f_id="'. $_SESSION['id'] .'" 
-								and courses_taught.crn=schedule.crn 
-								and schedule.course_id=catalog.c_id';
-		}
+			$query = 'SELECT department, c_no, title, semester, year, sem FROM catalog, schedule, courses_taught, semester WHERE courses_taught.f_id="'. $_SESSION['id'] .'" and courses_taught.crn=schedule.crn and schedule.course_id=catalog.c_id and sem=semesterid';
+		}else{
+      $query = 'SELECT department, c_no, title, semester, year, sem FROM catalog, schedule, semester WHERE schedule.course_id=catalog.c_id and sem=semesterid';
+    }
 	
 		$classes = mysqli_query ($dbc, $query);
     ?>
@@ -110,8 +110,8 @@
     <?php
 		// Need to add all classes to dropdown menu
 		while ($c = mysqli_fetch_array ($classes)) {
-			$course = '<b>'. $c['department'] . " " . $c['c_no'] . "</b>: " . $c['title'];
-			echo '<a href="grades.php?cno='. $c['c_no'] .'">'. $course .'</a>';
+			$course = '<b>'. $c['department'] . " " . $c['c_no'] . "</b>: " . $c['title'] . "</br>" . $c['semester'] . $c['year'];
+			echo '<a href="grades.php?cno='. $c['c_no'] .'&sem='. $c['sem'] .'"'. $course .'</a>';
 			
 		} 
 	?>

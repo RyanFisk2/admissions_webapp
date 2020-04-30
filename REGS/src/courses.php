@@ -36,25 +36,56 @@ $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
         // Schedule links to faculty on crn
         // Courses not being taught shouldnt have a proffesoror time alloted to them
 
-        $course_query = 'SELECT * FROM catalog';
+        $course_query = 'SELECT s.sem, x.semester, x.year FROM catalog c, schedule s, semester x WHERE c.c_id=s.course_id and s.sem = x.semesterid';
+        $sem1 = $i = $done = 0;
 
-        $result = mysqli_query($dbc, $course_query);
+        $result1 = mysqli_query($dbc, $course_query);
         
-        if (mysqli_num_rows($result) > 0) {
-            ?>
-            <table class="table ">
-                <thead>
-                <tr class="text-center">
-                    <th scope="col">Course</th>
-                    <th scope="col">Title</th>
-                    <th scope="col">Credits</th>
-                    <th scope="col">Pre-requisite 1</th>
-                    <th scope="col">Pre-requisite 2</th>
-                </tr>
-                </thead>
-            <tbody id="course_table">
-            <?php
-            while ($row = mysqli_fetch_assoc($result)) {
+        if (mysqli_num_rows($result1) > 0) {
+            while ($row1 = mysqli_fetch_assoc($result1)) {
+                if($done == 0){
+            	if($i == 0){
+            		$sem1 = $row1["sem"];
+            		echo 'Schedule for ' . $row1['semester'] . ' ' . $row1['year'] . ':<br></br>';
+            		$i = 1;
+            		echo '<table class="table ">
+                            <thead>
+                                <tr class="text-center">
+                                    <th scope="col">Course</th>
+                                    <th scope="col">Title</th>
+                                    <th scope="col">Credits</th>
+                                    <th scope="col">Pre-requisite 1</th>
+                                    <th scope="col">Pre-requisite 2</th>
+                                </tr>
+                                </thead>
+                            <tbody id="course_table">';
+                    $query = "SELECT c.* FROM catalog c, schedule s WHERE c.c_id=s.course_id and s.sem=$sem1";
+            	}else if($row1["sem"] != $sem1){
+                    if($row1["sem"] == 12){
+                        $done = 1;
+                    }
+            		$sem1 = $row1["sem"];
+                    echo "</tbody>
+                        </table>";
+            		echo 'Schedule for ' . $row1['semester'] . ' ' . $row1['year'] . ':<br></br>';
+            		echo '<table class="table ">
+                            <thead>
+                                <tr class="text-center">
+                                    <th scope="col">Course</th>
+                                    <th scope="col">Title</th>
+                                    <th scope="col">Credits</th>
+                                    <th scope="col">Pre-requisite 1</th>
+                                    <th scope="col">Pre-requisite 2</th>
+                                </tr>
+                                </thead>
+                            <tbody id="course_table">';
+                    $query = "SELECT c.* FROM catalog c, schedule s WHERE c.c_id=s.course_id and s.sem=$sem1";
+            	}
+
+            $result = mysqli_query($dbc, $query);
+        
+            if (mysqli_num_rows($result) > 0) {
+                while ($row = mysqli_fetch_assoc($result)) {
             ?>
                 <tr class="text-center">
                 <td>
@@ -75,7 +106,7 @@ $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 
                 ?>
 
-                <a href="course.php?cno=<?php echo $crn ?>&dept=<?php echo $dept?>"> <?php echo $dept ?> <?php echo $crn ?> </a>
+                <a href="course.php?cno=<?php echo $crn ?>&dept=<?php echo $dept?>&sem=<?php echo $sem1?>"> <?php echo $dept ?> <?php echo $crn ?> </a>
                 </td>
                 <td> <?php echo $title?> </td>
                 <td> <?php echo $credits?> </td>
@@ -105,6 +136,7 @@ $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
                  <?php } ?>
 
                 </tr>
+            <?php }}} ?>
         <?php
             }
             echo "</tbody>

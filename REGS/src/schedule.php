@@ -168,13 +168,13 @@
 
 	// Find all classes this student is taking
 	if ($_SESSION['p_level'] == 5) {
-		$query = 'SELECT semester, year, day, start_time, c_no, fname, lname, title, department 
+		$query = 'SELECT semester, year, day, start_time, c_no, fname, lname, title, department, sem 
 				  FROM faculty, schedule, courses_taken, catalog, courses_taught, semester
 				  WHERE u_id="'. $_SESSION['id'] .'" and courses_taken.crn=schedule.crn 
 					and schedule.course_id=catalog.c_id and faculty.f_id=courses_taught.f_id
 					and courses_taught.crn=courses_taken.crn and sem=semesterid';
 	} else if ($_SESSION['p_level'] == 4) {
-		$query = 'SELECT semester, year, day, start_time, c_no, title, department, lname, fname 
+		$query = 'SELECT semester, year, day, start_time, c_no, title, department, lname, fname, sem 
 				  FROM faculty, schedule, catalog, courses_taught, semester
 				  WHERE courses_taught.f_id="'. $_SESSION['id'] .'" 
 					and courses_taught.crn=schedule.crn and schedule.course_id=catalog.c_id
@@ -229,12 +229,13 @@
 								if ($row != false and strcmp ($row['day'], $d) == 0) { 
 									$cno = $row['c_no']; 
 									$dept = $row['department']; 
+									$sem = $row['sem'];
 									if($_SESSION['p_level'] == 5){?>
-									<b><a href="course.php?cno=<?php echo $cno ?>&dept=<?php echo $dept ?>"><?php echo $row['department'] . ' ' . $row['c_no'] . '</b></a>: <br>' . 
+									<b><a href="course.php?cno=<?php echo $cno ?>&dept=<?php echo $dept ?>&sem=<?php echo $sem ?>"><?php echo $row['department'] . ' ' . $row['c_no'] . '</b></a>: <br>' . 
 										$row['title'] . ' ' . '<br>' . 
 										'<i> Instructor: ' . $row['fname'] . ' ' . $row['lname'] , '</i>';
 									}else if($_SESSION['p_level'] == 4){?>
-										<b><a href="grades.php?cno=<?php echo $cno ?>"><?php echo $row['department'] . ' ' . $row['c_no'] . '</b></a>: <br>' . 
+										<b><a href="grades.php?cno=<?php echo $cno ?>&sem=<?php echo $sem ?>"><?php echo $row['department'] . ' ' . $row['c_no'] . '</b></a>: <br>' . 
 										$row['title'] . ' ' . '<br>' . 
 										'<i> Instructor: ' . $row['fname'] . ' ' . $row['lname'] , '</i>';
 									}
@@ -262,12 +263,13 @@
 								if ($row != false and strcmp ($row['day'], $d) == 0) { 
 									$cno = $row['c_no']; 
 									$dept = $row['department'];
+									$sem = $row['sem'];
 									if($_SESSION['p_level'] == 5){?>
 									<b><a href="course.php?cno=<?php echo $cno ?>&dept=<?php echo $dept ?>"><?php echo $row['department'] . ' ' . $row['c_no'] . '</b></a>: <br>' . 
 										$row['title'] . ' ' . '<br>' . 
 										'<i> Instructor: ' . $row['fname'] . ' ' . $row['lname'] , '</i>';
 									}else if($_SESSION['p_level'] == 4){?>
-										<b><a href="grades.php?cno=<?php echo $cno ?>"><?php echo $row['department'] . ' ' . $row['c_no'] . '</b></a>: <br>' . 
+										<b><a href="grades.php?cno=<?php echo $cno ?>&sem=<?php echo $sem ?>"><?php echo $row['department'] . ' ' . $row['c_no'] . '</b></a>: <br>' . 
 										$row['title'] . ' ' . '<br>' . 
 										'<i> Instructor: ' . $row['fname'] . ' ' . $row['lname'] , '</i>';
 									}
@@ -294,12 +296,13 @@
 								if ($row != false and strcmp ($row['day'], $d) == 0) { 
 									$cno = $row['c_no']; 
 									$dept = $row['department'];
+									$sem = $row['sem'];
 									if($_SESSION['p_level'] == 5){?>
-									<b><a href="course.php?cno=<?php echo $cno ?>&dept=<?php echo $dept ?>"><?php echo $row['department'] . ' ' . $row['c_no'] . '</b></a>: <br>' . 
+									<b><a href="course.php?cno=<?php echo $cno ?>&dept=<?php echo $dept ?>&sem=<?php echo $sem ?>"><?php echo $row['department'] . ' ' . $row['c_no'] . '</b></a>: <br>' . 
 										$row['title'] . ' ' . '<br>' . 
 										'<i> Instructor: ' . $row['fname'] . ' ' . $row['lname'] , '</i>';
 									}else if($_SESSION['p_level'] == 4){?>
-										<b><a href="grades.php?cno=<?php echo $cno ?>"><?php echo $row['department'] . ' ' . $row['c_no'] . '</b></a>: <br>' . 
+										<b><a href="grades.php?cno=<?php echo $cno ?>&sem=<?php echo $sem?>"><?php echo $row['department'] . ' ' . $row['c_no'] . '</b></a>: <br>' . 
 										$row['title'] . ' ' . '<br>' . 
 										'<i> Instructor: ' . $row['fname'] . ' ' . $row['lname'] , '</i>';
 									}
