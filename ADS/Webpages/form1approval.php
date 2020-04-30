@@ -33,10 +33,10 @@
 // prints out users that match the search
 	  if(isset($_GET['search'])) {
 		if($_SESSION['acc_type'] == 4) {
-            $searchstudents = mysqli_query($dbc, "select * from student where (fname like '%{$_GET['search']}%' or lname like '%{$_GET['search']}%') and form1status > 0 and advisor = '$myuid';");
+            $searchstudents = mysqli_query($dbc, "select * from student where (fname like '%{$_GET['search']}%' or lname like '%{$_GET['search']}%') and form1status = 1 and advisor = '$myuid';");
         }
         else {
-		    $searchstudents = mysqli_query($dbc, "select * from student where (fname like '%{$_GET['search']}%' or lname like '%{$_GET['search']}%') and form1status > 0;");
+		    $searchstudents = mysqli_query($dbc, "select * from student where (fname like '%{$_GET['search']}%' or lname like '%{$_GET['search']}%') and form1status = 1;");
         }
 		while ($searchstudent = mysqli_fetch_array($searchstudents)) {
 			?>
@@ -53,10 +53,10 @@
 	  }
 	else {
 		if($_SESSION['acc_type'] == 4) { // prints out every advisee with an approved or unapproved form1
-			$students = mysqli_query($dbc, "select * from student where form1status > 0 and advisor = '$myuid';");
+			$students = mysqli_query($dbc, "select * from student where form1status = 1 and advisor = '$myuid';");
 		}
 		else { // prints out every student with an approved or unapproved form1
-			$students = mysqli_query($dbc, "select * from student where form1status > 0;");
+			$students = mysqli_query($dbc, "select * from student where form1status = 1;");
 		}
 	while ($student = mysqli_fetch_array($students)) {
 		?>

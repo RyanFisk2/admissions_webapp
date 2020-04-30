@@ -6,10 +6,11 @@
     
 $uid = $_GET['uid'];
 
+
 $approvephd = "update student set gradapp = 2 where u_id = '$uid';";
     mysqli_query($dbc, $approvephd);
 
 $home_url = 'http://' . $_SERVER["HTTP_HOST"] .
 dirname($_SERVER["PHP_SELF"]) . '/thesisapproval.php';;
-          header('Location: ' . $home_url);
+        header('Location: ' . $home_url);
 ?>
