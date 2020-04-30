@@ -16,6 +16,9 @@
 		if (empty($_GET['cno'])) {
 			header("Location: schedule.php");
 		}
+
+		$cno = $_GET['cno'];
+		$sem = $_GET['sem'];
 		
 		$query = 'SELECT department, c_no, title FROM catalog WHERE c_no="'. $_GET['cno'] .'"';
 		$course = mysqli_query ($dbc, $query);
@@ -23,12 +26,13 @@
 		$course = $course['department'] . " " . $course['c_no'] . ": " . $course['title'];
 
 		// Query for all the students in this course
-		$query = 'SELECT student.u_id, fname, lname, email, grade, courses_taken.crn, department
+		$query = "SELECT student.u_id, fname, lname, email, grade, courses_taken.crn, department
 						  FROM student, courses_taken, schedule, catalog
 						  WHERE student.u_id=courses_taken.u_id
 							and courses_taken.crn=schedule.crn 
 							and schedule.course_id=catalog.c_id
-							and catalog.c_no="'. $_GET['cno'] .'"';
+							and catalog.c_no=$cno
+							and schedule.sem=$sem";
 
 		$students = mysqli_query ($dbc, $query);
 
@@ -57,7 +61,7 @@
 					$update_query = 'UPDATE courses_taken SET grade="'. $grade .'" 
 									 WHERE u_id="'. $s['u_id'] .'" and crn="'. $s['crn'] .'"';
 					mysqli_query ($dbc, $update_query);
-					$update_query1 = 'UPDATE student_transcript SET grade="'. $grade .'" WHERE t_id="'. $s['u_id'] .'" and cno="'. $_GET['cno'] .'" and dept="'. $s['department'] .'"';
+					$update_query1 = 'UPDATE student_transcript SET grade="'. $grade .'" WHERE t_id="'. $s['u_id'] .'" and cno="'. $_GET['cno'] .'" and dept="'. $s['department'] .'" and semesterid="'. $sem .'"';
 					mysqli_query($dbc, $update_query1);
 				}
 			}
@@ -108,7 +112,7 @@
 					if (strcmp ($s['grade'], "IP") == 0 || $_SESSION['p_level'] != 4) {
 						// Add a dropdown to enter grade 
 						echo '<td class="align-middle"> 
-								<form action="grades.php?cno='. $_GET['cno'] .'" method="post">';
+								<form action="grades.php?cno='. $cno . '&sem='. $sem .'" method="post">';
 						
 						// If this was the last grade changed, make the select green
 						if (strcmp ($s["u_id"], $last_update) == 0) {

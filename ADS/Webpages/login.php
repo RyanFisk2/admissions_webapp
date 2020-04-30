@@ -51,7 +51,7 @@
 
           //TODO: redirect to index.php
           if($row['id'] == $row['password']){
-            $home_url = "set_info.php";
+            $home_url = "../../REGS/src/set_info.php";
             header('Location: ' . $home_url);
           }else{
             $home_url = "superindex.php";
