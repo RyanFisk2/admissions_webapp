@@ -62,7 +62,7 @@
 									<span class="flaticon-university text-white"></span>
               					</div>
               					<div class="feature-1-content">
-                					<h2>Form One</h2>
+                					<h2>Submit Form One</h2>
                 					<p>Fill out and submit for Form 1 approval.</p>
                 					<p><a href="form1.php" class="btn btn-primary px-4 rounded-0">Fill out</a></p>
               					</div>
@@ -72,7 +72,19 @@
     				<br></br>
     				<br />
 					<div class="row mb-5 justify-content-center text-center">
-          				<div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
+          				<div class="col">
+            				<div class="feature-1 border">
+              					<div class="icon-wrapper bg-primary">
+                					<span class="flaticon-mortarboard text-white"></span>
+              					</div>
+              					<div class="feature-1-content">
+                					<h2>View Form 1</h2>
+                					<p>View submitted Form One.</p>
+                					<p><a href="viewform1.php" class="btn btn-primary px-4 rounded-0">View</a></p>
+              					</div>
+            				</div>
+          				</div>
+						<div class="col">
             				<div class="feature-1 border">
               					<div class="icon-wrapper bg-primary">
                 					<span class="flaticon-mortarboard text-white"></span>

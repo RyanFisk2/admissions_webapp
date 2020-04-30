@@ -40,7 +40,7 @@
 	$studentinfo = mysqli_fetch_array($data);
 	echo '<div class="row mb-4 justify-content-center text-center">';
 
-	echo "User id:".$studentinfo['u_id']." Name: " . $studentinfo['fname'] . " " . $studentinfo['lname'];
+	echo "User ID: ".$studentinfo['u_id']." | Name: " . $studentinfo['fname'] . " " . $studentinfo['lname'];
 	//echo '<br>';
 	echo '</div>';
 	$query = "SELECT * FROM form1 f, catalog c WHERE c.c_no = f.cno AND f.dept = c.department AND f.f1_id='" . $studentinfo[0] . "'";
