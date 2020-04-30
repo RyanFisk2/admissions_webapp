@@ -79,11 +79,13 @@ session_start();
                     $prereq1_cno = $c_no1;
 
                     $cid_query = "SELECT crn FROM schedule s, catalog c WHERE c.c_no='$prereq1_cno' AND s.course_id=c.c_id";
-                    $crn_prereq1_data = mysqli_fetch_assoc(mysqli_query($dbc, $cid_query));
-                    $crn_prereq1 = $crn_prereq1_data['crn'];
+                    $crn_prereq1_data = mysqli_query($dbc, $cid_query);
+                    while($crn_prereq1_data1 = mysqli_fetch_assoc($crn_prereq1_data)){
+                    	$crn_prereq1 = $crn_prereq1_data1['crn'];
 
-                    if (  in_array($crn_prereq1, $crns_taken) ) {
-                        $prereq1_conflict = 0;
+                    	if (  in_array($crn_prereq1, $crns_taken) ) {
+                        	$prereq1_conflict = 0;
+                    	}
                     }
                 }
 
@@ -92,11 +94,13 @@ session_start();
                     $prereq2_cno = $c_no2;
 
                     $cid_query = "SELECT crn FROM schedule s, catalog c WHERE c.c_no='$prereq2_cno' AND s.course_id=c.c_id";
-                    $crn_prereq2_data = mysqli_fetch_assoc(mysqli_query($dbc, $cid_query));
-                    $crn_prereq2 = $crn_prereq2_data['crn'];
+                    $crn_prereq2_data = mysqli_query($dbc, $cid_query);
+                    while($crn_prereq2_data1 = mysqli_fetch_assoc($crn_prereq2_data)){
+                    	$crn_prereq2 = $crn_prereq2_data1['crn'];
 
-                    if ( in_array($crn_prereq2, $crns_taken) ) {
-                        $prereq2_conflict = 0;
+                    	if ( in_array($crn_prereq2, $crns_taken) ) {
+                       		$prereq2_conflict = 0;
+                    	}
                     }
                 }
 
