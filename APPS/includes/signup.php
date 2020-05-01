@@ -71,7 +71,7 @@
 				$row = mysqli_fetch_array($data);	
 
 				$_SESSION['id'] = $row["id"];	
-				$_SESSION['p_level'] = $row["p_level"];
+				$_SESSION['acc_type'] = $row["p_level"];
 
 				//email user their login info
 				$msg = "Thank you for signing up!  

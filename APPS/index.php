@@ -16,7 +16,11 @@
 <style>
 	.content { margin: 200px; }
 </style>
-
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
 	<div id="content">
 	<?php
 		if($_SESSION['acc_type'] == 7){

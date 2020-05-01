@@ -1061,3 +1061,8 @@ INSERT ignore INTO decisions (decisionID, description) VALUES
 (3, 'Admitted With Aid'),
 (4, 'Rejected');
 
+INSERT ignore INTO recommendations (recID, description) VALUES
+(0, 'Reject'),
+(1, 'Boderline Admit'),
+(2, 'Admit Without Aid'),
+(3, 'Admit With Aid');

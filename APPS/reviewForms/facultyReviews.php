@@ -73,5 +73,7 @@
 				</tr>";
 		}
 
+		echo"<button class='small btn btn-primary' onclick='loadForm(\"./reviewForms/finalDecision.php?applicationID=$applicationID\")'>Next</button>";
+
 		?>
 	</table>

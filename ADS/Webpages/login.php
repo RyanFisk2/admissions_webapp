@@ -105,7 +105,7 @@
           <br><br>
           <div class="row justify-content-center text-center">
             <div class="col">
-              <input type="submit" formaction="../../APPS/includes/create.php" value="Haven't signed up yet? Sign Up" class="btn btn-primary btn-lg px-5" name="signup">
+              <input type="submit" formaction="../../APPS/includes/signup.php" value="Haven't signed up yet? Sign Up" class="btn btn-primary btn-lg px-5" name="signup">
 
 
 <?php
