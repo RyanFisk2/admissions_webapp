@@ -780,7 +780,7 @@ INSERT INTO student_transcript(t_id, dept, cno, grade, semesterid, inform1) VALU
 
 INSERT INTO form1 (f1_id, dept, cno) VALUES (12345678, "CSCI", "6221"); 
 INSERT INTO form1 (f1_id, dept, cno) VALUES (12345678, "CSCI", "6212"); 
-INSERT INTO form1 (f1_id, dept, cno) VALUES (12345678, "CSCI", "6261"); 
+INSERT INTO form1 (f1_id, dept, cno) VALUES (12345678, "CSCI", "6461"); 
 INSERT INTO form1 (f1_id, dept, cno) VALUES (12345678, "CSCI", "6232"); 
 INSERT INTO form1 (f1_id, dept, cno) VALUES (12345678, "CSCI", "6233"); 
 INSERT INTO form1 (f1_id, dept, cno) VALUES (12345678, "CSCI", "6284"); 
