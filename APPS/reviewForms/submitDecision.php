@@ -28,6 +28,29 @@
 						//applicant has been admitted, move them to students table TODO:make the applicant accept first
 						$updateStatusQuery = "UPDATE users SET p_level = '5' WHERE id = '$applicantID'";
 						$statusResult = mysqli_query($dbc, $updateStatusQuery);
+
+						//get student info from application form
+						$applicantQuery = "SELECT fname, lname FROM applicant WHERE app_id = '$applicantID'";
+						$applicantResult = mysqli_query($dbc, $applicantQuery);
+						$applicant = mysqli_fetch_array($applicantResult);
+						$fname = $applicant['fname'];
+						$lname = $applicant['lname'];
+
+						//split advisor name into first and last name for query
+						$advisorName = explode(" ", $advisor);
+						$aFname = $adivsorName[0];
+						$aLname = $adivorName[1];
+
+						//get advisor info from faculty table
+						$advisorQuery = "SELECT f_id FROM faculty WHERE fname = '$aFname' AND lname = '$aLname'";
+						$advisorResult = mysqli_query($dbc, $query);
+						$advID = $advisorResult['f_id'];
+
+						//insert info into students table
+						$studentEntry = "INSERT INTO student (u_id, fname, lname, advisor) VALUES ($applicantID, $fname, $lname, $advID)";
+						if($studentResult = mysqli_query($dbc, $studentEntry)){
+							header("Location: ../index.php");
+						}
 					};
 
 					if($updateResult = mysqli_query($dbc, $updateQuery)){
