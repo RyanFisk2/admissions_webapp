@@ -58,7 +58,7 @@
 
 			//add user info to applicants table
 			$ssn = rand(0, 999999999);
-			$appQuery = "INSERT INTO applicant VALUES ('$userID', '$fname', '$lname', 'n/a', '$ssn', 0)";
+			$appQuery = "INSERT INTO applicant VALUES ('$userID', '$fname', '$lname', 'n/a', '$email', '$ssn', 0)";
 			try_insert($dbc, $appQuery, 'add applicant');
 
 			//set session
