@@ -53,23 +53,24 @@
 						echo "advisor: " . $advID;
 
 						//get interest from application form
-						$interestQuery = "SELECT interest, address1 FROM application_form WHERE userID = $applicantID";
+						$interestQuery = "SELECT degree, interest, address1 FROM application_form WHERE userID = $applicantID";
 						$interestResult = mysqli_query($dbc, $interestQuery);
 						$interest = mysqli_fetch_array($interestResult);
 						$major = $interest['interest'];
 						$address = $interest['address1'];
+						$degree = $interest['degree'];
 
 						//insert info into students table
-						$studentEntry = "INSERT INTO student (u_id, fname, lname, addr, email, major, advisor) VALUES ($applicantID, '$fname', '$lname', '$address', '$email', '$major', $advID)";
+						$studentEntry = "INSERT INTO student (u_id, fname, lname, addr, email, major, degree, advisor) VALUES ($applicantID, '$fname', '$lname', '$address', '$email', '$major', '$degree', $advID)";
 						if($entryResult = mysqli_query($dbc, $studentEntry)){
 							echo "sucess";
-							//header("Location: ../index.php");
+							header("Location: ../index.php");
 						}else { echo "error inserting into student table"; }
 					}
 
 					if($updateResult = mysqli_query($dbc, $updateQuery)){
 						$msg = "Your application has been reviewed! Login to view your status!";
-                                        	//header("Location: ../index.php");
+                                        	header("Location: ../index.php");
 					}else{
 						echo"error updating table";
 					}
