@@ -81,7 +81,7 @@
 							//transcript hasnt been received
 							echo "<tr>
 								<td>
-									<button class='btn btn-primary' onclick='loadForm(\"./reviewForms/receivedTranscript.php?applicationID=$applicationID\");'>
+									<button class='smmall btn btn-primary px-4 py-2 rounded-0' onclick='loadForm(\"./reviewForms/receivedTranscript.php?applicationID=$applicationID\");'>
 									Received Transcript
 									</button>
 								</td>
