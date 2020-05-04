@@ -5,7 +5,7 @@
 	if (isset($_SESSION["id"])) {
 		$_SESSION = array();
 		session_destroy();
-		header('Location: ' . '../../ADS/Webpages/superindex.php');
+		header('Location: ' . '../../ADS/Webpages/login.php');
 	}
 	if(isset($_POST["back"])) {
 	 // Redirect them to the login page

@@ -134,7 +134,7 @@
 
                 if (!isset($_SESSION['id'])) {
                 echo'<li>
-                <a href="includes/login.php" class="small btn btn-primary px-4 py-2 rounded-0"><span class="icon-unlock-alt"></span> Log In </a>
+                <a href="../ADS/Webpages/login.php" class="small btn btn-primary px-4 py-2 rounded-0"><span class="icon-unlock-alt"></span> Log In </a>
                 </li>';
                 } else {
                   echo'<li>
