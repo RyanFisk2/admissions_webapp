@@ -16,7 +16,11 @@
 <style>
 	.content { margin: 200px; }
 </style>
-
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
 	<div id="content">
 	<?php
 		if($_SESSION['acc_type'] == 7){
@@ -43,8 +47,6 @@
 
 			?>
 			<div class="site-section">
-			<div class="row">
-			<div class="col">
 			<div class="feature-1 border">
 
 				<div class="icon-wrapper bg-primary">
@@ -56,8 +58,6 @@
 					<p>Review Current Applicants and Submit Review</p>
 					<p><button class="btn btn-primary px-4 py-2 rounded-0" onclick="loadForm('applicants.php')">Review Applicants</button></p>
 				</div>
-			</div>
-			</div>
 			</div>
 			</div>
 		<?php

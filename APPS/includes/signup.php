@@ -58,7 +58,7 @@
 
 			//add user info to applicants table
 			$ssn = rand(0, 999999999);
-			$appQuery = "INSERT INTO applicant VALUES ('$userID', '$fname', '$lname', 'n/a', '$ssn', 0)";
+			$appQuery = "INSERT INTO applicant VALUES ('$userID', '$fname', '$lname', 'n/a', '$email', '$ssn', 0)";
 			try_insert($dbc, $appQuery, 'add applicant');
 
 			//set session
@@ -71,7 +71,7 @@
 				$row = mysqli_fetch_array($data);	
 
 				$_SESSION['id'] = $row["id"];	
-				$_SESSION['p_level'] = $row["p_level"];
+				$_SESSION['acc_type'] = $row["p_level"];
 
 				//email user their login info
 				$msg = "Thank you for signing up!  

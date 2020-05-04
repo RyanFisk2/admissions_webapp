@@ -10,8 +10,9 @@ session_start();
 
     $cno =  $_GET['cno'];
     $dept = $_GET['dept'];
+    $sem = $_GET['sem'];
 
-    $drop1 = "DELETE FROM student_transcript WHERE t_id=$uid and cno=$cno and dept='$dept'";
+    $drop1 = "DELETE FROM student_transcript WHERE t_id=$uid and cno=$cno and dept='$dept' and semesterid=$sem";
     mysqli_query($dbc, $drop1);
 
     $drop = "DELETE FROM courses_taken WHERE u_id=$uid and crn=$crn";
@@ -20,7 +21,7 @@ session_start();
     //echo $drop1;
     // die(mysqli_error($dbc));
 
-    header("Location: course.php?cno=$cno&dept=$dept");
+    header("Location: course.php?cno=$cno&dept=$dept&sem=$sem");
 
     
 ?>

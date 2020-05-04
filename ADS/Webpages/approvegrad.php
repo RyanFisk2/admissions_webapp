@@ -6,6 +6,7 @@
     
 $uid = $_GET['uid'];
 
+
 //retrieve the variables to plug into alumni
 $info = mysqli_query($dbc, "select * from student where u_id = '$uid';");
     $grad = mysqli_fetch_array($info);
@@ -18,11 +19,13 @@ $info = mysqli_query($dbc, "select * from student where u_id = '$uid';");
     }
 $gradyear = date("Y");
 
+
     //$year = mysqli_query($dbc, "select year from semester where semesterid = ;");
 
 // delete grad from student
 
 mysqli_query($dbc, "DELETE FROM form1 WHERE f1_id=$uid");
+mysqli_query($dbc, "DELETE FROM courses_taken WHERE u_id=$uid");
 mysqli_query($dbc, "DELETE FROM student WHERE u_id=$uid");
 
 mysqli_query($dbc, "UPDATE users SET p_level=6 WHERE id=$uid");

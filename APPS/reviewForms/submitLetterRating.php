@@ -33,6 +33,7 @@
 
 						if($result = mysqli_query($dbc, $insertQuery)){
 							echo "trying to redirect back to letters page";
+							echo"<script> loadForm(\"./reviewForms/letters.php?applicationID=$applicationID\"); </script>";
 						}else{
 							echo"Error submitting review, please contact you system administrator";
 						}

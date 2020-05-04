@@ -85,6 +85,7 @@ app_id int NOT NULL,
 fname varchar(20) NOT NULL,
 lname varchar(20) NOT NULL,
 degree varchar(3) NOT NULL,
+email varchar(30),
 ssn int(9) NOT NULL,
 app_status int(1),
 primary key (app_id),
@@ -339,7 +340,7 @@ primary key (course_Id, prereq1),
 foreign key (course_Id) references catalog(c_id)
 );
 
-SET FOREIGN_KEY_CHECKS = 1;
+
 
 INSERT INTO users (id, p_level, password) VALUES (10000000, 1, 'admin');
 INSERT INTO users (id, p_level, password) VALUES (10000001, 2, 'gs123');
@@ -404,6 +405,16 @@ INSERT INTO applicant (app_id, fname, lname, degree, ssn, app_status) VALUES (00
 INSERT INTO applicant (app_id, fname, lname, degree, ssn, app_status) VALUES (00001235, 'Aretha', 'Franklin', 'MS', 666111111, 1);
 INSERT INTO applicant (app_id, fname, lname, degree, ssn, app_status) VALUES (00001236, 'Carlos', 'Santana', 'PhD', 777111111, 1);
 
+INSERT INTO application_form (address1, city, state, zip, userID, interest, term, degree, submitted, decision) VALUES ('123 Main St', 'Washington', 'DC', 20052, 15555555, 'Music', '2020-08', 'MS', 1, 1);
+INSERT INTO application_form (address1, city, state, zip, userID, interest, term, degree, submitted, decision) VALUES ('123 Shakedown St', 'Washington', 'DC', 20052, 16666666, 'Algorithms', '2020-08', 'MS', 0, 0);
+
+INSERT INTO prior_degrees VALUES (1, 'GWU', 3.7, 'Computer Science', 2014, 'BS');
+INSERT INTO rec_letter (applicationID, writerName, writerTitle, writerEmployer, writerEmail, letter, received) VALUES (1, 'Ryan Fisk', 'Professor', 'GWU', 'ryan_fisk@gwu.edu', 'highly recommended', DATE '2020-03-15');
+INSERT INTO experience VALUES (1, 'GWU', DATE '2020-01-01', DATE '2020-04-01', 'LA', 'LA for database');
+INSERT INTO GRE_score VALUES (1, 170, DATE '2020-02-24', 150, 5.5, 160);
+INSERT INTO TOEFL_score VALUES (1, DATE '2020-03-15', 110);
+INSERT INTO Adv_GRE VALUES (1, DATE '2020-04-06', 800, 'Math');
+
 INSERT INTO catalog (department, c_no, title, credits) VALUES ("CSCI", 6221, 'SW Paradigms', 3);
 INSERT INTO catalog (department, c_no, title, credits) VALUES ("CSCI", 6461, 'Computer Architecture', 3);
 INSERT INTO catalog (department, c_no, title, credits) VALUES ("CSCI", 6212, 'Algorithms', 3);
@@ -427,7 +438,154 @@ INSERT INTO catalog (department, c_no, title, credits) VALUES ("ECE", 6241, 'Com
 INSERT INTO catalog (department, c_no, title, credits) VALUES ("ECE", 6242, 'Information Theory', 2);
 INSERT INTO catalog (department, c_no, title, credits) VALUES ("MATH", 6210, 'Logic', 2);
 
-INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (1, 1, 8, 'M', '15:00', '17:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (1, 1, 1, 'M', '15:00', '17:30'); /*Fall 2016*/
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (2, 1, 1, 'T', '15:00', '17:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (3, 1, 1, 'W', '15:00', '17:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (5, 1, 1, 'M', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (6, 1, 1, 'T', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (7, 1, 1, 'W', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (8, 1, 1, 'R', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (9, 1, 1, 'T', '15:00', '17:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (11, 1, 1, 'M', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (12, 1, 1, 'M', '15:30', '18:00');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (10, 1, 1, 'R', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (13, 1, 1, 'W', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (14, 1, 1, 'T', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (15, 1, 1, 'M', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (16, 1, 1, 'W', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (19, 1, 1, 'W', '15:00', '17:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (20, 1, 1, 'M', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (21, 1, 1, 'T', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (22, 1, 1, 'W', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (18, 1, 1, 'R', '16:00', '18:30');
+
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (1, 1, 2, 'M', '15:00', '17:30'); /*Spring 2017*/
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (2, 1, 2, 'T', '15:00', '17:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (3, 1, 2, 'W', '15:00', '17:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (5, 1, 2, 'M', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (6, 1, 2, 'T', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (7, 1, 2, 'W', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (8, 1, 2, 'R', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (9, 1, 2, 'T', '15:00', '17:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (11, 1, 2, 'M', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (12, 1, 2, 'M', '15:30', '18:00');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (10, 1, 2, 'R', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (13, 1, 2, 'W', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (14, 1, 2, 'T', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (15, 1, 2, 'M', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (16, 1, 2, 'W', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (19, 1, 2, 'W', '15:00', '17:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (20, 1, 2, 'M', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (21, 1, 2, 'T', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (22, 1, 2, 'W', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (18, 1, 2, 'R', '16:00', '18:30');
+
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (1, 1, 3, 'M', '15:00', '17:30'); /*Fall 2017*/
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (2, 1, 3, 'T', '15:00', '17:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (3, 1, 3, 'W', '15:00', '17:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (5, 1, 3, 'M', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (6, 1, 3, 'T', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (7, 1, 3, 'W', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (8, 1, 3, 'R', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (9, 1, 3, 'T', '15:00', '17:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (11, 1, 3, 'M', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (12, 1, 3, 'M', '15:30', '18:00');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (10, 1, 3, 'R', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (13, 1, 3, 'W', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (14, 1, 3, 'T', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (15, 1, 3, 'M', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (16, 1, 3, 'W', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (19, 1, 3, 'W', '15:00', '17:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (20, 1, 3, 'M', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (21, 1, 3, 'T', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (22, 1, 3, 'W', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (18, 1, 3, 'R', '16:00', '18:30');
+
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (1, 1, 4, 'M', '15:00', '17:30'); /*Spring 2018*/
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (2, 1, 4, 'T', '15:00', '17:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (3, 1, 4, 'W', '15:00', '17:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (5, 1, 4, 'M', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (6, 1, 4, 'T', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (7, 1, 4, 'W', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (8, 1, 4, 'R', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (9, 1, 4, 'T', '15:00', '17:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (11, 1, 4, 'M', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (12, 1, 4, 'M', '15:30', '18:00');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (10, 1, 4, 'R', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (13, 1, 4, 'W', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (14, 1, 4, 'T', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (15, 1, 4, 'M', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (16, 1, 4, 'W', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (19, 1, 4, 'W', '15:00', '17:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (20, 1, 4, 'M', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (21, 1, 4, 'T', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (22, 1, 4, 'W', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (18, 1, 4, 'R', '16:00', '18:30');
+
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (1, 1, 5, 'M', '15:00', '17:30'); /*Fall 2018*/
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (2, 1, 5, 'T', '15:00', '17:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (3, 1, 5, 'W', '15:00', '17:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (5, 1, 5, 'M', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (6, 1, 5, 'T', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (7, 1, 5, 'W', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (8, 1, 5, 'R', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (9, 1, 5, 'T', '15:00', '17:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (11, 1, 5, 'M', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (12, 1, 5, 'M', '15:30', '18:00');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (10, 1, 5, 'R', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (13, 1, 5, 'W', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (14, 1, 5, 'T', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (15, 1, 5, 'M', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (16, 1, 5, 'W', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (19, 1, 5, 'W', '15:00', '17:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (20, 1, 5, 'M', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (21, 1, 5, 'T', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (22, 1, 5, 'W', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (18, 1, 5, 'R', '16:00', '18:30');
+
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (1, 1, 6, 'M', '15:00', '17:30'); /*Spring 2019*/
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (2, 1, 6, 'T', '15:00', '17:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (3, 1, 6, 'W', '15:00', '17:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (5, 1, 6, 'M', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (6, 1, 6, 'T', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (7, 1, 6, 'W', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (8, 1, 6, 'R', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (9, 1, 6, 'T', '15:00', '17:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (11, 1, 6, 'M', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (12, 1, 6, 'M', '15:30', '18:00');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (10, 1, 6, 'R', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (13, 1, 6, 'W', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (14, 1, 6, 'T', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (15, 1, 6, 'M', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (16, 1, 6, 'W', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (19, 1, 6, 'W', '15:00', '17:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (20, 1, 6, 'M', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (21, 1, 6, 'T', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (22, 1, 6, 'W', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (18, 1, 6, 'R', '16:00', '18:30');
+
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (1, 1, 7, 'M', '15:00', '17:30'); /*Fall 2019*/
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (2, 1, 7, 'T', '15:00', '17:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (3, 1, 7, 'W', '15:00', '17:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (5, 1, 7, 'M', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (6, 1, 7, 'T', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (7, 1, 7, 'W', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (8, 1, 7, 'R', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (9, 1, 7, 'T', '15:00', '17:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (11, 1, 7, 'M', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (12, 1, 7, 'M', '15:30', '18:00');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (10, 1, 7, 'R', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (13, 1, 7, 'W', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (14, 1, 7, 'T', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (15, 1, 7, 'M', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (16, 1, 7, 'W', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (19, 1, 7, 'W', '15:00', '17:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (20, 1, 7, 'M', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (21, 1, 7, 'T', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (22, 1, 7, 'W', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (18, 1, 7, 'R', '16:00', '18:30');
+
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (1, 1, 8, 'M', '15:00', '17:30'); /*Spring 2020*/
 INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (2, 1, 8, 'T', '15:00', '17:30');
 INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (3, 1, 8, 'W', '15:00', '17:30');
 INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (5, 1, 8, 'M', '18:00', '20:30');
@@ -448,8 +606,92 @@ INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VAL
 INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (22, 1, 8, 'W', '18:00', '20:30');
 INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (18, 1, 8, 'R', '16:00', '18:30');
 
-INSERT INTO courses_taken(u_id, crn, grade) VALUES (88888888, 2, 'IP');
-INSERT INTO courses_taken(u_id, crn, grade) VALUES (88888888, 3, 'IP');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (1, 1, 9, 'M', '15:00', '17:30'); /*Fall 2020*/
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (2, 1, 9, 'T', '15:00', '17:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (3, 1, 9, 'W', '15:00', '17:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (5, 1, 9, 'M', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (6, 1, 9, 'T', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (7, 1, 9, 'W', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (8, 1, 9, 'R', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (9, 1, 9, 'T', '15:00', '17:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (11, 1, 9, 'M', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (12, 1, 9, 'M', '15:30', '18:00');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (10, 1, 9, 'R', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (13, 1, 9, 'W', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (14, 1, 9, 'T', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (15, 1, 9, 'M', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (16, 1, 9, 'W', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (19, 1, 9, 'W', '15:00', '17:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (20, 1, 9, 'M', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (21, 1, 9, 'T', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (22, 1, 9, 'W', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (18, 1, 9, 'R', '16:00', '18:30');
+
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (1, 1, 10, 'M', '15:00', '17:30'); /*Spring 2021*/
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (2, 1, 10, 'T', '15:00', '17:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (3, 1, 10, 'W', '15:00', '17:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (5, 1, 10, 'M', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (6, 1, 10, 'T', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (7, 1, 10, 'W', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (8, 1, 10, 'R', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (9, 1, 10, 'T', '15:00', '17:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (11, 1, 10, 'M', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (12, 1, 10, 'M', '15:30', '18:00');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (10, 1, 10, 'R', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (13, 1, 10, 'W', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (14, 1, 10, 'T', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (15, 1, 10, 'M', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (16, 1, 10, 'W', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (19, 1, 10, 'W', '15:00', '17:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (20, 1, 10, 'M', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (21, 1, 10, 'T', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (22, 1, 10, 'W', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (18, 1, 10, 'R', '16:00', '18:30');
+
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (1, 1, 11, 'M', '15:00', '17:30'); /*Fall 2021*/
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (2, 1, 11, 'T', '15:00', '17:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (3, 1, 11, 'W', '15:00', '17:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (5, 1, 11, 'M', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (6, 1, 11, 'T', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (7, 1, 11, 'W', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (8, 1, 11, 'R', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (9, 1, 11, 'T', '15:00', '17:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (11, 1, 11, 'M', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (12, 1, 11, 'M', '15:30', '18:00');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (10, 1, 11, 'R', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (13, 1, 11, 'W', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (14, 1, 11, 'T', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (15, 1, 11, 'M', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (16, 1, 11, 'W', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (19, 1, 11, 'W', '15:00', '17:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (20, 1, 11, 'M', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (21, 1, 11, 'T', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (22, 1, 11, 'W', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (18, 1, 11, 'R', '16:00', '18:30');
+
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (1, 1, 12, 'M', '15:00', '17:30'); /*Spring 2022*/
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (2, 1, 12, 'T', '15:00', '17:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (3, 1, 12, 'W', '15:00', '17:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (5, 1, 12, 'M', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (6, 1, 12, 'T', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (7, 1, 12, 'W', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (8, 1, 12, 'R', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (9, 1, 12, 'T', '15:00', '17:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (11, 1, 12, 'M', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (12, 1, 12, 'M', '15:30', '18:00');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (10, 1, 12, 'R', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (13, 1, 12, 'W', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (14, 1, 12, 'T', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (15, 1, 12, 'M', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (16, 1, 12, 'W', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (19, 1, 12, 'W', '15:00', '17:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (20, 1, 12, 'M', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (21, 1, 12, 'T', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (22, 1, 12, 'W', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, sem, day, start_time, end_time) VALUES (18, 1, 12, 'R', '16:00', '18:30');
+
+INSERT INTO courses_taken(u_id, crn, grade) VALUES (88888888, 142, 'IP');
+INSERT INTO courses_taken(u_id, crn, grade) VALUES (88888888, 143, 'IP');
 
 INSERT INTO semester(semesterid, semester, year) VALUES (1, "FALL", 2016);
 INSERT INTO semester(semesterid, semester, year) VALUES (2, "SPRING", 2017);
@@ -549,7 +791,7 @@ INSERT INTO student_transcript(t_id, dept, cno, grade, semesterid, inform1) VALU
 
 INSERT INTO form1 (f1_id, dept, cno) VALUES (12345678, "CSCI", "6221"); 
 INSERT INTO form1 (f1_id, dept, cno) VALUES (12345678, "CSCI", "6212"); 
-INSERT INTO form1 (f1_id, dept, cno) VALUES (12345678, "CSCI", "6261"); 
+INSERT INTO form1 (f1_id, dept, cno) VALUES (12345678, "CSCI", "6461"); 
 INSERT INTO form1 (f1_id, dept, cno) VALUES (12345678, "CSCI", "6232"); 
 INSERT INTO form1 (f1_id, dept, cno) VALUES (12345678, "CSCI", "6233"); 
 INSERT INTO form1 (f1_id, dept, cno) VALUES (12345678, "CSCI", "6284"); 
@@ -591,7 +833,226 @@ INSERT INTO courses_taught(f_id, crn) VALUES (10000007, 17);
 INSERT INTO courses_taught(f_id, crn) VALUES (10000007, 18);
 INSERT INTO courses_taught(f_id, crn) VALUES (10000010, 19);
 INSERT INTO courses_taught(f_id, crn) VALUES (10000007, 20);
-
+INSERT INTO courses_taught(f_id, crn) VALUES (10000003, 21);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000002, 22);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000003, 23);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000003, 24);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000010, 25);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000013, 26);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000010, 27);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000004, 28);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000008, 29);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000006, 30);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000006, 31);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000006, 32);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000006, 33);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000009, 34);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000009, 35);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000004, 36);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000007, 37);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000007, 38);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000010, 39);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000007, 40);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000003, 41);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000002, 42);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000003, 43);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000003, 44);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000010, 45);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000013, 46);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000010, 47);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000004, 48);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000008, 49);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000006, 50);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000006, 51);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000006, 52);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000006, 53);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000009, 54);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000009, 55);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000004, 56);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000007, 57);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000007, 58);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000010, 59);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000007, 60);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000003, 61);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000002, 62);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000003, 63);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000003, 64);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000010, 65);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000013, 66);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000010, 67);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000004, 68);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000008, 69);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000006, 70);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000006, 71);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000006, 72);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000006, 73);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000009, 74);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000009, 75);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000004, 76);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000007, 77);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000007, 78);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000010, 79);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000007, 80);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000003, 81);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000002, 82);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000003, 83);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000003, 84);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000010, 85);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000013, 86);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000010, 87);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000004, 88);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000008, 89);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000006, 90);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000006, 91);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000006, 92);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000006, 93);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000009, 94);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000009, 95);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000004, 96);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000007, 97);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000007, 98);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000010, 99);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000007, 100);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000003, 101);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000002, 102);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000003, 103);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000003, 104);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000010, 105);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000013, 106);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000010, 107);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000004, 108);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000008, 109);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000006, 110);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000006, 111);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000006, 112);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000006, 113);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000009, 114);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000009, 115);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000004, 116);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000007, 117);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000007, 118);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000010, 119);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000007, 120);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000003, 121);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000002, 122);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000003, 123);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000003, 124);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000010, 125);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000013, 126);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000010, 127);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000004, 128);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000008, 129);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000006, 130);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000006, 131);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000006, 132);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000006, 133);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000009, 134);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000009, 135);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000004, 136);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000007, 137);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000007, 138);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000010, 139);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000007, 140);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000003, 141);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000002, 142);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000003, 143);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000003, 144);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000010, 145);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000013, 146);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000010, 147);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000004, 148);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000008, 149);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000006, 150);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000006, 151);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000006, 152);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000006, 153);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000009, 154);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000009, 155);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000004, 156);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000007, 157);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000007, 158);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000010, 159);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000007, 160);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000003, 161);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000002, 162);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000003, 163);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000003, 164);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000010, 165);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000013, 166);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000010, 167);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000004, 168);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000008, 169);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000006, 170);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000006, 171);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000006, 172);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000006, 173);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000009, 174);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000009, 175);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000004, 176);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000007, 177);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000007, 178);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000010, 179);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000007, 180);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000003, 181);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000002, 182);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000003, 183);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000003, 184);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000010, 185);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000013, 186);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000010, 187);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000004, 188);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000008, 189);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000006, 190);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000006, 191);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000006, 192);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000006, 193);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000009, 194);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000009, 195);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000004, 196);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000007, 197);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000007, 198);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000010, 199);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000007, 200);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000003, 201);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000002, 202);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000003, 203);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000003, 204);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000010, 205);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000013, 206);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000010, 207);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000004, 208);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000008, 209);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000006, 210);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000006, 211);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000006, 212);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000006, 213);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000009, 214);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000009, 215);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000004, 216);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000007, 217);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000007, 218);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000010, 219);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000007, 220);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000003, 221);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000002, 222);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000003, 223);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000003, 224);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000010, 225);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000013, 226);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000010, 227);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000004, 228);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000008, 229);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000006, 230);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000006, 231);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000006, 232);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000006, 233);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000009, 234);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000009, 235);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000004, 236);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000007, 237);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000007, 238);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000010, 239);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000007, 240);
 INSERT INTO prereqs(course_Id, prereq1, prereq2) VALUES (6, 'CSCI 6232', NULL);
 INSERT INTO prereqs(course_Id, prereq1, prereq2) VALUES (8, 'CSCI 6241', NULL);
 INSERT INTO prereqs(course_Id, prereq1, prereq2) VALUES (9, 'CSCI 6461', 'CSCI 6212');
@@ -611,3 +1072,10 @@ INSERT ignore INTO decisions (decisionID, description) VALUES
 (3, 'Admitted With Aid'),
 (4, 'Rejected');
 
+INSERT ignore INTO recommendations (recID, description) VALUES
+(0, 'Reject'),
+(1, 'Boderline Admit'),
+(2, 'Admit Without Aid'),
+(3, 'Admit With Aid');
+
+SET FOREIGN_KEY_CHECKS = 1;

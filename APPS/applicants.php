@@ -36,7 +36,7 @@
 	}
 
 	//query for applicants (roleID 1) that have submitted the application (submitted = 1)
-	$getApplicants = "SELECT applicant.fname, applicant.lname, applicant.app_id
+	$getApplicants = "SELECT applicant.fname, applicant.lname, applicant.app_id, application_form.applicationID
 				FROM applicant, users, application_form
 				WHERE users.p_level = '7' AND users.id = applicant.app_id AND users.id = application_form.userID AND application_form.submitted = 1";
 	$applicantResult = mysqli_query($dbc, $getApplicants);
@@ -57,6 +57,7 @@
 				$fname = $applicant['fname'];
 				$lname = $applicant['lname'];
 				$userID = $applicant['app_id'];
+				$applicationID = $applicant['applicationID'];
 
 				$doneQuery = "SELECT * FROM review_form WHERE facultyID = '$fID' AND applicantID = '$userID'";
 				$doneResult = mysqli_query($dbc, $doneQuery);
@@ -73,14 +74,14 @@
 					
 					</tr>";
 
-					if($role == 3){
+					if($role == 2){
 						$transcriptQuery = "SELECT * FROM transcript WHERE applicationID = '$applicationID'";
 						$transcriptResult = mysqli_query($dbc, $transcriptQuery);
 						if(mysqli_num_rows($transcriptResult) == 0){
 							//transcript hasnt been received
 							echo "<tr>
 								<td>
-									<button class='btn btn-primary' onclick='loadForm(\"./reviewForms/receivedTranscript.php?applicationID=$applicationID\");'>
+									<button class='smmall btn btn-primary px-4 py-2 rounded-0' onclick='loadForm(\"./reviewForms/receivedTranscript.php?applicationID=$applicationID\");'>
 									Received Transcript
 									</button>
 								</td>

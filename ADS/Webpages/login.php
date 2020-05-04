@@ -51,7 +51,7 @@
 
           //TODO: redirect to index.php
           if($row['id'] == $row['password']){
-            $home_url = "set_info.php";
+            $home_url = "../../REGS/src/set_info.php";
             header('Location: ' . $home_url);
           }else{
             $home_url = "superindex.php";
@@ -97,9 +97,17 @@
               <input type="password" id="pword" name="password" class="form-control form-control-lg">
             </div>
           </div>
-          <div class="row">
-            <div class="col-12">
+          <div class="row justify-content-center text-center">
+            <div class="col">
               <input type="submit" value="Log In" class="btn btn-primary btn-lg px-5" name="submit">
+            </div>
+          </div>
+          <br><br>
+          <div class="row justify-content-center text-center">
+            <div class="col">
+              <input type="submit" formaction="../../APPS/includes/signup.php" value="Haven't signed up yet? Sign Up" class="btn btn-primary btn-lg px-5" name="signup">
+
+
 <?php
   if (empty($_SESSION['id'])) {
     echo '<br><br><p class="text-danger">' . $error_msg . '</p>';

@@ -80,7 +80,7 @@ if(strcmp($row[0], 'MS') == 0 && $corecourse == 30 && $totalcredits >=30 && $csC
 }
 
 //phdcheck
-if(strcmp($row[0], 'PhD') == 0 && $corecourse == 1 && $totalcredits >= 36 && $csCredits >= 35){
+if(strcmp($row[0], 'PhD') == 0 && $corecourse == 30 && $totalcredits >= 36 && $csCredits >= 35){
 
 	$query = "UPDATE student_transcript set inform1 = 'false' WHERE t_id = '$uid'";
        	$data = mysqli_query($dbc, $query);

@@ -32,7 +32,7 @@ if (!empty($fc)) {
     $fcourses = $fc[0];
     if ($fcourses > 0) {
         $check = false;
-	    echo 'ERROR: Form1 check failed';
+	    echo 'ERROR: Transcript does not contain all Form One classes <br>';
     }
 }
 // checks if form 1 was approved
@@ -104,7 +104,7 @@ if ($degree == 'MS') {
         echo 'ERROR: could not determine credit hours<br>';
     }
     // makes sure student doesn't have more than 2 grades below a B
-    $gradesbelowb = mysqli_query($dbc, "select count(grade) from student_transcript where t_id = '$uid' and grade not in (select grade from student_transcript where t_id = '$uid' and (grade = 'A' or grade = 'B' or grade = 'IP'));");
+    $gradesbelowb = mysqli_query($dbc, "select count(grade) from student_transcript where t_id = '$uid' and grade not in (select grade from student_transcript where t_id = '$uid' and (grade = 'A' or grade = 'B' or grade = 'A-' or grade = 'B+' or grade = 'B-' or grade = 'IP'));");
 	$grade = mysqli_fetch_array($gradesbelowb);
     if (!empty($grade)) {
         $grades = $grade[0];
@@ -147,6 +147,7 @@ else {
         $credits = $c[0];
         if ($credits < 36) {
             $check = false;
+            echo 'ERROR: Not enough credit hours GPA<br>';
         }
     }	
     else {
@@ -159,18 +160,20 @@ else {
         $corecredits = $cc[0];
         if ($corecredits < 30) {
             $check = false;
+            echo 'ERROR: Not enough CS credit hours<br>';
         }
     }	
     else {
         echo 'ERROR: could not determine GPA<br>';
     }
     // makes sure student doesn't have more than 1 grade below a B
-    $gradesbelowb = mysqli_query($dbc, "select count(grade) from student_transcript where T_id = '$uid' and grade not in (select grade from student_transcript where t_id = '$uid' and (grade = 'A' or grade = 'B' or grade = 'IP'));");
-	$grade = mysqli_fetch_array($gradesbelowb);
+    $gradesbelowb = mysqli_query($dbc, "select count(grade) from student_transcript where T_id = '$uid' and grade not in (select grade from student_transcript where t_id = '$uid' and (grade = 'A' or grade = 'A-' or grade = 'B+' or grade = 'B-' or grade = 'B' or grade = 'IP'));");
+	$grade = $grade = mysqli_fetch_array($gradesbelowb);;
     if (!empty($grade)) {
         $grades = $grade[0];
         if ($grades > 1) {
             $check = false;
+            echo 'ERROR: More than one grade below C<br>';
         }
     }	
     else {
@@ -178,9 +181,16 @@ else {
     }
     if ($check == true) {
         // sets the gradapp attribute to 1, which signifies that the student has applied but still needs their thesis approved
-        $apply = "update student set gradapp = 1 where u_id = '$uid';";
-        mysqli_query($dbc, $apply);
-    	echo '<br>Application sent in. Awaiting approval of thesis.';
+        $checkthesis = mysqli_query($dbc, "SELECT gradapp FROM student WHERE U_id = $uid");
+        $result = mysqli_fetch_array($checkthesis);
+        if ($result[0] != 2){
+            $apply = "update student set gradapp = 1 where u_id = '$uid';";
+            mysqli_query($dbc, $apply);
+            echo '<br>Application sent in. Awaiting approval of thesis.';
+        }
+        else{
+            echo '<br> Applicaiton sent in. Thesis approved. Awaiting final graduation approval.';
+        }
     }
     else {
 	echo '<br>Application Failed. Please check requirements.';

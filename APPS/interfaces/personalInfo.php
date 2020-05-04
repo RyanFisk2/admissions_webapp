@@ -33,5 +33,6 @@
 		$query = rtrim($query, ", ");
 		$query .= " WHERE userID = " . $_SESSION["id"];
 		try_insert($dbc, $query, "Updated database entry with personal info.");
+
 	}
 ?>
