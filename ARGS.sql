@@ -340,7 +340,7 @@ primary key (course_Id, prereq1),
 foreign key (course_Id) references catalog(c_id)
 );
 
-SET FOREIGN_KEY_CHECKS = 1;
+
 
 INSERT INTO users (id, p_level, password) VALUES (10000000, 1, 'admin');
 INSERT INTO users (id, p_level, password) VALUES (10000001, 2, 'gs123');
@@ -404,6 +404,16 @@ INSERT INTO applicant (app_id, fname, lname, degree, ssn, app_status) VALUES (16
 INSERT INTO applicant (app_id, fname, lname, degree, ssn, app_status) VALUES (00001234, 'Louis', 'Armstrong', 'MS', 555111111, 1);
 INSERT INTO applicant (app_id, fname, lname, degree, ssn, app_status) VALUES (00001235, 'Aretha', 'Franklin', 'MS', 666111111, 1);
 INSERT INTO applicant (app_id, fname, lname, degree, ssn, app_status) VALUES (00001236, 'Carlos', 'Santana', 'PhD', 777111111, 1);
+
+INSERT INTO application_form (address1, city, state, zip, userID, interest, term, degree, submitted, decision) VALUES ('123 Main St', 'Washington', 'DC', 20052, 15555555, 'Music', '2020-08', 'MS', 1, 1);
+INSERT INTO application_form (address1, city, state, zip, userID, interest, term, degree, submitted, decision) VALUES ('123 Shakedown St', 'Washington', 'DC', 20052, 16666666, 'Algorithms', '2020-08', 'MS', 0, 0);
+
+INSERT INTO prior_degrees VALUES (1, 'GWU', 3.7, 'Computer Science', 2014, 'BS');
+INSERT INTO rec_letter (applicationID, writerName, writerTitle, writerEmployer, writerEmail, letter, received) VALUES (1, 'Ryan Fisk', 'Professor', 'GWU', 'ryan_fisk@gwu.edu', 'highly recommended', DATE '2020-03-15');
+INSERT INTO experience VALUES (1, 'GWU', DATE '2020-01-01', DATE '2020-04-01', 'LA', 'LA for database');
+INSERT INTO GRE_score VALUES (1, 170, DATE '2020-02-24', 150, 5.5, 160);
+INSERT INTO TOEFL_score VALUES (1, DATE '2020-03-15', 110);
+INSERT INTO Adv_GRE VALUES (1, DATE '2020-04-06', 800, 'Math');
 
 INSERT INTO catalog (department, c_no, title, credits) VALUES ("CSCI", 6221, 'SW Paradigms', 3);
 INSERT INTO catalog (department, c_no, title, credits) VALUES ("CSCI", 6461, 'Computer Architecture', 3);
@@ -1067,3 +1077,5 @@ INSERT ignore INTO recommendations (recID, description) VALUES
 (1, 'Boderline Admit'),
 (2, 'Admit Without Aid'),
 (3, 'Admit With Aid');
+
+SET FOREIGN_KEY_CHECKS = 1;
